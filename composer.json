@@ -30,20 +30,13 @@
         "symfony/validator": "*",
         "symfony/web-link": "*",
         "symfony/yaml": "*",
+        "symfony/maker-bundle": "*",
         "sensio/framework-extra-bundle": "^5.1",
         "twig/extensions": "^1.5",
         "antishov/doctrine-extensions-bundle": "^1.4",
         "piwik/device-detector": "^3.12",
         "intervention/image": "^2.4",
         "erusev/parsedown": "^1.7"
-    },
-    "require-dev": {
-        "symfony/debug-pack": "*",
-        "symfony/dotenv": "*",
-        "symfony/maker-bundle": "*",
-        "symfony/phpunit-bridge": "^4.0",
-        "symfony/profiler-pack": "*",
-        "symfony/test-pack": "*"
     },
     "autoload": {
         "psr-4": {

@@ -1,0 +1,39 @@
+{% extends('@WSCore/cms/layout.html.twig') %}
+
+{% page_configuration {
+    'title': 'profile.title'|trans({}, 'ws_cms_administrator'),
+    'header': 'profile.title'|trans({}, 'ws_cms_administrator'),
+    'breadcrumbs': {
+        ('profile.title'|trans({}, 'ws_cms_administrator')): false,
+    }
+} %}
+
+{% block content %}
+    <div class="wrapper wrapper-content animated fadeInRight faster">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="ibox ">
+                    <div class="ibox-content">
+                        {{ form_start(form) }}
+                        {{ form_row(form.name) }}
+
+                        <div id="ws-administrator-profile-password-container" class="hide">
+                            {{ form_row(form.password) }}
+                            {{ form_row(form.newPassword.first) }}
+                            {{ form_row(form.newPassword.second) }}
+                        </div>
+                        <button type="button" id="ws-administrator-profile-change-password" class="btn btn-w-m btn-info">{{ 'profile.form.button.change_password'|trans({}, 'ws_cms_administrator') }}</button>
+
+                        <hr>
+                        <a href="{{ path('cms_dashboard') }}" class="btn btn-danger">{{ 'cancel'|trans({}, 'ws_cms') }}</a>
+                        <button type="submit" class="btn btn-success float-right">{{ 'save'|trans({}, 'ws_cms') }}</button>
+
+                        {{ form_widget(form._token) }}
+                        {{ form_end(form, {'render_rest': false}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

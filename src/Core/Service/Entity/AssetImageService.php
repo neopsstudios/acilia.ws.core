@@ -1,0 +1,201 @@
+<?php
+
+namespace WS\Core\Service\Entity;
+
+use WS\Core\Entity\AssetImage;
+use WS\Core\Library\FactoryService\FactoryServiceInterface;
+use WS\Core\Service\ContextService;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
+
+class AssetImageService implements FactoryServiceInterface
+{
+    const ALLOW_SORT = 'filename';
+
+    protected $logger;
+    protected $em;
+    protected $repository;
+    protected $contextService;
+
+    public function __construct(
+        LoggerInterface $logger,
+        EntityManagerInterface $em,
+        ContextService $contextService
+    ) {
+        $this->logger = $logger;
+        $this->em = $em;
+        $this->repository = $this->em->getRepository(AssetImage::class);
+        $this->contextService = $contextService;
+    }
+
+    /**
+     * @param string $filter
+     * @param int $page
+     * @param int $limit
+     * @param string $sort
+     * @param string $dir
+     *
+     * @return array
+     */
+    public function getAll(?string $filter, int $page, int $limit, string $sort = '', string $dir = '')
+    {
+        $offset = ($page - 1) * $limit;
+
+        if ($sort === self::ALLOW_SORT) {
+            $orderBy = ["$sort" => $dir ? strtoupper($dir) : 'ASC'];
+        } else {
+            $orderBy = [];
+        }
+
+        $domain = $this->contextService->getDomain();
+
+        try {
+            return $this->repository->getAll($domain, $filter, $orderBy, $limit, $offset);
+        } catch (\Exception $e) {
+            $this->logger->error(sprintf('Error fetching image assets. Error %s', $e->getMessage()));
+            return [];
+        }
+    }
+
+    public function createFromUploadedFile(UploadedFile $imageFile, $entity = null, string $imageField = null) : AssetImage
+    {
+        $assetImage = new AssetImage();
+        $assetImage
+            ->setFilename($this->sanitizeFilename($imageFile))
+            ->setMimeType((string) $imageFile->getMimeType())
+        ;
+
+        // Set Asset Image into Entity
+        $fieldSetter = sprintf('set%s', ucfirst((string) $imageField));
+        if (method_exists($entity, $fieldSetter)) {
+            $ref = new \ReflectionMethod(get_class($entity), $fieldSetter);
+            $ref->invoke($entity, $assetImage);
+        }
+
+        // Save Asset Image
+        $this->em->persist($assetImage);
+        $this->em->flush();
+
+        return $assetImage;
+    }
+
+    public function createFromAsset($entity, $imageField, AssetImage $sourceAsset) : AssetImage
+    {
+        $assetImage = new AssetImage();
+        $assetImage
+            ->setFilename($sourceAsset->getFilename())
+            ->setMimeType($sourceAsset->getMimeType())
+        ;
+
+        // Set Asset Image into Entity
+        $fieldSetter = sprintf('set%s', ucfirst($imageField));
+        if (method_exists($entity, $fieldSetter)) {
+            $ref = new \ReflectionMethod(get_class($entity), $fieldSetter);
+            $ref->invoke($entity, $assetImage);
+        }
+
+        // Save Asset Image
+        $this->em->persist($assetImage);
+        $this->em->flush();
+
+        return $assetImage;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function create(AssetImage $image) : AssetImage
+    {
+        try {
+            $this->em->persist($image);
+            $this->em->flush();
+
+            $this->logger->info(sprintf('Created AssetImage ID::%s', $image->getId()));
+
+            return $image;
+        } catch (\Exception $e) {
+            $this->logger->error(sprintf('Error creating AssetImage. Error: %s', $e->getMessage()));
+
+            throw $e;
+        }
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function edit(AssetImage $image) : AssetImage
+    {
+        try {
+            $this->em->flush();
+
+            $this->logger->info(sprintf('Edited AssetImage ID::%s', $image->getId()));
+
+            return $image;
+        } catch (\Exception $e) {
+            $this->logger->error(sprintf('Error editing AssetImage ID::%s. Error: %s', $image->getId(), $e->getMessage()));
+
+            throw $e;
+        }
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return AssetImage|null
+     */
+    public function get(int $id) : ?AssetImage
+    {
+        return $this->repository->findOneBy(['id' => $id]);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function delete(AssetImage $image) : void
+    {
+        $id = $image->getId();
+        try {
+            $this->em->remove($image);
+            $this->em->flush();
+
+            $this->logger->info(sprintf('Removed AssetImage ID::%s', $id));
+        } catch (\Exception $e) {
+            $this->logger->error(sprintf('Error removing AssetImage ID::%s. Error: %s', $id, $e->getMessage()));
+
+            throw $e;
+        }
+    }
+
+    protected function sanitizeFilename(UploadedFile $imageFile) : string
+    {
+        $filename = explode('.', (string) $imageFile->getClientOriginalName());
+        $imageName = (string) preg_replace('/[^\w\-\.]/', '', $filename[0]);
+        $filename = sprintf('%s.%s', $imageName, $imageFile->getClientOriginalExtension());
+
+        return trim($filename);
+    }
+
+    public function getAvailableByIds(array $ids): array
+    {
+        $result = [];
+
+        try {
+            $data = $this->repository->getAvailableByIds($this->contextService->getDomain(), $ids);
+            foreach ($data as $entity) {
+                $result[$entity->getId()] = $entity;
+            }
+
+            return $result;
+        } catch (\Exception $e) {
+            $this->logger->error(sprintf('Error fetching image assets. Error %s', $e->getMessage()));
+
+            return [];
+        }
+    }
+
+    public function getSupported() : array
+    {
+        return [AssetImage::class];
+    }
+}

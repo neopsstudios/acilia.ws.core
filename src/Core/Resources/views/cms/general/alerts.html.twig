@@ -1,0 +1,34 @@
+{% if has_alerts() %}
+    <a aria-expanded="true" class="dropdown-toggle count-info" data-toggle="dropdown" href="#" title="{{ 'alerts.tooltip'|trans({ '%count%': get_alerts()|length }, 'ws_cms') }}">
+        <i class="fa fa-bell"></i>
+        <span class="label label-primary">{{ get_alerts()|length }}</span>
+    </a>
+    <ul class="dropdown-menu dropdown-alerts">
+        {% for alert in get_alerts() %}
+            <li>
+                {% if alert.routeName is not null %}
+                    <a href="{{ path(alert.routeName) }}" class="dropdown-item">
+                        <div>
+                            <i class="fa {{ alert.iconClass|default('fa-exclamation-triangle') }}"></i>
+                            {{ alert.message|raw }}
+                        </div>
+                    </a>
+                {% else %}
+                    <span class="dropdown-item">
+                        <div>
+                            <i class="fa {{ alert.iconClass|default('fa-exclamation-triangle') }}"></i>
+                            {{ alert.message|raw }}
+                        </div>
+                    </span>
+                {% endif %}
+            </li>
+            {% if not loop.last %}
+                <li class="divider"></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% else %}
+    <a aria-expanded="true" class="dropdown-toggle count-info" href="#" title="{{ 'alerts.tooltip'|trans({ '%count%': 0 }, 'ws_cms') }}">
+        <i class="fa fa-bell-slash"></i>
+    </a>
+{% endif %}

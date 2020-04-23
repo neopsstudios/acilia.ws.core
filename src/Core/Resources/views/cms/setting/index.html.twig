@@ -1,0 +1,51 @@
+{% extends('@WSCore/cms/layout.html.twig') %}
+
+{% page_configuration {
+    'title': section.name|trans({}, section.translationDomain) ~ ' ' ~  'title'|trans({}, 'ws_cms_setting'),
+    'header': 'title'|trans({}, 'ws_cms_setting'),
+    'subtitle': section.name|trans({}, section.translationDomain),
+    'breadcrumbs': {
+        ('title'|trans({}, 'ws_cms_setting')): false,
+        (section.name|trans({}, section.translationDomain)): false
+    }
+} %}
+
+{% block content %}
+    <div class="wrapper wrapper-content animated fadeInRight faster" data-page="settings">
+        <div class="row">
+
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>{{ 'disclaimer'|trans({}, 'ws_cms_setting') }}</h5>
+                        <div class="float-right">
+                            <button class="btn btn-primary" data-save-url="{{ path('ws_setting_save', { 'section': section.code }) }}" id="ws-settings-save">{{ 'save'|trans({}, 'ws_cms') }}</button>
+                        </div>
+                        <br />
+                        <small>{{ 'required'|trans({}, 'ws_cms_setting')|raw }}</small>
+                    </div>
+                </div>
+            </div>
+
+            {% for group in section.groups %}
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>{{ group.name|trans({}, group.translationDomain) }}</h5>
+                            {% if group.description is not empty %}
+                                <small>{{ group.description|trans({}, group.translationDomain) }}</small>
+                            {% endif %}
+                        </div>
+
+                        <div class="ibox-content">
+                            {{ render(controller('WS\\Core\\Controller\\CMS\\SettingController::form', {
+                                'section': section.code,
+                                'group': group.code
+                            })) }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

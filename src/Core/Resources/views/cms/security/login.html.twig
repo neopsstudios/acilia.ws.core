@@ -1,0 +1,36 @@
+{% extends('@WSCore/cms/base.html.twig') %}
+
+{% set bodyClass = 'gray-bg' %}
+
+{% block body %}
+<div class="login">
+    <h4 class="logo-name"></h4>
+    <div class="text-center">
+        <img src="{{ asset('cms/images/logo-header.png') }}"/>
+    </div>
+    <div class="middle-box loginscreen animated fadeInDown">
+        <div class="row text-center">
+            <h5 class="login-info text-center">{{ 'login.header'|trans({}, 'ws_cms') }}</h5>
+        </div>
+
+        {% if error %}
+            <div class="alert alert-danger">{{ error.message }}</div>
+        {% endif %}
+
+        <form action="{{ path('ws_cms_login') }}" method="post" class="m-t" role="form" accept-charset="UTF-8">
+            <div class="form-group">
+                <input type="text" id="username" class="form-control" placeholder="{{ 'login.email'|trans({}, 'ws_cms') }}" name="_username" value="{{ last_username }}" />
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="{{ 'login.password'|trans({}, 'ws_cms') }}" id="password" name="_password" />
+            </div>
+            <button type="submit" class="btn btn-primary block full-width m-b">{{ 'login.button'|trans({}, 'ws_cms') }}</button>
+
+            <input type="hidden" name="_target_path" value="{{ path('cms_dashboard') }}" />
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        </form>
+
+        <p class="m-t text-center"> <small>WideStand &copy; Acilia Software {{ 'now'|date('Y') }}</small> </p>
+    </div>
+</div>
+{% endblock %}

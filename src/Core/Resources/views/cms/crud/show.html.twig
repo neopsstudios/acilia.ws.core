@@ -1,0 +1,31 @@
+{% extends('@WSCore/cms/layout.html.twig') %}
+
+{% page_configuration {
+    'title': 'title'|trans([], trans_prefix),
+    'header': isCreate ? 'new'|trans({}, 'ws_cms') : 'edit'|trans({}, 'ws_cms') ~ ' ' ~ 'title'|trans({}, trans_prefix),
+    'breadcrumbs': {
+        ('title'|trans([], trans_prefix)): path("#{route_prefix}_index"),
+        (isCreate ? 'new'|trans({}, 'ws_cms') : 'edit'|trans({}, 'ws_cms') ~ ' ' ~ 'title'|trans({}, trans_prefix)): false
+    }
+} %}
+
+{% block content %}
+    <div class="wrapper wrapper-content animated fadeInRight faster">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="ibox ">
+                    <div class="ibox-content">
+                        {{ form_start(form) }}
+                        {{ form_widget(form) }}
+
+                        <hr>
+                        <a href="{{ path("#{route_prefix}_index") }}" class="btn btn-danger">{{ 'cancel'|trans({}, 'ws_cms') }}</a>
+                        <button type="submit" class="btn btn-success float-right">{{ 'save'|trans({}, 'ws_cms') }}</button>
+
+                        {{ form_end(form, {'render_rest': false}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

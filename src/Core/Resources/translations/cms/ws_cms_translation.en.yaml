@@ -1,0 +1,12 @@
+# Translations
+menu: Translations
+title: Translations
+description: Configure the literals and translations of the site
+disclaimer: Following are the literals and translations for the domain <strong>%host%</strong> in the <strong>%language%</strong> language.
+is_outdated: This translation is outdated
+is_missing: This translation is missing
+missing_alert: You have <strong>one</strong> missing translation.|You have <strong>%count%</strong> missing translations.
+outdated_alert: You have <strong>one</strong> outdated translation.|You have <strong>%count%</strong> outdated translations.
+save_success: Translations saved successfully.
+save_error: Unable to save the Translations.
+

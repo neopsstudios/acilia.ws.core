@@ -1,0 +1,43 @@
+<div class="row border-bottom">
+    <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+
+        {{ include('@WSCore/cms/general/breadcrumb.html.twig') }}
+
+        <ul class="nav navbar-top-links navbar-right">
+            <li>
+                {% set domains = get_domains() %}
+                {% if domains|length > 0 %}
+                    <select onchange="window.location=this.value;">
+                        {% for domain in domains %}
+                            <option value="{{ path('ws_switch_domain', { 'id': domain.id }) }}" {% if domain.id == get_current_domain().id %}selected="selected"{% endif %}>
+                                {{ domain.host }} | {{ ('language.' ~ domain.locale)|trans({}, 'ws_cms') }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                {% else %}
+                    <strong>{{ get_current_domain().host }} | {{ ('language.' ~ get_current_domain().locale)|trans({}, 'ws_cms') }}</strong>
+                {% endif %}
+
+            </li>
+            <li>
+                <a href="{{ path('ws_administrator_profile') }}">{{ app.user.name }}</a>
+            </li>
+            {% if ws_activity_log_enabled() and is_granted('ROLE_WS_ACTIVITY_LOG') %}
+                <li>
+                    <a href="{{ path('ws_activity_log_index') }}" title="{{ 'title'|trans({}, 'ws_cms_activity_log') }}">
+                        <i class="fas fa-history"></i>
+                    </a>
+                </li>
+            {% endif %}
+            <li class="dropdown">
+                {{ include('@WSCore/cms/general/alerts.html.twig') }}
+            </li>
+            <li class="sign-out-menu">
+                <a href="{{ app.user ? logout_path() : '' }}">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="nav-label">{{ 'logout'|trans({}, 'ws_cms') }}</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

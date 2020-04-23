@@ -1,0 +1,15 @@
+{% extends('@WSCore/cms/layout.html.twig') %}
+
+{% page_configuration {
+    'title': 'welcome'|trans({}, 'cms'),
+    'header': 'welcome'|trans({}, 'cms'),
+    'breadcrumbs': {}
+} %}
+
+{% block content %}
+    <div class="row">
+        {% for widget in get_dashboard_widgets() %}
+            {{ render_dashboard_widget(widget) }}
+        {% endfor %}
+    </div>
+{% endblock content %}

@@ -1,0 +1,20 @@
+{% extends('@WSCore/cms/base.html.twig') %}
+
+{% page_configuration {
+    'title': '401',
+} %}
+
+{% set bodyClass = 'gray-bg' %}
+
+{% block body %}
+<div class="middle-box text-center animated fadeInDown aliseda-error-404">
+    <h1>401</h1>
+    <h3 class="font-bold">{{ 'error_page.401.title'|trans({}, 'ws_cms') }}</h3>
+
+    <div class="error-desc">
+        <p>{{ 'error_page.401.description'|trans({}, 'ws_cms') }}</p>
+        <p> </p>
+        <p><a href="{{ path('cms_dashboard') }}" role="button" class="btn btn-primary btn-lg">{{ 'error_page.go_back'|trans({}, 'ws_cms') }}</a></p>
+    </div>
+</div>
+{% endblock %}

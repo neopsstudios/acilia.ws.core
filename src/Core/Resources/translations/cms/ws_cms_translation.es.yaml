@@ -1,0 +1,11 @@
+# Translations
+menu: Traducciones
+title: Traducciones
+description: Configure los literales y traducciones del sitio
+disclaimer: A continuación están los literales y traducciones para el dominio <strong>%host%</strong> en el idioma <strong>%language%</strong>.
+is_outdated: Esta traducción está desactualizada
+is_missing: Esta traducción no está definida
+missing_alert: Tienes <strong>una</strong> traducción sin definir.|Tienes <strong>%count%</strong> traducciones sin definir.
+outdated_alert: Tienes <strong>una</strong> traducción desactualizada.|Tienes <strong>%count%</strong> traducciones desactualizadas.
+save_success: Traducciones guardadas exitosamente.
+save_error: No se han podido guardar las Traducciones.

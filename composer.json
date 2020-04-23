@@ -19,7 +19,7 @@
         "symfony/form": "^4.4",
         "symfony/framework-bundle": "^4.4",
         "symfony/lock": "^4.4",
-        "symfony/monolog-bundle": "^4.4",
+        "symfony/monolog-bundle": "^3.5",
         "symfony/orm-pack": "^4.4",
         "symfony/process": "^4.4",
         "symfony/security-bundle": "^4.4",

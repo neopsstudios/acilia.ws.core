@@ -16,7 +16,7 @@ class DBLoggerService extends AbstractProcessingHandler
         parent::__construct($level, $bubble);
     }
 
-    public function handle(array $record)
+    protected function write(array $record): void
     {
         $connection = $this->em->getConnection();
         if ($connection) {

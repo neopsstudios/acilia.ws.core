@@ -1,0 +1,51 @@
+.o-close {
+    @include position(absolute, $top: 20px, $right: 5%);
+    width: 16px;
+    height: 16px;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+
+    &:hover {
+        opacity: .7;
+    }
+
+    &:before,
+    &:after {
+        @include position(absolute, $top: 0, $right: 0, $left: 0);
+        content: '';
+        width: 2px;
+        height: 16px;
+        margin: auto;
+        background-color: $title-color;
+    }
+
+    &:before {
+        transform: rotate(45deg);
+    }
+
+    &:after {
+        transform: rotate(-45deg);
+    }
+
+    &--info-msg {
+        top: 0;
+        bottom: 0;
+        right: 15px;
+        margin: auto;
+    }
+
+    &---msg-add-to-list {
+        top: 0;
+        bottom: 0;
+        right: 20px;
+        margin: auto;
+        width: 20px;
+        height: 20px;
+
+            &:before,
+            &:after {
+                height: 20px;
+            }
+    }
+}

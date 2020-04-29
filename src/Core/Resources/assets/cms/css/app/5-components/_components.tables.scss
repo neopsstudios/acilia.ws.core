@@ -1,0 +1,100 @@
+$table-cell-font-weight: $font-weight-normal;
+$table-cell-line-height: $base-line-height;
+
+
+.c-table {
+    &__cell {
+        font-weight: $font-weight-normal;
+    }
+
+    &__collapse {
+        display: none;
+        padding: 20px 30px;
+        background-color: $table-head-slim-background-color;
+        font-size: rem(14);
+    }
+
+    &__link {
+        display: block;
+        max-width: 300px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: $table-cell-color;
+        font-size: $table-cell-font-size;
+        font-weight: $font-weight-normal;
+        line-height: $table-cell-line-height;
+
+        @include media-breakpoint('lg') {
+            max-width: initial;
+            white-space: initial;
+            overflow: initial;
+            text-overflow: initial;
+        }
+    }
+
+    &__toggle {
+        position: relative;
+
+        &:hover {
+            text-decoration: underline;
+        }
+
+        &:before {
+            @include position(absolute, $top: 2px, $right: -14px);
+            font-size: 14px;
+            font-family: "FontAwesome";
+            content: "\f107";
+        }
+
+        &.is-open {
+            &:before {
+                content: "\f106";
+            }
+        }
+    }
+
+    &__sorting {
+        display: inline-block;
+        padding-right: 30px;
+
+        /* Need to overwrite template/vendor/_datatables-custom.scss because they have too many levels of css specificity */
+
+        &:after,
+        &:before {
+            right: 30px !important;
+        }
+
+        &:after {
+            bottom: -5px !important;
+        }
+
+        &:before {
+            top: -5px !important;
+        }
+    }
+
+    &__sorting-link {
+        position: relative;
+        z-index: 2;
+        padding-right: 30px;
+    }
+}
+
+.c-table-collapse {
+    &__item {
+        font-size: rem(16);
+        font-weight: $font-weight-semibold;
+
+        &:not(:last-child) {
+            margin-bottom: 20px;
+        }
+    }
+
+    &__sub-list {
+        margin-top: 10px;
+        font-size: rem(14);
+        line-height: rem(18);
+        font-weight: $font-weight-normal;
+    }
+}

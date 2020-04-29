@@ -1,0 +1,23 @@
+.c-breadcrumb__item {
+    font-size: rem(13);
+    line-height: rem(13);
+
+    > a {
+        font-size: rem(13);
+        line-height: rem(13);
+    }
+
+    > a:hover {
+        text-decoration: underline;
+    }
+
+    // divider
+    &:not(:last-child)::after {
+        content: ">";
+    }
+
+    &.is-active {
+        color: $breadcrumb-item-active-color;
+        font-weight: $font-weight-semibold;
+    }
+}

@@ -1,0 +1,25 @@
+.o-arrow {
+    display: inline-block;
+    margin-left: 7px;
+    width: 8px;
+    height: 5px;
+
+    &__svg {
+
+        &--up {
+            transform: rotate(-90deg);
+        }
+
+        &--down {
+            transform: rotate(90deg);
+        }
+
+        &--left {
+            transform: rotate(180deg);
+        }
+
+        &--black {
+            fill: $color-default-text;
+        }
+    }
+}

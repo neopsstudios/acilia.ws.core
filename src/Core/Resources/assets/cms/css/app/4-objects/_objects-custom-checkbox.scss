@@ -1,0 +1,128 @@
+.o-custom-checkbox {
+    $self: &;
+    position: relative;
+    display: block;
+    padding-left: 22px;
+    cursor: pointer;
+    user-select: none;
+    color: $color-default-text;
+    font-size: rem(14);
+    line-height: rem(17);
+
+    &__input {
+        @include position(absolute, $left: 0);
+        width: $checkbox-size;
+        height: $checkbox-size;
+        margin: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    &__check {
+        @include position(absolute, $top: 0, $left: 0, $bottom: 0);
+        box-sizing: border-box;
+        width: $checkbox-size;
+        height: $checkbox-size;
+        margin: auto 0;
+        border-radius: 2px;
+        border: 1px solid $border-color;
+        background-color: $color-white;
+
+        &:after {
+            @include position(absolute, $top: 0, $left: 5px);
+            content: "";
+            display: none;
+            width: 4px;
+            height: 10px;
+            border: solid $color-white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        &:focus {
+            border-color: $color-default-text;
+        }
+    }
+
+    &__info {
+        opacity: .6;
+        font-weight: $font-weight-bold;
+
+        &--secondary {
+            color: $color-default-text;
+            font-weight: $font-weight-medium;
+            font-size: rem(12);
+            line-height: rem(17);
+            letter-spacing: .5px;
+        }
+    }
+
+    &__link {
+        color: $color-primary;
+        text-decoration: underline;
+    }
+
+    &--background {
+        padding: 10px 15px 10px 27px;
+        background-color: rgba(249, 223, 73, .2);
+
+        #{ $self }__input {
+            top: 10px;
+            left: 5px;
+            margin: 0;
+        }
+
+        #{ $self }__check {
+            top: 10px;
+            left: 5px;
+            margin: 0;
+        }
+
+        @include media-breakpoint(md) {
+            padding: 10px 15px 10px 35px;
+
+            #{ $self }__input {
+                top: 0;
+                left: 15px;
+                margin: auto 0;
+            }
+
+            #{ $self }__check {
+                top: 0;
+                left: 15px;
+                margin: auto 0;
+            }
+        }
+    }
+}
+
+.o-custom-checkbox__input:checked ~ .o-custom-checkbox__check {
+    background-color: $color-secondary;
+
+    &:after {
+        display: block;
+    }
+}
+
+.o-custom-checkbox__input:checked ~ .o-custom-checkbox__check.o-custom-checkbox__check--secondary {
+    background-color: $color-secondary;
+    border-color: $color-secondary;
+
+    &:after {
+        display: block;
+    }
+}
+
+.o-custom-checkbox__input:focus ~ .o-custom-checkbox__check {
+    outline: thin dotted;
+}
+
+.o-custom-checkbox__input:checked ~ .o-custom-checkbox__label {
+    font-weight: $font-weight-medium;
+}
+
+.o-custom-checkbox__input:checked ~ .o-custom-checkbox__label.o-custom-checkbox__label--secondary {
+    font-weight: $font-weight-medium;
+    color: $color-default-text;
+}
+

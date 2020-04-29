@@ -1,0 +1,48 @@
+@import '../../../node_modules/cropperjs/dist/cropper';
+
+.ws-cropper_container {
+  width: 100%;
+  position: relative;
+  height: 600px;
+
+  .ws-cropper_crop {
+    width: 70%;
+    height: 100%;
+    float: left;
+  }
+
+  .ws-cropper_aside {
+    float: right;
+    height: 100%;
+    width: 30%;
+    padding-left: 20px;
+
+    .ws-cropper_preview_wrapper {
+      width: 100%;
+
+      .ws-cropper_preview {
+        height: 300px;
+        overflow: hidden;
+        margin: 0 auto;
+      }
+    }
+
+    .ws-cropper_detail_wrapper {
+      margin-top: 20px;
+
+      label {
+        display: block;
+      }
+    }
+
+    .ws-cropper_actions {
+      position: absolute;
+      padding: 60px 0 0;
+      bottom: 0;
+
+      .btn-danger {
+        margin-right: 20px;
+      }
+    }
+  }
+}

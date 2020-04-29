@@ -1,0 +1,12 @@
+.c-btn--brand {
+    @include linear-gradient(to bottom, $color-brand, $color-brand);
+    border-color: $color-brand;
+
+    &:hover {
+        @include linear-gradient(to bottom, darken($color-brand, 4%), darken($color-brand, 4%));
+    }
+
+    &:focus {
+        @include linear-gradient(to bottom, darken($color-brand, 6%), darken($color-brand, 6%));
+    }
+}

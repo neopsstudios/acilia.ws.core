@@ -1,0 +1,32 @@
+$sidebar-content-md: 280px;
+$sidebar-content-lg: 350px;
+
+.c-doc-article {
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 4px;
+    border: 1px solid #e6eaee;
+
+    &__content {
+        width: calc(100% - #{$sidebar-content-md});
+        padding-right: 30px;
+        margin-right: 30px;
+        border-right: 1px solid $grey-400;
+
+        @include media-breakpoint('lg') {
+            width: calc(100% - #{$sidebar-content-lg});
+        }
+    }
+
+    &__content-full {
+        width: 100%;
+    }
+
+    &__sidebar {
+        width: $sidebar-content-md;
+
+        @include media-breakpoint('lg') {
+            width: $sidebar-content-lg;
+        }
+    }
+}

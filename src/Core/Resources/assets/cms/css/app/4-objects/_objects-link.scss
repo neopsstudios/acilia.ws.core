@@ -1,0 +1,8 @@
+.o-link {
+    color: $color-primary;
+    text-decoration: underline;
+
+    &--break {
+        word-break: break-all;
+    }
+}

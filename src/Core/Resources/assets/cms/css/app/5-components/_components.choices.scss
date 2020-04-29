@@ -1,0 +1,106 @@
+.choices {
+    &__inner {
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        border: $input-border-width solid $input-border-color;
+        box-shadow: none;
+        border-radius: $base-border-radius;
+        padding: .5625rem .9375rem;
+        width: 100%;
+        min-height: 52px;
+        background-color: $color-white;
+        color: $color-default-text;
+        overflow: visible;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        font-size: rem(14);
+        line-height: rem(16);
+    }
+
+    &__input {
+        background-color: $color-transparent;
+
+        &--cloned {
+            display: none;
+        }
+    }
+
+    &__list {
+        border-color: $input-border-color !important;
+
+        &--dropdown {
+            border-color: $input-border-color !important;
+        }
+
+        &--single {
+            padding: 0;
+        }
+
+        &--multiple {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            height: 100%;
+
+            .choices__item {
+                @include linear-gradient(to bottom, $btn-primary-gradient);
+                border-color: $btn-primary-border-color;
+                font-family: $base-font-family;
+                font-weight: $font-weight-normal;
+                font-size: $text-small-font-size;
+
+                &:hover {
+                    @include linear-gradient(to bottom, $btn-primary-hover-gradient);
+                }
+
+                &:focus {
+                    @include linear-gradient(to bottom, $btn-primary-focus-gradient);
+                }
+            }
+        }
+    }
+}
+
+.is-open .choices__inner {
+    border-radius: $base-border-radius;
+    border-color: $input-border-color;
+    color: $color-default-text;
+
+    &::placeholder {
+        transition: opacity 0.3s;
+        color: $input-placeholder-color;
+        font-weight: $input-placeholder-font-weight;
+        opacity: 0.5;
+    }
+
+    &:focus {
+        border-color: $input-focus-border-color;
+        outline: none;
+
+        &::placeholder {
+            opacity: 0.2;
+        }
+    }
+
+    &.is-disabled,
+    &:disabled {
+        border-color: $input-disabled-border-color;
+        background-color: $input-disabled-background-color;
+        color: $input-disabled-color;
+        cursor: not-allowed;
+    }
+}
+
+.c-choice {
+    margin: 0;
+}
+
+.c-choice__input + .c-choice__label--batch::before {
+    margin: 0;
+}
+
+.c-choice-wrapper--small .choices__inner {
+    min-height: 39px;
+}

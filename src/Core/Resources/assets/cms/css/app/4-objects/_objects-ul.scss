@@ -1,0 +1,69 @@
+.o-ul {
+    font-size: rem(16);
+    line-height: rem(24);
+
+    &--disc {
+        list-style: disc;
+    }
+
+    &--position-inside {
+        list-style-position: inside;
+    }
+
+    // nested list
+    & {
+        padding-left: 25px;
+    }
+}
+
+.o-ol {
+    $self: &;
+    list-style: decimal;
+    font-size: rem(16);
+    line-height: rem(24);
+
+    &--link {
+        font-size: rem(14);
+        line-height: rem(24);
+        color: $color-brand;
+        text-decoration: underline;
+    }
+
+    &--position-inside {
+        list-style-position: inside;
+    }
+
+    &--nest {
+        counter-reset: number -1;
+
+        #{ $self }__li {
+            display: block;
+            
+            &:before {
+                content: counter(number) ". ";
+                counter-increment: number;
+            }
+
+            &--no-counter {
+                display: inline;
+
+                &:before {
+                    content: initial;
+                    counter-increment: none;
+                }
+            }
+        }
+
+        #{ $self } {
+            counter-reset: letter;
+            padding-left: 25px;
+            
+            #{ $self }__li {
+                &:before {
+                    content: counter(number) "." counter(letter, lower-alpha) " ";
+                    counter-increment: letter;
+                }
+            }
+        }
+    }
+}

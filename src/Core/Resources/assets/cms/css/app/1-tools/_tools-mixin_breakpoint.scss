@@ -1,0 +1,68 @@
+// ------------------------------------------------------------------------- //
+// Anchos de las diferentes pantallas - mapeamos de Bootstrap
+// ------------------------------------------------------------------------- //
+
+$bp__sm: 768px; //$screen-sm-min; // 768px
+
+$bp__md: 992px; //$screen-md-min; // 992px
+
+$bp__lg: 1440px; //$screen-lg; // 1200px
+
+
+$breakpoints: (
+    'sm': $bp__sm,
+    'md': $bp__md,
+    'lg': $bp__lg
+    );
+
+$breakpoints-count: length($breakpoints);
+
+// ------------------------------------------------------------------------- //
+// media-breakpoint()
+// - Mixin para breakpoints de Bootstrap
+//
+// Example:
+// @include media-breakpoint(sm) {
+//   width: 100%;
+// }
+// ------------------------------------------------------------------------- //
+
+@mixin media-breakpoint($media) {
+
+    @if $media == sm {
+        @media (min-width: $bp__sm) { @content }
+    }
+
+    @else if $media == sm--max {
+        @media (max-width: ($bp__sm - 1)) { @content }
+    }
+
+    @else if $media == sm--in {
+        @media (min-width: $bp__sm) and (max-width: ($bp__md - 1)) { @content }
+    }
+
+    @else if $media == md {
+        @media (min-width: $bp__md) { @content }
+    }
+
+    @else if $media == md--max {
+        @media (max-width: ($bp__md - 1)) { @content }
+    }
+
+    @else if $media == md--in {
+        @media (min-width: $bp__md) and (max-width: ($bp__lg - 1)) { @content }
+    }
+
+    @else if $media == lg {
+        @media (min-width: $bp__lg) { @content }
+    }
+
+    @else if $media == lg--max {
+        @media (max-width: $bp__lg - 1) { @content }
+    }
+
+    @else {
+        @media (min-width: $media) { @content }
+    }
+
+}

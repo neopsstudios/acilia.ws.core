@@ -1,0 +1,7 @@
+.o-tab {
+    display: none;
+
+    &.is-active {
+        display: initial;
+    }
+}

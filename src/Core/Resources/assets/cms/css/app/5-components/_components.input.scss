@@ -1,0 +1,19 @@
+.c-input {
+    line-height: $base-line-height;
+
+    &--small {
+        padding: $btn-padding;
+    }
+
+    &--select {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+    }
+}
+
+.c-field {
+    &__label {
+        flex-basis: auto;
+    }
+}

@@ -1,0 +1,28 @@
+#a-close {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 12px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 5px 7px 7px;
+    cursor: pointer;
+    color: #ffffff;
+    border: 0;
+    outline: none;
+    background: #e74c3c;
+
+    @media (max-width: 767px) {
+        font-size: 22px;
+
+        &:before {
+            content: '\58';
+            top: 20px;
+        }
+    }
+}
+
+#a-close:hover {
+    background: #c0392b;
+}

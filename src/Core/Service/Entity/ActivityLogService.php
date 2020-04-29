@@ -5,6 +5,7 @@ namespace WS\Core\Service\Entity;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use WS\Core\Entity\ActivityLog;
+use WS\Core\Repository\ActivityLogRepository;
 use WS\Core\Service\ContextService;
 
 class ActivityLogService
@@ -12,6 +13,8 @@ class ActivityLogService
     protected $logger;
     protected $em;
     protected $contextService;
+
+    /** @var ActivityLogRepository */
     protected $repository;
 
     public function __construct(LoggerInterface $logger, EntityManagerInterface $em, ContextService $contextService)

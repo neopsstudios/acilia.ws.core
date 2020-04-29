@@ -8,6 +8,8 @@ interface PublishingEntityInterface
     const STATUS_UNPUBLISHED = 'unpublished';
     const STATUS_DRAFT = 'draft';
 
+    const FILTER_STATUS = 'ws_cms_publishing_status';
+
     public function getPublishStatus(): ?string;
 
     public function setPublishStatus(?string $publishStatus): self;

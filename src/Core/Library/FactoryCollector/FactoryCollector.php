@@ -1,15 +1,15 @@
 <?php
 
-namespace WS\Core\Library\FactoryService;
+namespace WS\Core\Library\FactoryCollector;
 
-use WS\Core\Service\FactoryService;
+use WS\Core\Service\FactoryCollectorService;
 
 class FactoryCollector
 {
     protected $factoryService;
     protected $collect;
 
-    public function __construct(FactoryService $factoryService)
+    public function __construct(FactoryCollectorService $factoryService)
     {
         $this->factoryService = $factoryService;
         $this->collect = [];

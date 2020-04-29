@@ -1,25 +1,25 @@
 <?php
 
-namespace WS\Core\Library\FactoryService;
+namespace WS\Core\Library\FactoryCollector;
 
 use Symfony\Component\DependencyInjection\Compiler\PriorityTaggedServiceTrait;
-use WS\Core\Service\FactoryService;
+use WS\Core\Service\FactoryCollectorService;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 
-class FactoryServiceCompilerPass implements CompilerPassInterface
+class FactoryCollectorCompilerPass implements CompilerPassInterface
 {
     use PriorityTaggedServiceTrait;
 
-    const TAG = 'ws.factory_service';
+    const TAG = 'ws.factory_collector';
 
     public function process(ContainerBuilder $container)
     {
-        if (!$container->has(FactoryService::class)) {
+        if (!$container->has(FactoryCollectorService::class)) {
             return;
         }
 
-        $definition = $container->findDefinition(FactoryService::class);
+        $definition = $container->findDefinition(FactoryCollectorService::class);
 
         $taggedServices = $this->findAndSortTaggedServices(self::TAG, $container);
         foreach ($taggedServices as $taggedService) {

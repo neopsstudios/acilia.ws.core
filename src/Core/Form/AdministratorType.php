@@ -57,13 +57,13 @@ class AdministratorType extends AbstractType
                 'second_options' => ['label' => 'fields.repeat_password.label'],
                 'mapped' => false
             ])
-            ->add('active', CheckboxType::class, [
-                'label' => 'fields.active.label',
-            ])
             ->add('profile', ChoiceType::class, [
                 'choice_translation_domain' => 'cms',
                 'choices' => $this->administratorService->getFormProfiles(),
                 'label' => 'fields.profile.label',
+            ])
+            ->add('active', CheckboxType::class, [
+                'label' => 'fields.active.label',
             ])
         ;
 

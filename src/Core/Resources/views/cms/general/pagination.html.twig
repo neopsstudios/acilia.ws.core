@@ -7,46 +7,54 @@
 #}
 
 {% apply spaceless %}
-    <div class="clearfix">
+    <div class="u-flex u-justify-between u-mt-small">
+
+        <div class="dataTables_info">
+            {{
+                'pagination.info'|trans(
+                    {
+                        '%count%': totalCount,
+                        '%from%': ((currentPage - 1) * limit) + 1,
+                        '%to%': ((currentPage - 1) * limit) + currentCount
+                    }
+                , 'ws_cms')
+            }}
+        </div>
+
         {% if nbPages > 1 %}
-            {# Number of page around current page+1 #}
             {% set nearbyPagesLimit = 4 %}
-            <ul class="pagination float-left">
 
-                {% if currentPage != 1 %}
-                    <li><a href="{{ path(url, params|merge({'page': 1})) }}">{{ 'pagination.first'|trans({}, 'ws_cms') }}</a></li>
-                {% endif %}
+            <nav class="c-pagination u-flex u-justify-end">
+                <ul class="c-pagination__list">
 
-                {% for i in 1..nbPages %}
-                    {% if 0 == (currentPage - nearbyPagesLimit) - loop.index %} {# dot before #}
-                        <li class="disabled"><a href="#">...</a></li>
-                    {% elseif 0 == (currentPage + nearbyPagesLimit) - loop.index %} {# dot after #}
-                        <li class="disabled"><a href="#">...</a></li>
-                    {% elseif 0 < (currentPage - nearbyPagesLimit) - loop.index %} {# hide all before #}
-                    {% elseif 0 > (currentPage + nearbyPagesLimit) - loop.index %} {# hide all after #}
-                    {% else %}
-                        <li {% if currentPage == loop.index %} class="active"{% endif %}>
-                            <a href="{{ path(url, params|merge({'page': loop.index})) }}">{{ loop.index }}</a>
+                    {% if currentPage != 1 %}
+                        <li class="c-pagination__item">
+                            <a class="c-pagination__control" href="{{ path(url, params|merge({'page': 1})) }}">
+                                <i class="fa fa-caret-left"></i>
+                            </a>
                         </li>
                     {% endif %}
-                {% endfor %}
 
-                {% if currentPage != nbPages %}
-                    <li>
-                        <a href="{{ path(url, params|merge({'page': nbPages})) }}">{{ 'pagination.last'|trans({}, 'ws_cms') }}</a>
-                    </li>
-                {% endif %}
-            </ul>
+                    {% for i in 1..nbPages %}
+                        <li class="c-pagination__item">
+                            <a
+                                href="{{ path(url, params|merge({'page': loop.index})) }}"
+                                class="c-pagination__link {{ currentPage == loop.index ? 'is-active' }}"
+                            >
+                                {{ loop.index }}
+                            </a>
+                        </li>
+                    {% endfor %}
+
+                    {% if currentPage != nbPages %}
+                        <li class="c-pagination__item">
+                            <a class="c-pagination__control" href="{{ path(url, params|merge({'page': nbPages})) }}">
+                                <i class="fa fa-caret-right"></i>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
         {% endif %}
-
-        <div class="float-right">
-            {#
-            Mostrando {{ ((currentPage - 1) * limit) + 1 }} a
-                <span class="js-pagination_page">{{ ((currentPage - 1) * limit) + currentCount }}</span> de
-                <span class="js-pagination_total">{{ totalCount }}</span> elementos.
-            #}
-            {{ 'pagination.info'|trans({'%count%': totalCount, '%from%': ((currentPage - 1) * limit) + 1, '%to%': ((currentPage - 1) * limit) + currentCount }, 'ws_cms') }}
-
-        </div>
     </div>
 {% endapply %}

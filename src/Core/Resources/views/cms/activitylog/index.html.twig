@@ -1,140 +1,157 @@
 {% extends('@WSCore/cms/layout.html.twig') %}
 
 {% page_configuration {
-    'title': 'title'|trans([], trans_prefix),
-    'header': 'title'|trans([], trans_prefix),
-    'breadcrumbs': {
-        ('title'|trans([], trans_prefix)): false,
-    }
+    'title': 'title'|trans({}, trans_prefix),
+    'header': 'title'|trans({}, trans_prefix),
+    'breadcrumbs': [
+        {
+            'name': 'title'|trans({}, trans_prefix),
+            'main': true
+        }
+    ]
 } %}
 
 {% block content %}
-    <div class="wrapper wrapper-content animated fadeInRight faster">
-        <div class="row">
-            <div class="col-sm-12">
+    <div class="row u-mb-large">
+        <div class="col-sm-12">
+            <div class="c-table-responsive@desktop">
                 {% block crud_filter %}
-                    <div class="ibox">
-                        <div class="ibox-content p-xs">
-                            <div class="ibox-content theme-filter">
-                                <form id="user_filter_form" role="form" accept-charset="UTF-8">
-                                    <div class="row">
-                                        <div class="col-md-9 col-sd-10">
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <div class="form-group">
-                                                        <select name="m" class="custom-select">
-                                                            <option value="">{{ 'select_model'|trans({}, trans_prefix) }}</option>
-                                                            {% for model in models %}
-                                                                <option {{ model['model'] is ws_activity_log_selected(filters, 'model') ? 'selected="selected"' : '' }} value='{{ model['model'] }}'>
-                                                                    {{ model['model']|ws_activity_log_model }}
-                                                                </option>
-                                                            {% endfor %}
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <div class="form-group">
-                                                        <input class="form-control" placeholder="{{ 'select_model_id'|trans({}, trans_prefix) }}" type="text" name="f" value="{{ app.request.get('f') }}" autocomplete="off">
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <div class="form-group">
-                                                        <select name="u" class="custom-select">
-                                                            <option value="">{{ 'select_by'|trans({}, trans_prefix) }}</option>
-                                                            {% for user in users %}
-                                                                <option {{ user['user'] is ws_activity_log_selected(filters, 'user') ? 'selected="selected"' : '' }} value='{{ user['user'] }}'>
-                                                                    {{ user['user'] }}
-                                                                </option>
-                                                            {% endfor %}
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-sd-2">
-                                            <div class="form-group">
-                                                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> {{ 'search'|trans({}, 'ws_cms') }}</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
+                    <form
+                        class="c-toolbar c-toolbar--caption u-justify-space-between"
+                        id="user_filter_form"
+                        role="form"
+                        accept-charset="UTF-8"
+                    >
+                        <div class="u-flex u-mr-auto">
+                            <h4 class="c-toolbar__title u-mr-10">{{ 'title'|trans([], trans_prefix) }}</h4>
                         </div>
-                    </div>
+                        <div class="c-field c-field--inline c-choice-wrapper c-choice-wrapper--small u-mr-10">
+                            <select name="m" class="u-mr-10" data-component="ws_select">
+                                <option value="">{{ 'select_model'|trans({}, trans_prefix) }}</option>
+                                {% for model in models %}
+                                    <option {{ model['model'] is ws_activity_log_selected(filters, 'model') ? 'selected="selected"' : '' }} value='{{ model['model'] }}'>
+                                        {{ model['model']|ws_activity_log_model }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="c-field c-field--inline u-mr-10">
+                            <input class="c-input c-input--small" placeholder="{{ 'select_model_id'|trans({}, trans_prefix) }}" type="text" name="f" value="{{ app.request.get('f') }}" autocomplete="off">
+                        </div>
+                        <div class="c-field c-field--inline c-choice-wrapper c-choice-wrapper--small u-mr-10">
+                            <select name="u" data-component="ws_select">
+                                <option value="">{{ 'select_by'|trans({}, trans_prefix) }}</option>
+                                {% for user in users %}
+                                    <option {{ user['user'] is ws_activity_log_selected(filters, 'user') ? 'selected="selected"' : '' }} value='{{ user['user'] }}'>
+                                        {{ user['user'] }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="submit" class="c-btn c-btn--info u-mr-5">
+                            <i class="fa fa-search u-mr-5"></i>
+                            {{ 'search'|trans({}, 'ws_cms') }}
+                        </button>
+                    </form>
                 {% endblock %}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12 {% if data|length > 0 %} hide{% endif %}">
-                <div class="alert alert-warning alert-dismissable">{{ 'no_rows_found'|trans({}, trans_prefix) }}</div>
-            </div>
 
-            {% if data|length > 0 %}
-                <div class="col-md-12">
-                    <div class="ibox ">
-                        <div class="ibox-content">
-
-                            <table class="table table-hover">
-                                <thead>
-                                <tr>
-                                    <th width="125">{{ 'model'|trans({}, trans_prefix) }}</th>
-                                    <th width="125">{{ 'model_id'|trans({}, trans_prefix) }}</th>
-                                    <th width="125">{{ 'date'|trans({}, trans_prefix) }}</th>
-                                    <th width="125">{{ 'user'|trans({}, trans_prefix) }}</th>
-                                    <th width="125">{{ 'action'|trans({}, trans_prefix) }}</th>
-                                </tr>
-                                </thead>
-                                {% block crud_table_body %}
-                                    <tbody>
-                                    {% for entity in data %}
-                                        <tr>
-                                            {% if entity.action == constant('WS\\Core\\Library\\ActivityLog\\ActivityLogInterface::UPDATE') %}
-                                                <td><a role="button" data-toggle="collapse" href="#collapseExample{{ entity.id }}" >{{ entity.model|ws_activity_log_model }}</a></td>
-                                            {% else %}
-                                                <td>{{ entity.model|ws_activity_log_model }}</td>
-                                            {% endif %}
-                                            <td>{{ entity.modelId }}</td>
-                                            <td>{{ entity.createdAt|date('date_hour_format'|trans({}, 'ws_cms')) }}</td>
-                                            <td>{{ entity.createdBy }}</td>
-                                            <td><span class="badge badge-{{ entity.action|ws_activity_log_action }}">{{ entity.action }}</span></td>
-                                        </tr>
-
-                                        {% if entity.action == constant('WS\\Core\\Library\\ActivityLog\\ActivityLogInterface::UPDATE') %}
-                                            <tr class="collapse" id="collapseExample{{ entity.id }}">
-                                                <td colspan="5">
-                                                    <div>
-                                                        <div class="card card-body">
-                                                            <ul>
-                                                            {% for field, change in entity.changes %}
-                                                                <li>
-                                                                    {{ field|capitalize }}
-                                                                    <ul>
-                                                                        {% if field == 'password' %}
-                                                                            <li>{{ 'before'|trans({}, trans_prefix) }}: ******</li>
-                                                                            <li>{{ 'after'|trans({}, trans_prefix) }}: ******</li>
-                                                                        {% else %}
-                                                                            <li>{{ 'before'|trans({}, trans_prefix) }}: {{ change[0]|join('<br>')|raw }}</li>
-                                                                            <li>{{ 'after'|trans({}, trans_prefix) }}: {{ change[1]|join('<br>')|raw }}</li>
-                                                                        {% endif %}
-                                                                    </ul>
-                                                                </li>
-                                                            {% endfor %}
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        {% endif %}
-                                    {% endfor %}
-                                    </tbody>
-                                {% endblock %}
-                            </table>
-
-                            {{ include('@WSCore/cms/general/pagination.html.twig', paginationData|merge({ 'params': params }), with_context = false) }}
-                        </div>
+                <div class="c-doc-article u-mt-10 {{ data|length > 0 ? 'u-hidden' }}">
+                    <div class="c-doc-article__content-full">
+                        <h6 class="u-h6 u-color-warning"><i class="fa fa-info-circle u-color-warning"></i> {{ 'no_rows_found'|trans([], trans_prefix) }}</h6>
                     </div>
                 </div>
-            {% endif %}
+
+                {% if data|length > 0 %}
+                    <table class="c-table c-table--highlight">
+                        {% block crud_table_head %}
+                            <thead class="c-table__head c-table__head--slim">
+                                <tr class="c-table__row">
+                                    <th class="c-table__cell c-table__cell--head">
+                                        {{ 'model'|trans({}, trans_prefix) }}
+                                    </th>
+                                    <th class="c-table__cell c-table__cell--head">
+                                        {{ 'model_id'|trans({}, trans_prefix) }}
+                                    </th>
+                                    <th class="c-table__cell c-table__cell--head">
+                                        {{ 'date'|trans({}, trans_prefix) }}
+                                    </th>
+                                    <th class="c-table__cell c-table__cell--head">
+                                        {{ 'user'|trans({}, trans_prefix) }}
+                                    </th>
+                                    <th class="c-table__cell c-table__cell--head">
+                                        {{ 'action'|trans({}, trans_prefix) }}
+                                    </th>
+                                </tr>
+                            </thead>
+                        {% endblock %}
+
+                        {% block crud_table_body %}
+                            <tbody>
+                            {% for entity in data %}
+                                <tr class="c-table__row">
+                                    {% if entity.action == constant('WS\\Core\\Library\\ActivityLog\\ActivityLogInterface::UPDATE') %}
+                                        <td class="c-table__cell">
+                                            <a class="c-table__toggle" role="button" data-toggle="collapse" href="#collapseExample{{ entity.id }}" >{{ entity.model|ws_activity_log_model }}</a>
+                                        </td>
+                                    {% else %}
+                                        <td class="c-table__cell">
+                                            {{ entity.model|ws_activity_log_model }}
+                                        </td>
+                                    {% endif %}
+                                    <td class="c-table__cell">
+                                        {{ entity.modelId }}
+                                    </td>
+                                    <td class="c-table__cell">
+                                        {{ entity.createdAt|date('date_hour_format'|trans({}, 'ws_cms')) }}
+                                    </td>
+                                    <td class="c-table__cell">
+                                        {{ entity.createdBy }}
+                                    </td>
+                                    <td class="c-table__cell">
+                                        <span class="c-badge c-badge--{{ entity.action|ws_activity_log_action }}">{{ entity.action }}</span>
+                                    </td>
+                                </tr>
+
+                                {% if entity.action == constant('WS\\Core\\Library\\ActivityLog\\ActivityLogInterface::UPDATE') %}
+                                    <tr class="c-table__row collapse" id="collapseExample{{ entity.id }}">
+                                        <td class="" colspan="5">
+                                            <div class="c-table__collapse c-table-collapse">
+                                                <ul class="c-table-collapse__list">
+                                                {% for field, change in entity.changes %}
+                                                    <li class="c-table-collapse__item">
+                                                        {{ field|capitalize }}
+                                                        <ul class="c-table-collapse__sub-list">
+                                                            {% if field == 'password' %}
+                                                                <li class="c-table-collapse__sub-item">
+                                                                    {{ 'before'|trans({}, trans_prefix) }}: ******
+                                                                </li>
+                                                                <li class="c-table-collapse__sub-item">
+                                                                    {{ 'after'|trans({}, trans_prefix) }}: ******
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="c-table-collapse__sub-item">
+                                                                    {{ 'before'|trans({}, trans_prefix) }}: {{ change[0]|join('<br>')|raw }}
+                                                                </li>
+                                                                <li class="c-table-collapse__sub-item">
+                                                                    {{ 'after'|trans({}, trans_prefix) }}: {{ change[1]|join('<br>')|raw }}
+                                                                </li>
+                                                            {% endif %}
+                                                        </ul>
+                                                    </li>
+                                                {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+
+                            {% endfor %}
+                            </tbody>
+                        {% endblock %}
+                    </table>
+                {% endif %}
+                {{ include('@WSCore/cms/general/pagination.html.twig', paginationData|merge({ 'params': params }), with_context = false) }}
+            </div>
         </div>
     </div>
 {% endblock %}

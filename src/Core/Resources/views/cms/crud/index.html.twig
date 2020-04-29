@@ -3,152 +3,176 @@
 {% page_configuration {
     'title': 'title'|trans([], trans_prefix),
     'header': 'title'|trans([], trans_prefix),
-    'breadcrumbs': {
-        ('title'|trans([], trans_prefix)): false,
-    }
+    'breadcrumbs': [
+        {
+            'name': 'title'|trans({}, trans_prefix),
+            'main': true
+        }
+    ]
 } %}
 
 {% block content %}
-    <div class="wrapper wrapper-content animated fadeInRight faster">
-
-        <div class="row">
-            <div class="col-sm-12">
-                {# old filter #}
+    <div class="row u-mb-large">
+        <div class="col-sm-12">
+            <div class="c-table-responsive@desktop">
                 {% block crud_filter %}
-                <div class="ibox">
-                    <div class="ibox-content p-xs">
-                        <div class="ibox-content theme-filter">
-                            <form id="user_filter_form" role="form" accept-charset="UTF-8">
-                                <div class="row">
-                                    <div class="col-md-9 col-sd-10">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="form-group">
-                                                    <input class="form-control" placeholder="{{ 'search'|trans({}, 'ws_cms') }}" type="text" name="f" value="{{ app.request.get('f') }}" autocomplete="off">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sd-2">
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> {{ 'search'|trans({}, 'ws_cms') }}</button>
-                                            <a href="{{ path("#{route_prefix}_create") }}" class="btn btn-info"><i class="fa fa-plus"></i> {{ 'new'|trans({}, 'ws_cms') }}</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+                    <form
+                            class="c-toolbar c-toolbar--caption u-justify-space-between"
+                            id="user_filter_form"
+                            role="form"
+                            accept-charset="UTF-8"
+                    >
+                        <div class="u-flex u-mr-auto">
+                            <h4 class="c-toolbar__title u-mr-10">{{ 'title'|trans([], trans_prefix) }}</h4>
+                            <a class="c-btn c-btn--success" href="{{ path("#{route_prefix}_create") }}">
+                                <i class="fa fa-plus u-mr-5"></i>
+                                {{ 'new'|trans({}, 'ws_cms') }}
+                            </a>
                         </div>
+                        {{ include('@WSCore/cms/general/batch.html.twig', { 'batch_actions': batch_actions, 'route_prefix': route_prefix },  with_context = false) }}
+                        <div class="c-field c-field--inline has-icon-right u-hidden-down@tablet u-mr-10">
+                            <span class="c-field__icon">
+                                <i class="fa fa-search"></i>
+                            </span>
+                            <label class="u-hidden-visually" for="navbar-search">
+                                {{ 'search'|trans({}, 'ws_cms') }}
+                            </label>
+                            <input
+                                    class="c-input c-input--small"
+                                    id="navbar-search"
+                                    type="text"
+                                    placeholder="{{ 'search'|trans({}, 'ws_cms') }}"
+                                    name="f"
+                                    value="{{ app.request.get('f') }}"
+                                    autocomplete="off"
+                            >
+                        </div>
+                        <button type="submit" class="c-btn c-btn--info u-mr-5">
+                            <i class="fa fa-search u-mr-5"></i>
+                            {{ 'search'|trans({}, 'ws_cms') }}
+                        </button>
+                    </form>
+                {% endblock %}
+
+                <div class="c-doc-article u-mt-10 {{ data|length > 0 ? 'u-hidden' }}">
+                    <div class="c-doc-article__content-full">
+                        <h6 class="u-h6 u-color-warning"><i class="fa fa-info-circle u-color-warning"></i> {{ 'no_rows_found'|trans([], trans_prefix) }}</h6>
                     </div>
                 </div>
-                {% endblock %}
-                {# end old filter #}
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-sm-12 {% if data|length > 0 %} hide{% endif %}">
-                <div class="alert alert-warning alert-dismissable">{{ 'no_rows_found'|trans([], trans_prefix) }}</div>
-            </div>
+                {% if data|length > 0 %}
+                    {# TODO: batch_actions #}
+                    <table class="c-table c-table--highlight">
+                        {% if dir == 'asc' %}
+                            {% set dirClass = '_asc' %}
+                            {% set newDir = 'desc' %}
+                        {% else %}
+                            {% set dirClass = '_desc' %}
+                            {% set newDir = 'asc' %}
+                        {% endif %}
+                        {% set filterQuery = get_filter_query(params, ['f']) %}
+                        {% set sortedField = get_filter_query(params, ['sort']) %}
 
-            {% if data|length > 0 %}
-                <div class="col-md-12">
-                    <div class="ibox ">
-                        <div class="ibox-content">
-                            <table class="table table-hover">
-                                {% if dir == 'asc' %}
-                                    {% set dirClass = '-up' %}
-                                    {% set newDir = 'desc' %}
-                                {% else %}
-                                    {% set dirClass = '-down' %}
-                                    {% set newDir = 'asc' %}
+                        {% block crud_table_head %}
+                            <thead class="c-table__head c-table__head--slim">
+                            <tr class="c-table__row">
+                                {% if batch_actions is not empty %}
+                                    <th class="c-table__cell c-table__cell--head no-sort">
+                                        <div class="c-choice c-choice--checkbox">
+                                            <input class="c-choice__input js-batchAll" id="checkbox-batch" name="checkboxes" type="checkbox">
+                                            <label class="c-choice__label c-choice__label--batch" for="checkbox-batch"></label>
+                                        </div>
+                                    </th>
                                 {% endif %}
-                                {% set filterQuery = get_filter_query(params, ['f']) %}
-                                {% set sortedField = get_filter_query(params, ['sort']) %}
 
-                                {% block crud_table_head %}
-                                <thead>
-                                    <tr>
-                                        {% if batch_actions is not empty %}
-                                            <th width="50">
-                                                <label class="custom-checkbox ml-0">
-                                                    <input type="checkbox" class="custom-checkbox__input js-batchAll">
-                                                    <span class="custom-checkbox__checkmark"></span>
-                                                </label>
-                                            </th>
+                                {% for field in list_fields %}
+                                    {% set sortClass = 'no-sort' %}
+                                    {% if field.sortable %}
+                                        {% set sortClass = 'sorting' %}
+                                        {% if field.name in sortedField %}
+                                            {% set sortClass = sortClass ~ dirClass %}
                                         {% endif %}
-                                        {% for field in list_fields %}
-                                            {% if  sortedField is empty and loop.first %}
-                                                {% set sortField = field.name %}
-                                            {% endif %}
+                                    {% endif %}
 
-                                            <th {{ field.width is defined ? "width=#{field.width}" }}>
-                                                {% if field.sortable %}
-                                                    <a href="?sort={{ field.name }}&dir={{ newDir }}{{ filterQuery is defined ? filterQuery : '' }}">
-                                                        {{ "fields.#{field.name}.label"|trans([], trans_prefix) }}
-                                                        {% if field.name in sortedField %}
-                                                            <i class="fas fa-sort{{ dirClass }}"></i>
-                                                        {% endif %}
-                                                    </a>
-                                                {% else %}
+                                    <th
+                                            class="c-table__cell c-table__cell--head"
+                                            {{ field.width is defined ? "width=#{field.width}" }}
+                                    >
+
+                                        {% if field.sortable %}
+                                            {% set sortableParams = {
+                                                "sort":field.name,
+                                                "dir":newDir
+                                            } %}
+                                            <div class="c-table__sorting {{ sortClass }}">
+                                                <a
+                                                        class="c-table__sorting-link d-block"
+                                                        href={{"?#{params|merge(sortableParams)|url_encode}"}}
+                                                >
                                                     {{ "fields.#{field.name}.label"|trans([], trans_prefix) }}
-                                                {% endif %}
-                                            </th>
-                                        {% endfor %}
-                                        <th width="125">{{ 'actions'|trans({}, 'ws_cms') }}</th>
-                                    </tr>
-                                </thead>
-                                {% endblock %}
-
-                                {% block crud_table_body %}
-                                <tbody>
-                                {% for entity in data %}
-                                    <tr class="js-genericDelete_wrapper" data-id="{{ entity.id }}">
-                                        {% if batch_actions is not empty %}
-                                            <td>
-                                                <label class="custom-checkbox ml-0">
-                                                    <input type="checkbox" class="custom-checkbox__input js-batchItem">
-                                                    <span class="custom-checkbox__checkmark"></span>
-                                                </label>
-                                            </td>
+                                                </a>
+                                            </div>
+                                        {% else %}
+                                            {{ "fields.#{field.name}.label"|trans([], trans_prefix) }}
                                         {% endif %}
-                                        {% for field in list_fields %}
-                                        <td>
-                                            <a href="{{ path("#{route_prefix}_edit", { 'id': entity.id }) }}">
-                                                {% if field.isDate|default(false) %}
-                                                    {% if attribute(entity, field.name) is null %}
-                                                        -
-                                                    {% else %}
-                                                        {{ attribute(entity, field.name)|date('date_hour_format'|trans({}, 'ws_cms')) }}
-                                                    {% endif %}
-                                                {% else %}
-                                                    {{ attribute(entity, field.name) }}
-                                                {% endif %}
-                                            </a>
+                                    </th>
+                                {% endfor %}
+                                <th class="c-table__cell c-table__cell--head">{{ 'actions'|trans({}, 'ws_cms') }}</th>
+                            </tr>
+                            </thead>
+                        {% endblock %}
+
+                        {% block crud_table_body %}
+                            <tbody>
+                            {% for entity in data %}
+                                <tr class="c-table__row js-genericDelete_wrapper" data-id="{{ entity.id }}">
+                                    {% if batch_actions is not empty %}
+                                        <td class="c-table__cell">
+                                            <div class="c-choice c-choice--checkbox">
+                                                <input class="c-choice__input js-batchItem" id="checkbox-item-{{ entity.id }}" name="checkboxes" type="checkbox">
+                                                <label class="c-choice__label c-choice__label--batch" for="checkbox-item-{{ entity.id }}"></label>
+                                            </div>
                                         </td>
-                                        {% endfor %}
-                                        <td>
-                                            <button class="btn btn-xs btn-danger js-genericDelete"
+                                    {% endif %}
+                                    {% for field in list_fields %}
+                                        {% block crud_table_body_row %}
+                                            <td class="c-table__cell">
+                                                <a
+                                                        class="c-table__link"
+                                                        href="{{ path("#{route_prefix}_edit", { 'id': entity.id }) }}"
+                                                >
+                                                    {% if field.isDate|default(false) %}
+                                                        {{ ws_cms_crud_list_is_date(attribute(entity, field.name)) }}
+                                                    {% elseif field.filter|default(false) %}
+                                                        {{ ws_cms_crud_list_filter(field.filter, attribute(entity, field.name)) }}
+                                                    {% else %}
+                                                        {{ attribute(entity, field.name) }}
+                                                    {% endif %}
+                                                </a>
+                                            </td>
+                                        {% endblock %}
+                                    {% endfor %}
+                                    <td class="c-table__cell u-text-right">
+                                        <button
+                                                class="c-btn c-btn--danger js-genericDelete"
                                                 data-id="{{ entity.id }}"
                                                 data-url="{{ path("#{route_prefix}_delete", { 'id': entity.id }) }}"
                                                 data-title="{{ 'title'|trans([], trans_prefix) }}"
-                                                data-message="{{ 'delete_warning'|trans([], trans_prefix) }}">
-                                                    <i class="fas fa-trash-alt"></i> {{ 'delete'|trans({}, 'ws_cms') }}
-                                            </button>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                                {% endblock %}
-                            </table>
-
-
-                            {{ include('@WSCore/cms/general/batch.html.twig', { 'batch_actions': batch_actions, 'route_prefix': route_prefix },  with_context = false) }}
-
-                            {{ include('@WSCore/cms/general/pagination.html.twig', paginationData|merge({ 'params': params }), with_context = false) }}
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
+                                                data-message="{{ 'delete_warning'|trans([], trans_prefix) }}"
+                                        >
+                                            <i class="fa fa-trash-o u-mr-5"></i>
+                                            {{ 'delete'|trans({}, 'ws_cms') }}
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        {% endblock %}
+                    </table>
+                {% endif %}
+                {{ include('@WSCore/cms/general/pagination.html.twig', paginationData|merge({ 'params': params }), with_context = false) }}
+            </div>
         </div>
+
     </div>
 {% endblock %}

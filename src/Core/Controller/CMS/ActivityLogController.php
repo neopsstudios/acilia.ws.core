@@ -3,8 +3,7 @@
 namespace WS\Core\Controller\CMS;
 
 use Symfony\Contracts\Translation\TranslatorInterface;
-use WS\Core\Service\Entity\ActivityLogService as ActivityLogEntityService;
-use WS\Core\Service\ActivityLogService;
+use WS\Core\Service\Entity\ActivityLogService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,16 +16,11 @@ class ActivityLogController extends AbstractController
 {
     protected $translator;
     protected $service;
-    protected $activityLogService;
 
-    public function __construct(
-        TranslatorInterface $translator,
-        ActivityLogEntityService $service,
-        ActivityLogService $activityLogService)
+    public function __construct(TranslatorInterface $translator, ActivityLogService $service)
     {
         $this->translator = $translator;
         $this->service = $service;
-        $this->activityLogService = $activityLogService;
     }
 
     /**
@@ -39,10 +33,6 @@ class ActivityLogController extends AbstractController
      */
     public function index(Request $request) : Response
     {
-        if (!$this->activityLogService->isEnabled()) {
-            throw $this->createNotFoundException();
-        }
-
         if (!$this->isGranted('ROLE_WS_ACTIVITY_LOG')) {
             throw $this->createAccessDeniedException($this->translator->trans('not_allowed', [], 'ws_cms'));
         }

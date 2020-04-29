@@ -19,11 +19,9 @@ class AdministratorController extends AbstractController
 {
     protected $service;
 
-    public function __construct(TranslatorInterface $translator, ImageService $imageService, AdministratorService $service)
+    public function __construct(AdministratorService $service)
     {
         $this->service = $service;
-
-        parent::__construct($translator, $imageService);
     }
 
     protected function getRouteNamePrefix(): string
@@ -49,7 +47,7 @@ class AdministratorController extends AbstractController
         return [
             ['name' => 'name'],
             ['name' => 'email'],
-            ['name' => 'profile', 'isProfile' => true],
+            ['name' => 'profile', 'filter' => 'ws_cms_administrator_profile'],
             ['name' => 'createdAt', 'width' => 200, 'isDate' => true],
         ];
     }
@@ -72,8 +70,7 @@ class AdministratorController extends AbstractController
             [
                 'translation_domain' => $this->getTranslatorPrefix()
             ]
-        )
-        ;
+        );
 
         $form->handleRequest($request);
         if ($form->isSubmitted()) {

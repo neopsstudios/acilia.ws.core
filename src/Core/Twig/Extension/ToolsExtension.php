@@ -2,8 +2,6 @@
 
 namespace WS\Core\Twig\Extension;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use WS\Core\Entity\Domain;
 use WS\Core\Library\CRUD\AbstractController;
 use WS\Core\Library\Dashboard\DashboardWidgetInterface;
@@ -11,8 +9,10 @@ use WS\Core\Service\AlertService;
 use WS\Core\Service\ContextService;
 use WS\Core\Service\DashboardService;
 use WS\Core\Service\SettingService;
-use Twig\Extension\AbstractExtension;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\TwigFunction;
+use Twig\Extension\AbstractExtension;
 
 class ToolsExtension extends AbstractExtension
 {

@@ -1,8 +1,8 @@
 # Settings
 menu: Configuración
 title: Configuración
-disclaimer: Gestione la Configuración del Sitio, si tiene dudas sobre alguna de las opciones por favor contacte al administrador
-required: Opciones con <i class="fa fa-asterisk"></i> son requeridas.
+disclaimer: Gestione la configuración del sitio, si tiene dudas sobre alguna de las opciones por favor contacte al administrador
+required: Opciones con * son requeridas.
 save_success: Configuraciones guardadas exitosamente.
 save_error: No se han podido guardar las Configuraciones.
 alert: Tienes <strong>una</strong> configuración sin definir.|Tienes <strong>%count%</strong> configuraciones sin definir.

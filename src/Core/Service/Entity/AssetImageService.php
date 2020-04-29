@@ -3,19 +3,23 @@
 namespace WS\Core\Service\Entity;
 
 use WS\Core\Entity\AssetImage;
-use WS\Core\Library\FactoryService\FactoryServiceInterface;
+use WS\Core\Library\FactoryCollector\FactoryCollectorInterface;
+use WS\Core\Repository\AssetImageRepository;
 use WS\Core\Service\ContextService;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 
-class AssetImageService implements FactoryServiceInterface
+class AssetImageService implements FactoryCollectorInterface
 {
     const ALLOW_SORT = 'filename';
 
     protected $logger;
     protected $em;
+
+    /** @var AssetImageRepository */
     protected $repository;
+
     protected $contextService;
 
     public function __construct(
@@ -38,7 +42,7 @@ class AssetImageService implements FactoryServiceInterface
      *
      * @return array
      */
-    public function getAll(?string $filter, int $page, int $limit, string $sort = '', string $dir = '')
+    public function getAll(?string $filter, int $page, int $limit, string $sort = '', string $dir = ''): array
     {
         $offset = ($page - 1) * $limit;
 
@@ -58,7 +62,7 @@ class AssetImageService implements FactoryServiceInterface
         }
     }
 
-    public function createFromUploadedFile(UploadedFile $imageFile, $entity = null, string $imageField = null) : AssetImage
+    public function createFromUploadedFile(UploadedFile $imageFile, $entity = null, string $imageField = null): AssetImage
     {
         $assetImage = new AssetImage();
         $assetImage
@@ -80,7 +84,7 @@ class AssetImageService implements FactoryServiceInterface
         return $assetImage;
     }
 
-    public function createFromAsset($entity, $imageField, AssetImage $sourceAsset) : AssetImage
+    public function createFromAsset($entity, $imageField, AssetImage $sourceAsset): AssetImage
     {
         $assetImage = new AssetImage();
         $assetImage
@@ -105,7 +109,7 @@ class AssetImageService implements FactoryServiceInterface
     /**
      * @throws \Exception
      */
-    public function create(AssetImage $image) : AssetImage
+    public function create(AssetImage $image): AssetImage
     {
         try {
             $this->em->persist($image);
@@ -124,7 +128,7 @@ class AssetImageService implements FactoryServiceInterface
     /**
      * @throws \Exception
      */
-    public function edit(AssetImage $image) : AssetImage
+    public function edit(AssetImage $image): AssetImage
     {
         try {
             $this->em->flush();
@@ -144,7 +148,7 @@ class AssetImageService implements FactoryServiceInterface
      *
      * @return AssetImage|null
      */
-    public function get(int $id) : ?AssetImage
+    public function get(int $id): ?AssetImage
     {
         return $this->repository->findOneBy(['id' => $id]);
     }
@@ -152,7 +156,7 @@ class AssetImageService implements FactoryServiceInterface
     /**
      * @throws \Exception
      */
-    public function delete(AssetImage $image) : void
+    public function delete(AssetImage $image): void
     {
         $id = $image->getId();
         try {
@@ -167,7 +171,7 @@ class AssetImageService implements FactoryServiceInterface
         }
     }
 
-    protected function sanitizeFilename(UploadedFile $imageFile) : string
+    protected function sanitizeFilename(UploadedFile $imageFile): string
     {
         $filename = explode('.', (string) $imageFile->getClientOriginalName());
         $imageName = (string) preg_replace('/[^\w\-\.]/', '', $filename[0]);
@@ -194,7 +198,7 @@ class AssetImageService implements FactoryServiceInterface
         }
     }
 
-    public function getSupported() : array
+    public function getFactoryCollectorSupported(): array
     {
         return [AssetImage::class];
     }

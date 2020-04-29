@@ -2,12 +2,12 @@
 
 namespace WS\Core\Repository;
 
+use Doctrine\ORM\NoResultException;
 use WS\Core\Entity\ActivityLog;
 use WS\Core\Entity\Domain;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
-use WS\Core\Library\Domain\DomainRepositoryTrait;
 
 /**
  * @method ActivityLog|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,8 +17,6 @@ use WS\Core\Library\Domain\DomainRepositoryTrait;
  */
 class ActivityLogRepository extends EntityRepository
 {
-    use DomainRepositoryTrait;
-
     public function getAllUsers()
     {
         $alias = 'a';
@@ -72,7 +70,8 @@ class ActivityLogRepository extends EntityRepository
         $alias = 't';
         $qb = $this->createQueryBuilder($alias);
 
-        $this->setDomainRestriction($alias, $qb, $domain);
+        $qb->andWhere(sprintf('(%s.domain = :domain OR %s.domain IS NULL)', $alias, $alias));
+        $qb->setParameter('domain', $domain);
 
         $this->setFilters($filters, $qb);
 
@@ -91,13 +90,18 @@ class ActivityLogRepository extends EntityRepository
         $alias = 't';
         $qb = $this->createQueryBuilder($alias)->select(sprintf(sprintf('count(%s.id)', $alias)));
 
-        $this->setDomainRestriction($alias, $qb, $domain);
+        $qb->andWhere(sprintf('(%s.domain = :domain OR %s.domain IS NULL)', $alias, $alias));
+        $qb->setParameter('domain', $domain);
 
         $this->setFilters($filters, $qb);
 
         try {
             return $qb->getQuery()->getSingleScalarResult();
+
         } catch (NonUniqueResultException $e) {
+            return 0;
+
+        } catch (NoResultException $e) {
             return 0;
         }
     }

@@ -1,31 +1,33 @@
 {% extends('@WSCore/cms/layout.html.twig') %}
 
 {% page_configuration {
-    'title': 'title'|trans([], trans_prefix),
+    'title': 'title'|trans({}, trans_prefix),
     'header': isCreate ? 'new'|trans({}, 'ws_cms') : 'edit'|trans({}, 'ws_cms') ~ ' ' ~ 'title'|trans({}, trans_prefix),
-    'breadcrumbs': {
-        ('title'|trans([], trans_prefix)): path("#{route_prefix}_index"),
-        (isCreate ? 'new'|trans({}, 'ws_cms') : 'edit'|trans({}, 'ws_cms') ~ ' ' ~ 'title'|trans({}, trans_prefix)): false
-    }
+    'breadcrumbs': [
+        {
+            'name': 'title'|trans({}, trans_prefix),
+            'path': path("#{route_prefix}_index"),
+            'main': true
+        },
+        {
+            'name': isCreate ? 'new'|trans({}, 'ws_cms') : 'edit'|trans({}, 'ws_cms') ~ ' ' ~ 'title'|trans({}, trans_prefix)
+        }
+    ]
 } %}
 
 {% block content %}
-    <div class="wrapper wrapper-content animated fadeInRight faster">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="ibox ">
-                    <div class="ibox-content">
-                        {{ form_start(form) }}
-                        {{ form_widget(form) }}
-
-                        <hr>
-                        <a href="{{ path("#{route_prefix}_index") }}" class="btn btn-danger">{{ 'cancel'|trans({}, 'ws_cms') }}</a>
-                        <button type="submit" class="btn btn-success float-right">{{ 'save'|trans({}, 'ws_cms') }}</button>
-
-                        {{ form_end(form, {'render_rest': false}) }}
-                    </div>
-                </div>
+    {{ form_start(form) }}
+    <div class="container">
+        <div class="c-doc-article">
+            <div class="u-flex u-mr-auto">
+                <h2 class="c-doc-article__title u-h2 u-mb-30">{{ 'title'|trans({}, trans_prefix) }}</h3>
             </div>
+            {{ form_widget(form) }}
+            <div class="c-divider u-mv-small"></div>
+            <button type="submit" class="c-btn c-btn--info">{{ 'save'|trans({}, 'ws_cms') }}</button>
+            <a href="{{ path("#{route_prefix}_index") }}" class="c-btn c-btn--secondary">{{ 'cancel'|trans({}, 'ws_cms') }}</a>
+            {{ form_end(form, {'render_rest': false}) }}
         </div>
     </div>
 {% endblock %}
+

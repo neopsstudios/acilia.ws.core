@@ -6,20 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{{ get_title() }} | {{ 'name'|trans({}, 'cms') }}{% endblock %}</title>
 
+        <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,500,600,700&display=swap" rel="stylesheet">
+
     <link rel="shortcut icon" href="{{ asset('cms/favicon.ico', 'cms') }}" type="image/x-icon">
     <link type="text/css" href="{{ asset('cms/css/app.css', 'cms') }}" rel="stylesheet" />
 
     {% block stylesheets %}{% endblock %}
 </head>
-<body class="md-skin {{ bodyClass is defined ? bodyClass }}">
+<body class="o-page {{ bodyClass is defined ? bodyClass }}">
     {% block body %}{% endblock %}
 
     {% for flashMessage in app.session.flashbag.get('cms_success') %}
-        <div class="cms-notifications hide" data-type="success">{{ flashMessage|raw }}</div>
+        <div class="cms-notifications u-hidden" data-type="success">{{ flashMessage|raw }}</div>
     {% endfor %}
 
     {% for flashMessage in app.session.flashbag.get('cms_error') %}
-        <div class="cms-notifications hide" data-type="failure">{{ flashMessage|raw }}</div>
+        <div class="cms-notifications u-hidden" data-type="failure">{{ flashMessage|raw }}</div>
     {% endfor %}
 
     <script type="text/javascript">

@@ -5,8 +5,10 @@ namespace WS\Core;
 use WS\Core\Library\ActivityLog\ActivityLogCompilerPass;
 use WS\Core\Library\Alert\AlertCompilerPass;
 use WS\Core\Library\Asset\ImageCompilerPass;
+use WS\Core\Library\CRUD\CRUDCompilerPass;
 use WS\Core\Library\Dashboard\DashboardWidgetCompilerPass;
-use WS\Core\Library\FactoryService\FactoryServiceCompilerPass;
+use WS\Core\Library\DataExport\DataExportCompilerPass;
+use WS\Core\Library\FactoryCollector\FactoryCollectorCompilerPass;
 use WS\Core\Library\Router\RouterCompilerPass;
 use WS\Core\Library\Setting\SettingCompilerPass;
 use WS\Core\Library\Sidebar\SidebarCompilerPass;
@@ -24,8 +26,10 @@ class WSCoreBundle extends Bundle
         $container->addCompilerPass(new AlertCompilerPass());
         $container->addCompilerPass(new SidebarCompilerPass());
         $container->addCompilerPass(new RouterCompilerPass());
-        $container->addCompilerPass(new FactoryServiceCompilerPass());
+        $container->addCompilerPass(new FactoryCollectorCompilerPass());
         $container->addCompilerPass(new ActivityLogCompilerPass());
         $container->addCompilerPass(new DashboardWidgetCompilerPass());
+        $container->addCompilerPass(new DataExportCompilerPass());
+        $container->addCompilerPass(new CRUDCompilerPass());
     }
 }

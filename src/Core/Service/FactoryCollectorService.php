@@ -2,28 +2,28 @@
 
 namespace WS\Core\Service;
 
-use WS\Core\Library\FactoryService\FactoryCollector;
-use WS\Core\Library\FactoryService\FactoryServiceInterface;
+use WS\Core\Library\FactoryCollector\FactoryCollector;
+use WS\Core\Library\FactoryCollector\FactoryCollectorInterface;
 
-class FactoryService
+class FactoryCollectorService
 {
     protected $services = [];
-    protected $supportedEntites = [];
+    protected $supportedEntities = [];
     protected $collect = [];
     protected $objects = [];
 
-    public function registerService(FactoryServiceInterface $service)
+    public function registerService(FactoryCollectorInterface $service)
     {
         $this->services[] = $service;
 
-        foreach ($service->getSupported() as $entityName) {
-            $this->supportedEntites[] = $entityName;
+        foreach ($service->getFactoryCollectorSupported() as $entityName) {
+            $this->supportedEntities[] = $entityName;
         }
     }
 
     public function isSupported(string $className) : bool
     {
-        return in_array($className, $this->supportedEntites);
+        return in_array($className, $this->supportedEntities);
     }
 
     public function getCollector()
@@ -45,7 +45,7 @@ class FactoryService
             }
 
             foreach ($this->services as $service) {
-                if (in_array($className, $service->getSupported())) {
+                if (in_array($className, $service->getFactoryCollectorSupported())) {
                     $collectedObjects = $service->getAvailableByIds($toCollect);
                     foreach ($collectedObjects as $objectId => $object) {
                         $this->objects[$className][$objectId] = $object;

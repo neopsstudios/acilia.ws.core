@@ -4,48 +4,46 @@
     'title': section.name|trans({}, section.translationDomain) ~ ' ' ~  'title'|trans({}, 'ws_cms_setting'),
     'header': 'title'|trans({}, 'ws_cms_setting'),
     'subtitle': section.name|trans({}, section.translationDomain),
-    'breadcrumbs': {
-        ('title'|trans({}, 'ws_cms_setting')): false,
-        (section.name|trans({}, section.translationDomain)): false
-    }
+    'breadcrumbs': [
+        {
+            'name': 'title'|trans({}, 'ws_cms_setting'),
+            'main': true
+        },
+        {
+            'name': section.name|trans({}, section.translationDomain)
+        }
+    ]
 } %}
 
 {% block content %}
-    <div class="wrapper wrapper-content animated fadeInRight faster" data-page="settings">
-        <div class="row">
-
-            <div class="col-lg-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>{{ 'disclaimer'|trans({}, 'ws_cms_setting') }}</h5>
-                        <div class="float-right">
-                            <button class="btn btn-primary" data-save-url="{{ path('ws_setting_save', { 'section': section.code }) }}" id="ws-settings-save">{{ 'save'|trans({}, 'ws_cms') }}</button>
-                        </div>
-                        <br />
-                        <small>{{ 'required'|trans({}, 'ws_cms_setting')|raw }}</small>
-                    </div>
+    <div class="container" data-page="settings">
+        <div class="c-doc-article">
+            <div class="c-doc-article__content-full">
+                <div class="u-flex u-mr-auto">
+                    <h2 class="c-doc-article__title u-h2 u-mr-10 u-mb-10">{{ 'title'|trans({}, 'ws_cms_setting') }}</h2>
                 </div>
-            </div>
-
-            {% for group in section.groups %}
-                <div class="col-lg-12">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <h5>{{ group.name|trans({}, group.translationDomain) }}</h5>
+                <p class="u-text-small u-mb-30">
+                    {{ 'disclaimer'|trans({}, 'ws_cms_setting') }}
+                </p>
+                {% for group in section.groups %}
+                    <div class="l-form__wrapper-row u-mb-30">
+                        <h5 class="u-h5 u-font-bold u-mb-30">
+                            {{ group.name|trans({}, group.translationDomain) }}
                             {% if group.description is not empty %}
-                                <small>{{ group.description|trans({}, group.translationDomain) }}</small>
+                                <small class="c-field__message u-mt-5">({{ group.description|trans({}, group.translationDomain) }})</small>
                             {% endif %}
-                        </div>
-
-                        <div class="ibox-content">
-                            {{ render(controller('WS\\Core\\Controller\\CMS\\SettingController::form', {
-                                'section': section.code,
-                                'group': group.code
-                            })) }}
-                        </div>
+                        </h5>
+                        {{ render(controller('WS\\Core\\Controller\\CMS\\SettingController::form', {
+                            'section': section.code,
+                            'group': group.code
+                        })) }}
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+                <small class="c-field__message u-block u-mt-5"><i class="fa fa-info-circle"></i>{{ 'required'|trans({}, 'ws_cms_setting')|raw }}</small>
+                <div class="c-divider u-mv-small"></div>
+                <button class="c-btn c-btn--info" data-save-url="{{ path('ws_setting_save', { 'section': section.code }) }}" id="ws-settings-save">{{ 'save'|trans({}, 'ws_cms') }}</button>
+            </div>
         </div>
     </div>
 {% endblock %}
+

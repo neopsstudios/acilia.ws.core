@@ -25,7 +25,7 @@ class ActivityLog implements DomainDependantInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="WS\Core\Entity\Domain")
-     * @ORM\JoinColumn(name="activity_log_domain", referencedColumnName="domain_id", nullable=false)
+     * @ORM\JoinColumn(name="activity_log_domain", referencedColumnName="domain_id", nullable=true)
      */
     private $domain;
 

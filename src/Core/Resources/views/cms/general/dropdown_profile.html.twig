@@ -1,0 +1,23 @@
+<div class="c-dropdown dropdown" data-toggle="dropdown-profile" data-component="ws_dropdown">
+    <a
+        class="c-avatar c-avatar--xsmall has-dropdown dropdown-toggle"
+        href="#"
+        id="dropdwonMenuAvatar"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+    >
+        <img class="c-avatar__img" src="{{ asset('cms/images/avatar-72.jpg')}}" alt="{{ app.user.name }}">
+    </a>
+
+    <div class="c-dropdown__menu dropdown-menu dropdown-menu-right dropdown-profile" aria-labelledby="dropdwonMenuAvatar">
+        <a class="c-dropdown__item dropdown-item" href="{{ path('ws_administrator_profile') }}">
+            {{ 'view_profile'|trans({}, 'ws_cms') }}
+        </a>
+        {% if ws_activity_log_enabled() and is_granted('ROLE_WS_ACTIVITY_LOG') %}
+            <a class="c-dropdown__item dropdown-item" href="{{ path('ws_activity_log_index') }}">
+                {{ 'title'|trans({}, 'ws_cms_activity_log') }}
+            </a>
+        {% endif %}
+    </div>
+</div>

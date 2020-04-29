@@ -33,6 +33,7 @@ pagination.first: First
 pagination.last: Last
 pagination.info: Showing one element.|Showing %from% to %to% of %count% elements.
 domain_switched: Switched to domain %domain% (%locale%)
+view_profile: View Profile
 
 # Cropper and assets
 cropper_preview: Preview

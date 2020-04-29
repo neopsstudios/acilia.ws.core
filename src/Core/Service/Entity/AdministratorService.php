@@ -12,9 +12,9 @@ class AdministratorService extends AbstractService implements ActivityLogInterfa
 {
     use ActivityLogTrait;
 
-    protected $roles;
+    protected $roles = [];
 
-    public function getEntityClass() : string
+    public function getEntityClass(): string
     {
         return Administrator::class;
     }
@@ -24,7 +24,7 @@ class AdministratorService extends AbstractService implements ActivityLogInterfa
         return AdministratorType::class;
     }
 
-    public function getSortFields() : array
+    public function getSortFields(): array
     {
         return ['name'];
     }
@@ -41,22 +41,25 @@ class AdministratorService extends AbstractService implements ActivityLogInterfa
         $this->roles[] = $role;
     }
 
-    public function getRoles()
+    public function getRoles(): ?array
     {
         return $this->roles;
     }
 
-    public function getFormProfiles()
+    public function getFormProfiles(): array
     {
         $profiles = [];
 
-        if (is_array($this->roles)) {
-            foreach ($this->roles as $role) {
-                $profile = sprintf('administrator_role.%s', str_replace('ROLE_', '', $role));
-                $profiles[strtolower($profile)] = $role;
-            }
+        foreach ($this->roles as $role) {
+            $profile = sprintf('administrator_role.%s', str_replace('ROLE_', '', $role));
+            $profiles[strtolower($profile)] = $role;
         }
 
         return $profiles;
+    }
+
+    public function getProfileLabel($profile): string
+    {
+        return sprintf('administrator_role.%s', strtolower(str_replace('ROLE_', '', $profile)));
     }
 }

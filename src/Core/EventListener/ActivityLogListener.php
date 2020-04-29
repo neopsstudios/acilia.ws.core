@@ -2,6 +2,9 @@
 
 namespace WS\Core\EventListener;
 
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use WS\Core\Entity\Domain;
 use WS\Core\Library\ActivityLog\ActivityLogInterface;
 use WS\Core\Library\Domain\DomainDependantInterface;
 use WS\Core\Service\ActivityLogService;
@@ -23,8 +26,8 @@ class ActivityLogListener
         LoggerInterface $logger,
         ContextService $contextService,
         ActivityLogService $activityLogService,
-        TokenStorageInterface $tokenStorage)
-    {
+        TokenStorageInterface $tokenStorage
+    ) {
         $this->logger = $logger;
         $this->contextService = $contextService;
         $this->activityLogService = $activityLogService;
@@ -142,6 +145,22 @@ class ActivityLogListener
         }
     }
 
+    public function onController(ControllerEvent $event)
+    {
+        if (!$event->isMasterRequest()) {
+            return;
+        }
+
+        if ($this->activityLogService->isEnabled()) {
+            return;
+        }
+
+        $request = $event->getRequest();
+        if (strpos($request->attributes->get('_route'), 'ws_activity_log_index') === 0) {
+            throw new NotFoundHttpException();
+        }
+    }
+
     private function getUsername(): string
     {
         if ($this->tokenStorage->getToken() instanceof TokenInterface) {
@@ -151,14 +170,16 @@ class ActivityLogListener
         return 'annon';
     }
 
-    private function getDomainId($entity): int
+    private function getDomainId($entity): ?int
     {
-        $domainId = $this->contextService->getDomain()->getId();
-
         if ($entity instanceof DomainDependantInterface) {
-            $domainId = $entity->getDomain()->getId();
+            return $entity->getDomain()->getId();
         }
 
-        return $domainId;
+        if ($this->contextService->getDomain() instanceof Domain) {
+            return $this->contextService->getDomain()->getId();
+        }
+
+        return null;
     }
 }

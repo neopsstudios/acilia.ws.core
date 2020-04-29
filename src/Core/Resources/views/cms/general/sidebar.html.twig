@@ -1,33 +1,40 @@
-{% for menu in get_sidebar() %}
-    {% if menu.roles is empty or is_granted(menu.roles) %}
-        <li class="hide {{ in_route(menu.collapsedRoutes) }}">
-
+<ul class="c-sidebar__list">
+    {% for menu in get_sidebar() %}
+        {% if menu.roles is empty or is_granted(menu.roles) %}
             {% if menu.container %}
-                <a class="nav-label {{ in_route(menu.collapsedRoutes, 'collapsed') }}" data-toggle="collapse" data-target="#{{ menu.code }}NavBar">
-                    <i class="fas {{ menu.icon }}"></i>
-                    <span>{{ menu.label|trans({}, menu.translationDomain) }}<span class="fa arrow"></span></span>
-                </a>
-
-                <div id="{{ menu.code }}NavBar" class="collapse navbar-collapse {{ in_route(menu.collapsedRoutes, 'show') }}">
-                    <ul class="nav nav-second-level">
+                <li class="c-sidebar__item has-submenu {{ in_route(menu.collapsedRoutes, 'is-open') }}">
+                    <a
+                        class="c-sidebar__link"
+                        href="#"
+                        aria-expanded="false"
+                    >
+                        <i class="fa fa-caret-square-o-down u-mr-5"></i>
+                        {{ menu.label|trans({}, menu.translationDomain) }}
+                    </a>
+                    <ul class="c-sidebar__submenu collapse">
                         {% for submenu in menu.children %}
                             {% if is_granted(submenu.roles) %}
-                                <li class="{{ in_route(submenu.collapsedRoutes, 'active', null, submenu.routeOptions) }}">
-                                    <a href="{{ path(submenu.routeName, submenu.routeOptions) }}">
-                                        <i class="fas {{ submenu.icon }}"></i>
-                                        <span class="nav-label">{{ submenu.label|trans({}, submenu.translationDomain) }}</span>
+                                <li>
+                                    <a
+                                        class="c-sidebar__link js-submenu-children {{ in_route(submenu.collapsedRoutes, 'is-active', null, submenu.routeOptions) }}"
+                                        href="{{ path(submenu.routeName, submenu.routeOptions) }}"
+                                    >
+                                        {{ submenu.label|trans({}, submenu.translationDomain) }}
                                     </a>
                                 </li>
                             {% endif %}
                         {% endfor %}
                     </ul>
-                </div>
+                </li>
             {% else %}
-                <a href="{{ path(menu.routeName, menu.routeOptions) }}">
-                    <i class="fas {{ menu.icon }}"></i>
-                    <span class="nav-label">{{ menu.label|trans({}, menu.translationDomain) }}</span>
+                <a
+                    class="c-sidebar__link {{ in_route(menu.collapsedRoutes, 'is-active') }}"
+                    href="{{ path(menu.routeName, menu.routeOptions) }}"
+                >
+                    <i class="fa fa-home u-mr-5"></i>
+                    {{ menu.label|trans({}, menu.translationDomain) }}
                 </a>
             {% endif %}
-        </li>
-    {% endif %}
-{% endfor %}
+        {% endif %}
+    {% endfor %}
+</ul>

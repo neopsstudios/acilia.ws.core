@@ -3,6 +3,12 @@
 namespace WS\Core\DependencyInjection;
 
 use WS\Core\EventListener\DeviceListener;
+use WS\Core\Library\DataExport\DataExportCompilerPass;
+use WS\Core\Library\DataExport\DataExportProviderInterface;
+use WS\Core\Library\CRUD\AbstractController;
+use WS\Core\Library\CRUD\CRUDCompilerPass;
+use WS\Core\Library\FactoryCollector\FactoryCollectorCompilerPass;
+use WS\Core\Library\FactoryCollector\FactoryCollectorInterface;
 use WS\Core\Service\ActivityLogService;
 use WS\Core\Library\ActivityLog\ActivityLogCompilerPass;
 use WS\Core\Library\ActivityLog\ActivityLogInterface;
@@ -12,8 +18,6 @@ use WS\Core\Library\Asset\ImageCompilerPass;
 use WS\Core\Library\CRUD\RoleCalculatorTrait;
 use WS\Core\Library\CRUD\RoleLoaderTrait;
 use WS\Core\Library\Dashboard\DashboardWidgetCompilerPass;
-use WS\Core\Library\FactoryService\FactoryServiceCompilerPass;
-use WS\Core\Library\FactoryService\FactoryServiceInterface;
 use WS\Core\Library\Setting\SettingCompilerPass;
 use WS\Core\Library\Sidebar\SidebarCompilerPass;
 use WS\Core\Library\Sidebar\SidebarDefinitionInterface;
@@ -53,7 +57,7 @@ class WSCoreExtension extends Extension implements PrependExtensionInterface
         $container->registerForAutoconfiguration(ImageRenditionInterface::class)->addTag(ImageCompilerPass::TAG);
 
         // Tag Factory Objects
-        $container->registerForAutoconfiguration(FactoryServiceInterface::class)->addTag(FactoryServiceCompilerPass::TAG);
+        $container->registerForAutoconfiguration(FactoryCollectorInterface::class)->addTag(FactoryCollectorCompilerPass::TAG);
 
         // Tag Activity Logs
         $container->registerForAutoconfiguration(ActivityLogInterface::class)->addTag(ActivityLogCompilerPass::TAG);
@@ -64,9 +68,14 @@ class WSCoreExtension extends Extension implements PrependExtensionInterface
         // Tag Sidebars Definitions
         $container->registerForAutoconfiguration(SidebarDefinitionInterface::class)->addTag(SidebarCompilerPass::TAG);
 
+        // Tag Data Exporters
+        $container->registerForAutoconfiguration(DataExportProviderInterface::class)->addTag(DataExportCompilerPass::TAG);
+
+        // Tag CRUD Controllers
+        $container->registerForAutoconfiguration(AbstractController::class)->addTag(CRUDCompilerPass::TAG);
+
         // Configure services
         $configuration = new Configuration();
-
         $config = $this->processConfiguration($configuration, $configs);
 
         // Configure Activity Log

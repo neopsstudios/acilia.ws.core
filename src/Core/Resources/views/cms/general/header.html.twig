@@ -1,43 +1,34 @@
-<div class="row border-bottom">
-    <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+<header class="c-navbar u-mb-medium">
+    <button class="c-sidebar-toggle u-mr-small">
+        <span class="c-sidebar-toggle__bar"></span>
+        <span class="c-sidebar-toggle__bar"></span>
+        <span class="c-sidebar-toggle__bar"></span>
+    </button>
 
-        {{ include('@WSCore/cms/general/breadcrumb.html.twig') }}
+    {% set breadcrumbs = [{ 'name': 'dashboard.menu'|trans({}, 'cms'), 'path': path('cms_dashboard') }]|merge(get_breadcrumbs()) %}
 
-        <ul class="nav navbar-top-links navbar-right">
-            <li>
-                {% set domains = get_domains() %}
-                {% if domains|length > 0 %}
-                    <select onchange="window.location=this.value;">
-                        {% for domain in domains %}
-                            <option value="{{ path('ws_switch_domain', { 'id': domain.id }) }}" {% if domain.id == get_current_domain().id %}selected="selected"{% endif %}>
-                                {{ domain.host }} | {{ ('language.' ~ domain.locale)|trans({}, 'ws_cms') }}
-                            </option>
-                        {% endfor %}
-                    </select>
-                {% else %}
-                    <strong>{{ get_current_domain().host }} | {{ ('language.' ~ get_current_domain().locale)|trans({}, 'ws_cms') }}</strong>
-                {% endif %}
-
-            </li>
-            <li>
-                <a href="{{ path('ws_administrator_profile') }}">{{ app.user.name }}</a>
-            </li>
-            {% if ws_activity_log_enabled() and is_granted('ROLE_WS_ACTIVITY_LOG') %}
-                <li>
-                    <a href="{{ path('ws_activity_log_index') }}" title="{{ 'title'|trans({}, 'ws_cms_activity_log') }}">
-                        <i class="fas fa-history"></i>
+    <ol class="u-mr-auto c-breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+            <li class="c-breadcrumb__item {{ breadcrumb.main is defined and breadcrumb.main ? 'is-active' }}">
+                {% if breadcrumb.path is defined %}
+                    <a href="{{ breadcrumb.path }}">
+                        {{ breadcrumb.name }}
                     </a>
-                </li>
-            {% endif %}
-            <li class="dropdown">
-                {{ include('@WSCore/cms/general/alerts.html.twig') }}
+                {% else %}
+                    {{ breadcrumb.name }}
+                {% endif %}
             </li>
-            <li class="sign-out-menu">
-                <a href="{{ app.user ? logout_path() : '' }}">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span class="nav-label">{{ 'logout'|trans({}, 'ws_cms') }}</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</div>
+        {% endfor %}
+    </ol>
+
+    {{ include('@WSCore/cms/general/language.html.twig') }}
+
+    {{ include('@WSCore/cms/general/alerts.html.twig') }}
+
+    <a class="c-navbar__logout u-mr-small" href="{{ app.user ? logout_path() : '' }}" title="{{ 'logout'|trans({}, 'ws_cms') }}">
+        <i class="c-navbar__logout-icon fa fa-power-off" aria-hidden="true"></i>
+    </a>
+
+    {{ include('@WSCore/cms/general/dropdown_profile.html.twig') }}
+
+</header>

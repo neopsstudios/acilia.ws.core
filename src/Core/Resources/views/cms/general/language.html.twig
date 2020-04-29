@@ -1,0 +1,29 @@
+{% set domains = get_domains() %}
+{% if domains|length > 1 %}
+    <div class="c-dropdown dropdown u-mr-small" data-toggle="dropdown-language" data-component="ws_dropdown">
+        <a id="languageDropdownButton" href="#" class="c-notification dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+            <span class="c-notification__icon">
+                <i class="fa fa-globe"></i>
+            </span>
+        </a>
+
+        <div
+            class="c-dropdown__menu c-dropdown__menu--large dropdown-menu dropdown-menu-right dropdown-language"
+            aria-labelledby="languageDropdownButton"
+        >
+            {% for domain in domains %}
+                <a
+                    href="{{ path('ws_switch_domain', { 'id': domain.id }) }}"
+                    class="c-dropdown__item dropdown-item o-media {{ domain.id == get_current_domain().id ? 'is-active' }}"
+                >
+                    <div class="o-media__body">
+                        <p class="u-text-mute">
+                            {{ domain.host }} |
+                            {{ ('language.' ~ domain.locale)|trans({}, 'ws_cms') }}
+                        </p>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}

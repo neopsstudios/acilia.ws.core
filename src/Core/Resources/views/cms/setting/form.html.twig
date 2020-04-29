@@ -1,62 +1,64 @@
 {% for setting in settings %}
+    <h6 class="c-field__label" for="setting-{{ setting.code }}">
+        {{ setting.name|trans({}, setting.translationDomain) }}
+        {% if setting.required|default(false) %}
+            *
+        {% endif %}
+    </h6>
+
     <div
-            class="form-group {% if setting.required and setting.value is empty %}has-warning{% endif %}"
-            id="ws-setting-{{ setting.code }}"
+        class="l-form__row {% if setting.required and setting.value is empty %}has-warning{% endif %}"
+        id="ws-setting-{{ setting.code }}"
     >
-
-        <label class="col-sm-2 col-form-label" for="setting-{{ setting.code }}">
-            {{ setting.name|trans({}, setting.translationDomain) }}
-            {% if setting.required|default(false) %}
-                <i class="fa fa-asterisk"></i>
-            {% endif %}
-        </label>
-
-        <div class="col-lg-8">
-            {% if setting.type == 'boolean' %}
-                <div class="col-sm-10">
-                    <label class="custom-checkbox job-form__check col-12">
-                        <input type="checkbox" name="{{ setting.code }}" class="custom-checkbox__input ws-setting-option" value="1" {% if setting.value %}checked="checked"{% endif %}>
-                        <span class="custom-checkbox__checkmark"></span>
-                        <span class="custom-checkbox__text">
-                            {% if setting.description is not empty %}
-                                {{ setting.description|trans({}, setting.translationDomain) }}
-                            {% endif %}
-                        </span>
+        {% if setting.type == 'boolean' %}
+            <div class="l-form__item l-form__item--large c-field">
+                <div class="c-choice c-choice--checkbox">
+                    <input class="c-choice__input" type="checkbox" id="{{ setting.code }}" name="{{ setting.code }}"  value="1" {% if setting.value %}checked="checked"{% endif %}>
+                    <label class="c-choice__label" for="{{ setting.code }}">
+                        {% if setting.description is not empty %}
+                            {{ setting.description|trans({}, setting.translationDomain) }}
+                        {% endif %}
                     </label>
                 </div>
+            </div>
 
-            {% elseif setting.type == 'multiple' %}
-                <select name="{{ setting.code }}" class="ws-setting-option form-control">
-                    {% for value, option in setting.options %}
-                        <option value="{{ value }}" {% if value == setting.value %}selected="selected"{% endif %}>{{ option }}</option>
-                    {% endfor %}
-                </select>
-                <span class="help-block m-b-none">
-                    {% if setting.description is not empty %}
-                        {{ setting.description|trans({}, setting.translationDomain) }}
-                    {% endif %}
-                </span>
+        {% elseif setting.type == 'multiple' %}
+            <select name="{{ setting.code }}" class="ws-setting-option form-control">
+                {% for value, option in setting.options %}
+                    <option value="{{ value }}" {% if value == setting.value %}selected="selected"{% endif %}>{{ option }}</option>
+                {% endfor %}
+            </select>
+            <span class="help-block m-b-none">
+                {% if setting.description is not empty %}
+                    {{ setting.description|trans({}, setting.translationDomain) }}
+                {% endif %}
+            </span>
 
-            {% elseif setting.type == 'textarea' %}
+        {% elseif setting.type == 'textarea' %}
+            <div class="l-form__item l-form__item--large c-field">
                 <textarea name="{{ setting.code }}"
-                          class="ws-setting-option form-control"
+                          class="c-input"
                           placeholder="{{ setting.placeholder is defined and setting.placeholder is not empty ? setting.placeholder|trans({}, setting.translationDomain) }}"
                           rows="6">{{ setting.value }}</textarea>
-                <span class="help-block m-b-none">
+                <small class="c-field__message u-block u-mt-5">
+                    <i class="fa fa-info-circle"></i>
                     {% if setting.description is not empty %}{{ setting.description|trans({}, setting.translationDomain) }}{% endif %}
-                </span>
+                </small>
+            </div>
 
-            {% else %}
+        {% else %}
+            <div class="l-form__item l-form__item--large c-field">
                 <input name="{{ setting.code }}"
-                       type="text" class="ws-setting-option form-control"
+                       type="text" class="c-input"
                        placeholder="{{ setting.placeholder is defined and setting.placeholder is not empty ? setting.placeholder|trans({}, setting.translationDomain) }}"
                        value="{{ setting.value }}">
-                <span class="help-block m-b-none">
+                <small class="c-field__message u-block u-mt-5">
                     {% if setting.description is not empty %}
+                        <i class="fa fa-info-circle"></i>
                         {{ setting.description|trans({}, setting.translationDomain) }}
                     {% endif %}
-                </span>
-            {% endif %}
-        </div>
+                </small>
+            </div>
+        {% endif %}
     </div>
 {% endfor %}

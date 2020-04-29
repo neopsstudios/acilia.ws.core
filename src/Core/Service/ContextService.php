@@ -37,13 +37,17 @@ class ContextService
         $this->domain = $domain;
     }
 
-    public function getDomain() : ?Domain
+    public function getDomain(): ?Domain
     {
-        if ($this->domain->getType() === Domain::ALIAS) {
-            return $this->domain->getParent();
+        if ($this->domain instanceof Domain) {
+            if ($this->domain->getType() === Domain::ALIAS) {
+                return $this->domain->getParent();
+            }
+
+            return $this->domain;
         }
 
-        return $this->domain;
+        return null;
     }
 
     /**

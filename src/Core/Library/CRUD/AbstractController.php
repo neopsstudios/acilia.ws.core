@@ -2,6 +2,9 @@
 
 namespace WS\Core\Library\CRUD;
 
+use WS\Core\Library\DataExport\DataExportInterface;
+use WS\Core\Library\DataExport\Provider\CsvExportProvider;
+use WS\Core\Service\DataExportService;
 use WS\Core\Service\ImageService;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
@@ -32,13 +35,23 @@ abstract class AbstractController extends BaseController
 
     protected $translator;
     protected $imageService;
+    protected $dataExportService;
     protected $events = [];
     protected $service;
 
-    public function __construct(TranslatorInterface $translator, ImageService $imageService)
+    public function setTranslator(TranslatorInterface $translator)
     {
         $this->translator = $translator;
+    }
+
+    public function setImageService(ImageService $imageService)
+    {
         $this->imageService = $imageService;
+    }
+
+    public function setDataExportService(DataExportService $dataExportService)
+    {
+        $this->dataExportService = $dataExportService;
     }
 
     protected function getService(): AbstractService
@@ -162,7 +175,7 @@ abstract class AbstractController extends BaseController
      * @return Response
      * @throws \Exception
      */
-    public function index(Request $request) : Response
+    public function index(Request $request): Response
     {
         $this->denyAccessUnlessAllowed('view');
 
@@ -230,7 +243,7 @@ abstract class AbstractController extends BaseController
      * @return Response
      * @throws \Exception
      */
-    public function create(Request $request) : Response
+    public function create(Request $request): Response
     {
         $this->denyAccessUnlessAllowed('create');
 
@@ -297,7 +310,7 @@ abstract class AbstractController extends BaseController
      * @return Response
      * @throws \Exception
      */
-    public function edit(Request $request, int $id) : Response
+    public function edit(Request $request, int $id): Response
     {
         $this->denyAccessUnlessAllowed('edit');
 
@@ -359,7 +372,7 @@ abstract class AbstractController extends BaseController
      *
      * @return Response
      */
-    public function delete(Request $request, int $id) : Response
+    public function delete(Request $request, int $id): Response
     {
         try {
             $this->denyAccessUnlessAllowed('delete');
@@ -403,7 +416,7 @@ abstract class AbstractController extends BaseController
      *
      * @return Response
      */
-    public function batchDelete(Request $request) : Response
+    public function batchDelete(Request $request): Response
     {
         try {
             $this->denyAccessUnlessAllowed('delete');
@@ -437,5 +450,49 @@ abstract class AbstractController extends BaseController
                 'msg' => $this->trans('batch_action.fail_message', [], 'ws_cms')
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    /**
+     * @Route ("/export", name="export", methods="POST"))
+     *
+     * @param Request $request
+     *
+     * @return Response
+     * @throws \Exception
+     */
+    public function export(Request $request): Response
+    {
+        $this->denyAccessUnlessAllowed('view');
+
+        if (! $this->getService() instanceof DataExportInterface) {
+            throw new NotFoundHttpException();
+        }
+
+        $filter = (string) $request->get('f');
+        $format = (string) strtolower($request->get('format', CsvExportProvider::EXPORT_FORMAT));
+
+        $data = $this->getService()->getDataExport($filter, (string)$request->get('sort'), (string)$request->get('dir'));
+
+        $data = $this->dataExportService->export($data, $format);
+        $headers = $this->dataExportService->headers($format);
+
+        $response = new Response($data, Response::HTTP_OK);
+        foreach($headers as $header) {
+            $response->headers->set($header['name'], $header['value']);
+        }
+
+        if (!$response->headers->has('Content-Disposition')) {
+            $currentDatetime = new \DateTimeImmutable();
+            $filename = sprintf(
+                '%s-export-%s.%s',
+                str_replace(['ws_cms_', 'cms_'], [''], $this->getRouteNamePrefix()),
+                $currentDatetime->format('YmdHis'),
+                $format
+            );
+
+            $response->headers->set('Content-Disposition', sprintf('attachment; filename="%s"', $filename));
+        }
+
+        return $response;
     }
 }

@@ -150,19 +150,39 @@
                                                         <ul class="c-table-collapse__sub-list">
                                                             {% if field == 'password' %}
                                                                 <li class="c-table-collapse__sub-item">
-                                                                    {{ 'before'|trans({}, trans_prefix) }}: ******
+                                                                    <span class="u-font-bold">
+                                                                        {{ 'before'|trans({}, trans_prefix) }}:</br>
+                                                                    </span>
+                                                                    ******
                                                                 </li>
                                                                 <li class="c-table-collapse__sub-item">
-                                                                    {{ 'after'|trans({}, trans_prefix) }}: ******
+                                                                    <span class="u-font-bold">
+                                                                        {{ 'after'|trans({}, trans_prefix) }}:</br>
+                                                                    </span>
+                                                                    ******
                                                                 </li>
                                                             {% else %}
                                                                 <li class="c-table-collapse__sub-item">
-                                                                    {{ 'before'|trans({}, trans_prefix) }}:
-                                                                    {{ change[0]|join('<br>')|raw }}
+                                                                    <span class="u-font-bold">
+                                                                        {{ 'before'|trans({}, trans_prefix) }}:</br>
+                                                                    </span>
+                                                                    {% for item in change[0] %}
+                                                                        {% if item is defined and item is not null %}
+                                                                            {{ item|raw }}
+                                                                            </br>
+                                                                        {% endif %}
+                                                                    {% endfor %}
                                                                 </li>
                                                                 <li class="c-table-collapse__sub-item">
-                                                                    {{ 'after'|trans({}, trans_prefix) }}:
-                                                                    {{ change[1]|join('<br>')|raw }}
+                                                                    <span class="u-font-bold">
+                                                                        {{ 'after'|trans({}, trans_prefix) }}:</br>
+                                                                    </span>
+                                                                    {% for item in change[1] %}
+                                                                        {% if item is defined and item is not null %}
+                                                                            {{ item|raw }}
+                                                                            </br>
+                                                                        {% endif %}
+                                                                    {% endfor %}
                                                                 </li>
                                                             {% endif %}
                                                         </ul>

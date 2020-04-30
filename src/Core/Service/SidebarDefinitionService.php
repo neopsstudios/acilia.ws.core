@@ -16,6 +16,22 @@ class SidebarDefinitionService implements SidebarDefinitionInterface
 
     public function getSidebarDefinition(): array
     {
+        // dashboard menu
+        $dashboardNode = new SidebarDefinition(
+            'dashboard',
+            'dashboard.menu',
+            [
+                'route_name' => 'ws_dashboard'
+            ],
+            [
+                'roles' => [],
+                'translation_domain' => 'ws_cms',
+                'icon' => 'fa-tachometer-alt',
+                'collapsed_routes' => ['ws_dashboard'],
+                'order' => 1
+            ]
+        );
+
         // translation menu
         $translationsNode = new SidebarDefinition(
             'translations',
@@ -84,6 +100,7 @@ class SidebarDefinitionService implements SidebarDefinitionInterface
         );
 
         return [
+            $dashboardNode,
             $translationsNode,
             $settingsNode,
             $administratorsNode

@@ -30,7 +30,7 @@
 
                 <button class="c-btn c-btn--info c-btn--fullwidth u-mb-small" type="submit">{{ 'login.button'|trans({}, 'ws_cms') }}</button>
 
-                <input type="hidden" name="_target_path" value="{{ path('cms_dashboard') }}" />
+                <input type="hidden" name="_target_path" value="{{ path('ws_dashboard') }}" />
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                 <p class="u-text-xsmall u-text-center"> WideStand &copy; Acilia Software {{ 'now'|date('Y') }}</p>
             </form>

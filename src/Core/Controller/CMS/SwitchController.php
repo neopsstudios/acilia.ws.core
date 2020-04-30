@@ -48,7 +48,7 @@ class SwitchController extends AbstractController
                     'ws_cms'
                 ));
 
-                return $this->redirectToRoute('cms_dashboard');
+                return $this->redirectToRoute('ws_dashboard');
             }
         }
 

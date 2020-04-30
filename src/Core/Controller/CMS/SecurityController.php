@@ -30,7 +30,7 @@ class SecurityController extends AbstractController
     public function login(Request $request, AuthenticationUtils $authenticationUtils, AuthorizationCheckerInterface $authChecker)
     {
         if ($authChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->redirectToRoute('cms_dashboard');
+            return $this->redirectToRoute('ws_dashboard');
         }
 
         // get the login error if there is one

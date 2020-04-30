@@ -8,7 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use <?= $className ?>;
 <?php endforeach; ?>
 <?php if ($metadata_fields): ?>
-    use WS\Site\Library\Metadata\MetadataFormTrait;
+use WS\Site\Library\Metadata\MetadataFormTrait;
 <?php endif ?>
 <?php if ($publishing_fields): ?>
     use WS\Core\Library\Publishing\PublishingFormTrait;;
@@ -54,13 +54,12 @@ class <?= $class_name ?> extends AbstractType
         $resolver->setDefaults([
 <?php if ($bounded_full_class_name): ?>
             'data_class' => <?= $bounded_class_name ?>::class,
-<?php else: ?>
+<?php endif ?>
             'attr' => [
                 'novalidate' => 'novalidate',
                 'autocomplete' => 'off',
                 'accept-charset'=> 'UTF-8'
             ]
-<?php endif ?>
         ]);
     }
 }

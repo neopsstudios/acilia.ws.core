@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 class DashboardController extends AbstractController
 {
     /**
-     * @Route("/", name="cms_dashboard")
+     * @Route("/", name="ws_dashboard")
      *
      * @return Response
      */

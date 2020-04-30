@@ -167,8 +167,8 @@ class MakeCrud extends AbstractMaker
             $serviceClassDetails->getFullName(),
             __DIR__.'/../../Resources/maker/crud/Service.tpl.php',
             [
-                'type_full_class_name' => $formClassDetails->getFullName(),
-                'entity_class_name' => $serviceClassDetails->getShortName(),
+                'type_full_class_name' => $entityClassDetails->getFullName(),
+                'entity_class_name' => $entityClassDetails->getShortName(),
                 'entity_type_name' => $formClassDetails->getShortName(),
                 'sort_fields' => $sortFields
             ]

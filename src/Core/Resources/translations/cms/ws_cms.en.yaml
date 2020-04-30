@@ -34,6 +34,8 @@ pagination.last: Last
 pagination.info: Showing one element.|Showing %from% to %to% of %count% elements.
 domain_switched: Switched to domain %domain% (%locale%)
 view_profile: View Profile
+dashboard: Dashboard
+dashboard.menu: Dashboard
 
 # Cropper and assets
 cropper_preview: Preview

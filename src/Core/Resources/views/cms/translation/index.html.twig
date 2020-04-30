@@ -22,7 +22,7 @@
                         </div>
                         <p class="u-text-small u-mb-30">{{ 'disclaimer'|trans({ '%host%': domain.host, '%language%': ("language.#{domain.locale}"|trans({}, 'ws_cms'))}, 'ws_cms_translation')|raw }}</p>
                         {% for node in translations %}
-                            <div class="l-form__wrapper-row u-mb-30">
+                            <div class="l-form__wrapper-row u-mb-30 js-block" data-menu-link={{ "block-#{node.name}" }}>
                                 <h5 class="u-h5 u-font-bold u-mb-30">
                                     {{ "#{node.source}translation.#{node.name}.name"|trans({}, node.type, domain.locale) }}
                                     <small class="c-field__message u-block u-mt-5 u-font-normal">
@@ -33,13 +33,18 @@
                                 {% for attribute in node.attributes %}
                                     <div class="l-form__row">
                                         <div class="l-form__item l-form__item--large c-field">
-                                            <label class="c-field__label" for="{{ attribute.id }}">{{ "#{node.name}.#{attribute.name}" }}</label>
+                                            <label
+                                                class="c-field__label"
+                                                for="{{ attribute.id }}"
+                                            >
+                                                {{ "#{node.name}.#{attribute.name}" }}
+                                            </label>
                                             <input type="text"
-                                                   class="c-input ws-translation-attribute"
-                                                   name="{{ attribute.id }}"
-                                                   value="{% if attribute.translation is not null %}{{ attribute.translation }}{% endif %}"
-                                                   placeholder="{{ "#{node.source}#{node.name}.#{attribute.name}"|trans({}, node.type, domain.locale) }}"
-                                                   title="{{ "#{node.source}#{node.name}.#{attribute.name}"|trans({}, node.type, domain.locale) }}"
+                                                class="c-input ws-translation-attribute"
+                                                name="{{ attribute.id }}"
+                                                value="{{ attribute.translation is not null ? attribute.translation }}"
+                                                placeholder="{{ "#{node.source}#{node.name}.#{attribute.name}"|trans({}, node.type, domain.locale) }}"
+                                                title="{{ "#{node.source}#{node.name}.#{attribute.name}"|trans({}, node.type, domain.locale) }}"
                                             />
                                         </div>
                                     </div>
@@ -49,13 +54,18 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 u-hidden-down@desktop">
+            <div class="col-lg-3 u-hidden-down@desktop" data-component="translation-sidebar">
                 <div class="c-toc">
                     <nav>
                         <ul>
                             {% for node in translations %}
                                 <li class="c-toc__item">
-                                    <a class="c-toc__link" href="">{{ "#{node.source}translation.#{node.name}.name"|trans({}, node.type, domain.locale) }}</a>
+                                    <button
+                                        class="c-toc__link js-toc-link {{ loop.first ? 'is-active' }}"
+                                        data-menu-link={{ "block-#{node.name}" }}
+                                    >
+                                        {{ "#{node.source}translation.#{node.name}.name"|trans({}, node.type, domain.locale) }}
+                                    </button>
                                 </li>
                             {% endfor %}
                         </ul>

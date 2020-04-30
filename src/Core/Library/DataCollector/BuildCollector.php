@@ -12,11 +12,17 @@ class BuildCollector extends DataCollector
 {
     protected $parameterBag;
     protected $contextService;
+    protected $components = [];
 
     public function __construct(ParameterBagInterface $parameterBag, ContextService $contextService)
     {
         $this->parameterBag = $parameterBag;
         $this->contextService = $contextService;
+    }
+
+    public function addComponent($component)
+    {
+        $this->components[] = $component;
     }
 
     public function collect(Request $request, Response $response, \Exception $exception = null)
@@ -26,9 +32,15 @@ class BuildCollector extends DataCollector
             $build = $this->parameterBag->get('build');
         }
 
+        $components = [];
+        foreach ($this->components as $component) {
+            $components[$component::NAME] = $component::VERSION;
+        }
+
         $this->data = [
             'build' => $build,
-            'domain' => $this->contextService->getDomain()
+            'domain' => $this->contextService->getDomain(),
+            'components' => $components
         ];
     }
 
@@ -50,5 +62,10 @@ class BuildCollector extends DataCollector
     public function getDomain()
     {
         return $this->data['domain'];
+    }
+
+    public function getComponents()
+    {
+        return $this->data['components'];
     }
 }

@@ -7,13 +7,25 @@
     {% endset %}
 
     {% set text %}
-        <div class="sf-toolbar-info-piece">
-            <b>Domain</b>
-            <span>{{ collector.domain.host }} ({{ collector.domain.locale }})</span>
+
+        <div class="sf-toolbar-info-group">
+            <div class="sf-toolbar-info-piece">
+                <b>Domain</b>
+                <span>{{ collector.domain.host }} ({{ collector.domain.locale }})</span>
+            </div>
+            <div class="sf-toolbar-info-piece">
+                <b>Build</b>
+                <span class="sf-toolbar-status sf-toolbar-status-{{ collector.build == 'dev' ? 'green' : '' }}">{{ collector.build }}</span>
+            </div>
         </div>
-        <div class="sf-toolbar-info-piece">
-            <b>Build</b>
-            <span>{{ collector.build }}</span>
+
+        <div class="sf-toolbar-info-group">
+        {% for component, version in collector.components %}
+            <div class="sf-toolbar-info-piece">
+                <b>WS::{{ component }}</b>
+                <span>{{ version }}</span>
+            </div>
+        {% endfor %}
         </div>
     {% endset %}
 

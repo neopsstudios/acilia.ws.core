@@ -24,6 +24,10 @@ services:
         tags:
             - { name: ws.sidebar_definition, priority: 1024 }
 
+    WS\Core\Widestand:
+        tags:
+            - { name: ws.component }
+
     # Listeners
     WS\Core\EventListener\ContextListener:
         tags:

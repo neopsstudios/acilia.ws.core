@@ -500,7 +500,11 @@
     <div class="c-img-upload {{ form.children.asset_image.vars.data == null ? 'is-hidden' }}" data-id="{{ id }}">
         {% if form.children.asset_image.vars.data != null %}
             <div class="c-img-upload__wrapper-img">
-                <img class="c-img-upload__img" src="http://aciliacorpo.shun.acilia.net/storage/images/0/54/thumb/150x150/pastedimage0.png">
+                {% if form.children.asset_image.vars.data != null %}
+                    <img class="c-img-upload__img" src="{{ asset_get_image(form.children.asset_image.vars.data, 'thumb', '300x300') }}">
+                {% else %}
+                    <img class="c-img-upload__img" src="">
+                {% endif %}
                 <button
                     class="c-btn c-btn--secondary c-img-upload__btn js-open-modal"
                     type="button"
@@ -508,14 +512,6 @@
                     {{ 'assets_image.change_modal_on_image'|trans({}, 'ws_cms') }}
                 </button>
             </div>
-        {% else %}
-            <button
-                class="c-btn c-btn--brand c-img-upload__btn js-open-modal"
-                type="button"
-                data-id-asset-component="{{ form.children.asset.vars.id }}">
-                {{ 'assets_image.add_modal_on_image'|trans({}, 'ws_cms') }}
-                <i class="c-img-upload__icon fa fa-file-image-o u-mr-5"></i>
-            </button>
         {% endif %}
     </div>
 
@@ -543,38 +539,52 @@
                 <img>
             </div>
             <div class="ws-cropper_aside">
-                <div class="ws-cropper_preview_wrapper">
-                    <h4>{{ 'cropper_preview'|trans({}, 'ws_cms') }}</h4>
+                <div class="ws-cropper_preview_wrapper u-mb-20">
+                    <h4 class="u-h4 u-font-medium u-mb-10">{{ 'cropper_preview'|trans({}, 'ws_cms') }}</h4>
                     <div class="ws-cropper_preview"></div>
                 </div>
                 <div class="ws-cropper_detail_wrapper">
-                    <h4>{{ 'cropper_title'|trans({}, 'ws_cms') }}</h4>
-                    <label>
-                        <b>{{ 'cropper_ratio'|trans({}, 'ws_cms') }}:</b>
-                        <span class="ws-cropper_details_ratio"></span>
-                    </label>
-                    <label>
-                        <b>{{ 'cropper_width'|trans({}, 'ws_cms') }}:</b>
-                        <span class="ws-cropper_details_min_w"></span>px
-                    </label>
-                    <label>
-                        <b>{{ 'cropper_height'|trans({}, 'ws_cms') }}:</b>
-                        <span class="ws-cropper_details_min_h"></span>px
-                    </label>
-                    <label>
-                        <b>{{ 'cropper_obs'|trans({}, 'ws_cms') }}</b>
-                        <span class="ws-cropper_details_obs"></span>
-                    </label>
+                    <h6 class="u-h6 u-font-medium u-mb-10">{{ 'cropper_title'|trans({}, 'ws_cms') }}:</h6>
+                    <table class="c-table u-text-center u-border-right-zero u-border-left-zero u-mb-20">
+                        <thead>
+                            <tr>
+                                <th
+                                    class="u-pt-small u-font-medium u-pb-xsmall ws-cropper_details_ratio">
+                                </th>
+                                <th
+                                    class="u-pt-small u-font-medium u-pb-xsmall ws-cropper_details_min_w">
+                                </th>
+                                <th
+                                    class="u-pt-small u-font-medium u-pb-xsmall ws-cropper_details_min_h">
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="u-text-mute u-font-semibold u-text-xsmall u-pb-small u-text-uppercase">
+                                    {{ 'cropper_ratio'|trans({}, 'ws_cms') }}
+                                </td>
+                                <td class="u-text-mute u-font-semibold u-text-xsmall u-pb-small u-text-uppercase">
+                                    {{ 'cropper_width'|trans({}, 'ws_cms') }}
+                                </td>
+                                <td class="u-text-mute u-font-semibold u-text-xsmall u-pb-small u-text-uppercase">
+                                    {{ 'cropper_height'|trans({}, 'ws_cms') }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h6 class="u-h6 u-font-medium u-mb-10">{{ 'cropper_obs'|trans({}, 'ws_cms') }}</h6>
+                    <p class="ws-cropper_details_obs"></p>
                 </div>
                 <div class="ws-cropper_actions">
-                    <button class="btn btn-danger" data-id="{{ form.children.asset.vars.id }}">
-                        {{ 'cancel'|trans({}, 'ws_cms') }}
-                    </button>
-                    <button class="btn btn-success ws-cropper_confirm ws-cropper_next" data-id="{{ form.children.asset.vars.id }}">
+                    <button class="c-btn c-btn--success ws-cropper_confirm ws-cropper_next u-mr-5" data-id="{{ form.children.asset.vars.id }}">
                         {{ 'next'|trans({}, 'ws_cms') }}
                     </button>
-                    <button class="btn btn-success ws-cropper_confirm ws-cropper_save" data-id="{{ form.children.asset.vars.id }}">
+                    <button class="c-btn c-btn--info ws-cropper_confirm ws-cropper_save u-mr-5" data-id="{{ form.children.asset.vars.id }}">
                         {{ 'confirm'|trans({}, 'ws_cms') }}
+                    </button>
+                    <button class="c-btn c-btn--secondary" data-id="{{ form.children.asset.vars.id }}">
+                        {{ 'cancel'|trans({}, 'ws_cms') }}
                     </button>
                 </div>
             </div>
@@ -590,15 +600,28 @@
         <div class="c-img-modal js-image-selector-modal" data-id="{{ form.children.asset.vars.id }}">
             <div class="c-img-modal__wrapper">
                 <div class="c-img-modal__search js-search-form">
-                    <div class="u-flex u-justify-end u-mb-medium">
-                        <div class="c-field c-field--inline has-icon-right u-hidden-down@tablet u-mr-small">
-                            <span class="c-field__icon">
-                                <i class="fa fa-search"></i> 
-                            </span>
-                            <label class="u-hidden-visually" for="navbar-search">Seach</label>
-                            <input class="c-input c-input--small js-search-input" autocomplete="off" name="f" placeholder="Search" type="text" value="">
+                    <div class="u-flex u-justify-between u-mb-medium">
+                        <h2 class="u-h2">{{ 'assets_image.open_modal'|trans({}, 'ws_cms') }}</h2>
+                        <div class="u-flex u-justify-end">
+                            <div class="c-field c-field--inline has-icon-right u-hidden-down@tablet u-mr-small">
+                                <span class="c-field__icon">
+                                    <i class="fa fa-search"></i> 
+                                </span>
+                                <label class="u-hidden-visually" for="navbar-search">Seach</label>
+                                <input
+                                    class="c-input c-input--small js-search-input"
+                                    autocomplete="off"
+                                    name="f"
+                                    placeholder="Search"
+                                    type="text"
+                                    value=""
+                                >
+                            </div>
+                            <button type="submit" class="c-btn c-btn--info js-search-submit">
+                                <i class="fa fa-search u-mr-xsmall"></i>
+                                {{ 'search'|trans({}, 'ws_cms') }}
+                            </button>
                         </div>
-                        <button type="submit" class="c-btn c-btn--info u-mr-small js-search-submit"><i class="fa fa-search u-mr-5"></i>{{ 'search'|trans({}, 'ws_cms') }}</button>
                     </div>
                 </div>
                 <div class="c-img-modal__drag">
@@ -612,7 +635,7 @@
                     </div>
                 </div>
                 <div class="c-img-modal__list js-img-selector-images-list" data-id="{{ form.children.asset.vars.id }}" data-next-page="2">
-                    <div class="loader js-loader">
+                    <div class="loader o-loader js-loader">
                         <div class="loader__circle"></div>
                     </div>
                 </div>
@@ -622,17 +645,18 @@
         <figure class="c-img-modal__list-image js-image-item #extra-class" data-id="{{ form.children.asset.vars.id }}">
             <div class="c-img-modal__img-actions">
                 <button
-                        class="btn btn-primary js-list-image-use"
+                        class="c-btn c-btn--info c-btn--small u-mr-xsmall js-list-image-use"
                         data-image-id="#image-id"
                         data-image-url="#image-thumb"
                         type="button">{{ 'assets_image.image_list.use'|trans({}, 'ws_cms') }}
                 </button>
                 <button
-                        class="btn btn-success js-list-image-crop"
+                        class="c-btn c-btn--secondary c-btn--small js-list-image-crop"
                         data-id="#id"
                         data-image-id="#image-id"
                         data-image-url="#image-original"
                         type="button">
+                    <i class="fa fa-crop" aria-hidden="true"></i>
                     {{ 'assets_image.image_list.crop'|trans({}, 'ws_cms') }}
                 </button>
             </div>
@@ -640,10 +664,9 @@
                     id="#image-id"
                     alt="#image-alt"
                     class="lazy_loaded js-image"
-                    src="https://images.unsplash.com/photo-1584308972272-9e4e7685e80f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1400&q=80"/>
-{#                     data-a-lazy
+                    data-a-lazy
                     data-src="#image-thumb"
-                    data-image="#image-original"/> #}
+                    data-image="#image-original"/>
         </figure>
     {% endif %}
 

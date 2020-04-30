@@ -169,10 +169,8 @@ class ToolsExtension extends AbstractExtension
                     'route' => 'batch_delete',
                     'title' => 'batch_action.remove_alert_title'
                 ];
-                break;
             default:
                 return null;
-                break;
         }
     }
 

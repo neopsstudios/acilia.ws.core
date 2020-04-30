@@ -25,44 +25,66 @@
                         <div class="u-flex u-mr-auto">
                             <h4 class="c-toolbar__title u-mr-10">{{ 'title'|trans([], trans_prefix) }}</h4>
                         </div>
+
                         <div class="c-field c-field--inline c-choice-wrapper c-choice-wrapper--small u-mr-10">
                             <select name="m" class="u-mr-10" data-component="ws_select">
                                 <option value="">{{ 'select_model'|trans({}, trans_prefix) }}</option>
                                 {% for model in models %}
-                                    <option {{ model['model'] is ws_activity_log_selected(filters, 'model') ? 'selected="selected"' : '' }} value='{{ model['model'] }}'>
+                                    <option
+                                        value='{{ model['model'] }}'
+                                        {{ model['model'] is ws_activity_log_selected(filters, 'model') ? 'selected="selected"' : '' }}
+                                    >
                                         {{ model['model']|ws_activity_log_model }}
                                     </option>
                                 {% endfor %}
                             </select>
                         </div>
+
                         <div class="c-field c-field--inline u-mr-10">
-                            <input class="c-input c-input--small" placeholder="{{ 'select_model_id'|trans({}, trans_prefix) }}" type="text" name="f" value="{{ app.request.get('f') }}" autocomplete="off">
+                            <input
+                                type="text"
+                                name="f"
+                                autocomplete="off"
+                                class="c-input c-input--small"
+                                value="{{ app.request.get('f') }}"
+                                placeholder="{{ 'select_model_id'|trans({}, trans_prefix) }}"
+                            >
                         </div>
+
                         <div class="c-field c-field--inline c-choice-wrapper c-choice-wrapper--small u-mr-10">
                             <select name="u" data-component="ws_select">
                                 <option value="">{{ 'select_by'|trans({}, trans_prefix) }}</option>
                                 {% for user in users %}
-                                    <option {{ user['user'] is ws_activity_log_selected(filters, 'user') ? 'selected="selected"' : '' }} value='{{ user['user'] }}'>
+                                    <option
+                                        value='{{ user['user'] }}'
+                                        {{ user['user'] is ws_activity_log_selected(filters, 'user') ? 'selected="selected"' : '' }}
+                                    >
                                         {{ user['user'] }}
                                     </option>
                                 {% endfor %}
                             </select>
                         </div>
+
                         <button type="submit" class="c-btn c-btn--info u-mr-5">
                             <i class="fa fa-search u-mr-5"></i>
                             {{ 'search'|trans({}, 'ws_cms') }}
                         </button>
+
                     </form>
                 {% endblock %}
 
                 <div class="c-doc-article u-mt-10 {{ data|length > 0 ? 'u-hidden' }}">
                     <div class="c-doc-article__content-full">
-                        <h6 class="u-h6 u-color-warning"><i class="fa fa-info-circle u-color-warning"></i> {{ 'no_rows_found'|trans([], trans_prefix) }}</h6>
+                        <h6 class="u-h6 u-color-warning">
+                            <i class="fa fa-info-circle u-color-warning"></i>
+                            {{ 'no_rows_found'|trans([], trans_prefix) }}
+                        </h6>
                     </div>
                 </div>
 
                 {% if data|length > 0 %}
-                    <table class="c-table c-table--highlight">
+                    <table class="c-table c-table--highlight" data-component="ws_table_collapse">
+
                         {% block crud_table_head %}
                             <thead class="c-table__head c-table__head--slim">
                                 <tr class="c-table__row">
@@ -88,15 +110,18 @@
                         {% block crud_table_body %}
                             <tbody>
                             {% for entity in data %}
-                                <tr class="c-table__row">
-                                    {% if entity.action == constant('WS\\Core\\Library\\ActivityLog\\ActivityLogInterface::UPDATE') %}
-                                        <td class="c-table__cell">
-                                            <a class="c-table__toggle" role="button" data-toggle="collapse" href="#collapseExample{{ entity.id }}" >{{ entity.model|ws_activity_log_model }}</a>
-                                        </td>
+                                {% if entity.action == constant('WS\\Core\\Library\\ActivityLog\\ActivityLogInterface::UPDATE') %}
+                                    <tr class="c-table__row ws-table-collapse" data-toggle="collapseRow{{ entity.id }}">
+                                            <td class="c-table__cell">
+                                                <span class="c-table__toggle">
+                                                    {{ entity.model|ws_activity_log_model }}
+                                                </span>
+                                            </td>
                                     {% else %}
-                                        <td class="c-table__cell">
-                                            {{ entity.model|ws_activity_log_model }}
-                                        </td>
+                                        <tr class="c-table__row">
+                                            <td class="c-table__cell">
+                                                {{ entity.model|ws_activity_log_model }}
+                                            </td>
                                     {% endif %}
                                     <td class="c-table__cell">
                                         {{ entity.modelId }}
@@ -108,14 +133,16 @@
                                         {{ entity.createdBy }}
                                     </td>
                                     <td class="c-table__cell">
-                                        <span class="c-badge c-badge--{{ entity.action|ws_activity_log_action }}">{{ entity.action }}</span>
+                                        <span class="c-badge c-badge--{{ entity.action|ws_activity_log_action }}">
+                                            {{ entity.action }}
+                                        </span>
                                     </td>
                                 </tr>
 
                                 {% if entity.action == constant('WS\\Core\\Library\\ActivityLog\\ActivityLogInterface::UPDATE') %}
-                                    <tr class="c-table__row collapse" id="collapseExample{{ entity.id }}">
-                                        <td class="" colspan="5">
-                                            <div class="c-table__collapse c-table-collapse">
+                                    <tr class="c-table__row c-table__collapse" id="collapseRow{{ entity.id }}">
+                                        <td colspan="5">
+                                            <div class="c-table-collapse">
                                                 <ul class="c-table-collapse__list">
                                                 {% for field, change in entity.changes %}
                                                     <li class="c-table-collapse__item">
@@ -130,10 +157,12 @@
                                                                 </li>
                                                             {% else %}
                                                                 <li class="c-table-collapse__sub-item">
-                                                                    {{ 'before'|trans({}, trans_prefix) }}: {{ change[0]|join('<br>')|raw }}
+                                                                    {{ 'before'|trans({}, trans_prefix) }}:
+                                                                    {{ change[0]|join('<br>')|raw }}
                                                                 </li>
                                                                 <li class="c-table-collapse__sub-item">
-                                                                    {{ 'after'|trans({}, trans_prefix) }}: {{ change[1]|join('<br>')|raw }}
+                                                                    {{ 'after'|trans({}, trans_prefix) }}:
+                                                                    {{ change[1]|join('<br>')|raw }}
                                                                 </li>
                                                             {% endif %}
                                                         </ul>
@@ -150,7 +179,12 @@
                         {% endblock %}
                     </table>
                 {% endif %}
-                {{ include('@WSCore/cms/general/pagination.html.twig', paginationData|merge({ 'params': params }), with_context = false) }}
+
+                {{ include(
+                    '@WSCore/cms/general/pagination.html.twig',
+                    paginationData|merge({ 'params': params }),
+                    with_context = false
+                ) }}
             </div>
         </div>
     </div>

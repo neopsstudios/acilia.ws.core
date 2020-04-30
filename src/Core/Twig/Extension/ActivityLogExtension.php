@@ -56,13 +56,10 @@ class ActivityLogExtension extends AbstractExtension
         switch ($action) {
             case 'create':
                 return 'success';
-                break;
             case 'update':
                 return 'info';
-                break;
             default:
                 return 'danger';
-                break;
         }
     }
 

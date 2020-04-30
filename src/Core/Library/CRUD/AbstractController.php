@@ -124,7 +124,6 @@ abstract class AbstractController extends BaseController
     {
         if ($this->getService()->getImageFields($entity)) {
             foreach ($this->getService()->getImageFields($entity) as $imageField) {
-
                 if (!empty($form->get($imageField)->get('asset')->getData())) {
                     $imageFile = $form->get($imageField)->get('asset')->getData();
                     $options = [
@@ -473,11 +472,11 @@ abstract class AbstractController extends BaseController
 
         $data = $this->getService()->getDataExport($filter, (string)$request->get('sort'), (string)$request->get('dir'));
 
-        $data = $this->dataExportService->export($data, $format);
+        $content = $this->dataExportService->export($data, $format);
         $headers = $this->dataExportService->headers($format);
 
-        $response = new Response($data, Response::HTTP_OK);
-        foreach($headers as $header) {
+        $response = new Response($content);
+        foreach ($headers as $header) {
             $response->headers->set($header['name'], $header['value']);
         }
 

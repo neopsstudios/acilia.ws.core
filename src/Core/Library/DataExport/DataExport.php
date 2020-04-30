@@ -22,5 +22,4 @@ class DataExport
     {
         return $this->data;
     }
-
 }

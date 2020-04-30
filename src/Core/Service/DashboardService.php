@@ -7,6 +7,7 @@ use Twig\Environment;
 
 class DashboardService
 {
+    protected $twig;
     protected $widgets = [];
 
     public function __construct(Environment $twig)
@@ -33,7 +34,7 @@ class DashboardService
         $widgets = $this->widgets;
 
         usort($widgets, function (DashboardWidgetInterface $a, DashboardWidgetInterface $b) {
-            return strcmp($a->getOrder(), $b->getOrder());
+            return ($a->getOrder() < $b->getOrder()) ? -1 : (($a->getOrder() > $b->getOrder()) ? 1 : 0);
         });
 
         return $widgets;

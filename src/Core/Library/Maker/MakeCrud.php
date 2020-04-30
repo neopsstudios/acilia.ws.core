@@ -86,13 +86,11 @@ class MakeCrud extends AbstractMaker
             if (in_array($name, ['domain', 'createdBy', 'modifiedAt', 'createdAt'])) {
                 unset($entityFormFields[$name]);
                 continue;
-
             } elseif (in_array($name, ['metadataTitle', 'metadataDescription', 'metadataKeywords'])) {
                 unset($entityFormFields[$name]);
                 $metadataFields = true;
                 continue;
-
-            }  elseif (in_array($name, ['publishStatus', 'publishSince', 'publishUntil'])) {
+            } elseif (in_array($name, ['publishStatus', 'publishSince', 'publishUntil'])) {
                 unset($entityFormFields[$name]);
                 $publishingFields = true;
                 continue;

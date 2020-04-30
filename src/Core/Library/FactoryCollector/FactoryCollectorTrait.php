@@ -2,7 +2,6 @@
 
 namespace WS\Core\Library\FactoryCollector;
 
-
 use WS\Core\Library\CRUD\AbstractService;
 
 trait FactoryCollectorTrait

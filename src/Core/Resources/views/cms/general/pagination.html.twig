@@ -7,54 +7,65 @@
 #}
 
 {% apply spaceless %}
-    <div class="u-flex u-justify-between u-mt-small">
+<div class="u-flex u-justify-between u-mt-small">
+    <div class="dataTables_info">
+        {{
+            'pagination.info'|trans(
+                {
+                    '%count%': totalCount,
+                    '%from%': ((currentPage - 1) * limit) + 1,
+                    '%to%': ((currentPage - 1) * limit) + currentCount
+                }
+            , 'ws_cms')
+        }}
+    </div>
 
-        <div class="dataTables_info">
-            {{
-                'pagination.info'|trans(
-                    {
-                        '%count%': totalCount,
-                        '%from%': ((currentPage - 1) * limit) + 1,
-                        '%to%': ((currentPage - 1) * limit) + currentCount
-                    }
-                , 'ws_cms')
-            }}
-        </div>
+    {% if nbPages > 1 %}
+        {% set nearbyPagesLimit = 4 %}
 
-        {% if nbPages > 1 %}
-            {% set nearbyPagesLimit = 4 %}
+        <nav class="c-pagination u-flex u-justify-end">
+            <ul class="c-pagination__list">
 
-            <nav class="c-pagination u-flex u-justify-end">
-                <ul class="c-pagination__list">
+                {% if currentPage > 1 %}
+                    <li class="c-pagination__item">
+                        <a class="c-pagination__control" href="{{ path(url, params|merge({'page': 1})) }}">
+                            <i class="fa fa-caret-left"></i>
+                        </a>
+                    </li>
+                {% endif %}
 
-                    {% if currentPage != 1 %}
-                        <li class="c-pagination__item">
-                            <a class="c-pagination__control" href="{{ path(url, params|merge({'page': 1})) }}">
-                                <i class="fa fa-caret-left"></i>
-                            </a>
-                        </li>
-                    {% endif %}
-
-                    {% for i in 1..nbPages %}
+                {% for i in 1..nbPages %}
+                    {% if 0 == (currentPage - nearbyPagesLimit) - loop.index %}
+                        {% if 1 == loop.index %}
+                            <li class="c-pagination__item">
+                                <a class="c-pagination__link" href="{{ path(url, params|merge({'page': 1 })) }}">1</a>
+                            </li>
+                        {% endif %}
+                    {% elseif 0 == (currentPage + nearbyPagesLimit) - loop.index  and (currentPage + nearbyPagesLimit) < nbPages %}
+                    {% elseif 0 < (currentPage - nearbyPagesLimit) - loop.index %}
+                    {% elseif 0 > (currentPage + nearbyPagesLimit) - loop.index %}
+                    {% else %}
                         <li class="c-pagination__item">
                             <a
-                                href="{{ path(url, params|merge({'page': loop.index})) }}"
                                 class="c-pagination__link {{ currentPage == loop.index ? 'is-active' }}"
+                                href="{{ path(url, params|merge({'page': loop.index})) }}"
                             >
                                 {{ loop.index }}
                             </a>
                         </li>
-                    {% endfor %}
-
-                    {% if currentPage != nbPages %}
-                        <li class="c-pagination__item">
-                            <a class="c-pagination__control" href="{{ path(url, params|merge({'page': nbPages})) }}">
-                                <i class="fa fa-caret-right"></i>
-                            </a>
-                        </li>
                     {% endif %}
-                </ul>
-            </nav>
-        {% endif %}
-    </div>
+                {% endfor %}
+
+                {% if currentPage < nbPages %}
+                    <li class="c-pagination__item">
+                        <a class="c-pagination__control" href="{{ path(url, params|merge({'page': nbPages})) }}">
+                            <i class="fa fa-caret-right"></i>
+                        </a>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </nav>
+    {% endif %}
+</div>
 {% endapply %}

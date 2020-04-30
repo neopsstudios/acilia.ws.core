@@ -50,6 +50,8 @@ class CollectCommand extends Command
         foreach ($this->translationService->getSources() as $directory => $source) {
             $this->gatherTranslations($directory, $source);
         }
+
+        return 0;
     }
 
     protected function gatherTranslations(string $directory, string $source)

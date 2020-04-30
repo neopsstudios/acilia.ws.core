@@ -37,10 +37,6 @@ class DeviceListener
             return;
         }
 
-        if (is_array($userAgent)) {
-            $userAgent = $userAgent[0];
-        }
-
         $detector = new DeviceDetector($userAgent);
         $detector->parse();
         $device = $detector->getDeviceName();

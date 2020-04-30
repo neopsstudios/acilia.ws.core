@@ -2,6 +2,7 @@
 
 namespace WS\Core\EventListener;
 
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use WS\Core\Entity\Domain;
 use WS\Core\Service\ContextService;
 use WS\Core\Service\DomainService;
@@ -71,7 +72,7 @@ class ContextListener
             $this->contextService->setDomain($domain);
             $this->settingService->loadSettings();
 
-            if ($this->contextService->isCMS() && $event->getRequest()->getSession()) {
+            if ($this->contextService->isCMS() && $event->getRequest()->getSession() instanceof SessionInterface) {
                 if ($session !== null) {
                     $session->set(ContextService::SESSION_DOMAIN, $domain->getId());
                 }

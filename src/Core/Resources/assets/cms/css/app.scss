@@ -1,10 +1,10 @@
 // app
 @import 'app/vendor/a_datePicker';
-@import 'app/vendor/a_modal';
 @import 'app/vendor/a_notification';
 @import 'app/vendor/a_select';
 @import 'app/vendor/ws_image_selector';
 @import 'app/vendor/ws_markdown';
+@import 'app/vendor/ws_cropper';
 @import 'app/0-settings/_settings-variables';
 @import 'app/1-tools/_tools-mixin_breakpoint';
 @import 'app/1-tools/_tools-mixin_fontsize';
@@ -27,6 +27,7 @@
 @import 'app/4-objects/_objects-layout';
 @import 'app/4-objects/_objects-link-block';
 @import 'app/4-objects/_objects-link';
+@import 'app/4-objects/_objects-loader';
 @import 'app/4-objects/_objects-svg';
 @import 'app/4-objects/_objects-ul';
 @import 'app/4-objects/_objects-tab';
@@ -42,6 +43,7 @@
 @import 'app/5-components/_components.markdown';
 @import 'app/5-components/_components.modal';
 @import 'app/5-components/_components.navbar';
+@import 'app/5-components/_components.sidebar';
 @import 'app/5-components/_components.tables';
 @import 'app/5-components/_components.toc';
 @import 'app/5-components/_components.toolbar';

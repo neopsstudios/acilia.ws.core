@@ -1,4 +1,5 @@
 import { showError, showSuccess } from '../modules/a_notifications';
+import '../modules/sidebar';
 
 function onSaveTranslations(event) {
   const xhr = event.currentTarget;
@@ -16,7 +17,7 @@ function saveTranslations(event) {
   const translations = {};
 
   document.querySelectorAll('.ws-translation-attribute').forEach((item) => {
-      translations[item.getAttribute('name')] = item.value;
+    translations[item.getAttribute('name')] = item.value;
   });
 
   const xhr = new XMLHttpRequest();

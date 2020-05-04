@@ -121,7 +121,7 @@ function init() {
   }
 
   document.querySelectorAll('.js-batchItem')
-    .forEach(input => input.addEventListener('change', handleItem));
+    .forEach((input) => input.addEventListener('change', handleItem));
 }
 
 export default init();

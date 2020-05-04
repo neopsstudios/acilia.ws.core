@@ -1,81 +1,131 @@
 .c-img-modal {
     display: none;
+    height: 100%;
+
+    &__wrapper {
+        height: 100%;
+    }
 
     &__search {
 
     }
 
     &__drag {
-        padding: 30px;
-        background-color: $body-background-color;
-        border-bottom: 2px solid $grey-300;
     }
+
+    // Overwrite styles for plugin drag and drop
+    .dz-icon {
+        font-size: rem(50);
+        margin: 0 auto 10px;
+        color: rgba(46, 161, 248, .5);
+    }
+
+    .dropzone {
+        padding: 0;
+    }
+
+    .dropzone:hover {
+        border: 0;
+    }
+
+    .dropzone .dz-message {
+        width: 100%;
+        height: 100%;
+        border: 1px dashed #2ea1f8;
+        background-color: rgba(46, 161, 248, .1);
+        transition: border-width .3s;
+
+        &:hover {
+            border-width: 2px;
+        }
+    }
+
+    &__text {
+      margin: 0 auto;
+      font-size: rem(14);
+      text-align: center;
+    }
+
+    // Overwrite styles for plugin drag and drop
 
     &__list {
         position: relative;
-        border: 1px solid #e5e6e7;
-        display: flex;
-        padding: 20px;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
         width: 100%;
-        justify-content: flex-start;
-        overflow-y: scroll;
-        height: 500px;
+        height: calc(100vh - 450px);
         margin-top: 20px;
+        padding-right: 18px;
+        overflow-y: scroll;
 
         &.no-scroll {
             overflow: hidden;
         }
     }
 
-    &__list-image {
+    &__figure {
         position: relative;
-        height: 150px;
-        width: 150px;
         display: none;
-        margin: 0 43px 20px 0;
         border-radius: 5px;
         cursor: pointer;
 
-        img {
-            height: 100%;
-            width: 100%;
-            display: block;
-            border-radius: 5px;
+        &:hover {
+            border: 1px solid $grey-600;
+
+            .c-img-modal__img-actions {
+                display: flex;
+            }
+
+            &:before {
+                position: absolute;
+                content: '';
+                display: block;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(255, 255, 255, .7);
+            }
         }
 
         &.is-visible {
             display: block;
         }
 
-        &:nth-of-type(6n) {
-            margin-right: 0;
+        &--text {
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            justify-content: center;
+            border: 1px solid $grey-600;
+            background-color: $grey-100;
         }
+    }
 
-        &:hover {
-            box-shadow: 5px 5px 15px 5px #000000;
+    &__figure-icon {
+        display: block;
+        margin-bottom: 10px;
+        color: $grey-600;
+        font-size: rem(35);
+        text-align: center;
+    }
 
-            .ws-image-selector__list__image-actions {
-                display: flex;
-            }
-        }
+    &__figure-text {
+        font-size: rem(12);
+        text-align: center;
+    }
+
+    &__img {
+        display: block;
+        width: 100%;
+        height: auto;
     }
 
     &__img-actions {
-        position: absolute;
+        @include position(absolute, $top: 0, $bottom: 0);
+        justify-content: center;
         display: none;
-        bottom: 5px;
-        margin: 0 20px;
-
-        button:nth-of-type(1) {
-            margin-right: 10px;
-        }
-    }
-
-    &__text {
-      text-align: center;
-      font-size: 16px;
-      margin: 11px auto;
-      width: 178px;
+        width: 100%;
+        height: 30px;
+        margin: auto;
     }
 }

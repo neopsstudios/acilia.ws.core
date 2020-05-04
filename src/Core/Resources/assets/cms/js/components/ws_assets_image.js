@@ -20,8 +20,8 @@ function handleBehaviour(event) {
     `#${event.currentTarget.dataset.idAssetComponent}[data-component="ws_cropper"]`,
   );
   if (assetImageElement.dataset.displayMode === 'list'
-    && document.querySelector('.c-img-modal').offsetWidth === 0
-    && document.querySelector('.c-img-modal').offsetHeight === 0) {
+    && document.querySelector('.js-image-selector-modal').offsetWidth === 0
+    && document.querySelector('.js-image-selector-modal').offsetHeight === 0) {
     event.preventDefault();
     initModalImageSelector(assetImageElement, modal);
   } else if (assetImageElement.dataset.displayMode === 'crop') {

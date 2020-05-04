@@ -61,7 +61,13 @@ function showElements(imageList) {
     stillData = false;
     imageListContainer.insertAdjacentHTML(
       'beforeend',
-      `<p class="js-no-more-images">${window.cmsTranslations.ws_cms_components.assets_images.no_results}</p>`,
+      `<figure class="c-img-modal__figure c-img-modal__figure--text js-no-more-images">
+          <i class="c-img-modal__figure-icon fa fa-picture-o" aria-hidden="true"></i>
+          <p class="c-img-modal__figure-text">
+            ${window.cmsTranslations.ws_cms_components.assets_images.no_results}
+          </p>
+      </figure>`
+      ,
     );
   }
 

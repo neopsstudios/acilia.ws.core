@@ -45,7 +45,8 @@ $black: #000 !default;
 
 $blue-100: #86CAFF !default;
 $blue-200: #53b2f9 !default;
-$blue-300: #2ea1f8 !default; // main
+// $blue-300: #2ea1f8 !default; // main
+$blue-300: #2083fe !default; // main
 $blue-400: #1990ea !default;
 $blue-500: #1a91eb !default;
 
@@ -107,6 +108,7 @@ $secondary-background-color: #fafbfc !default;
 // ========================================================================== */
 
 $base-font-family: 'IBM Plex Sans', sans-serif !default;
+// $base-font-family: 'Source Sans Pro', sans-serif !default;
 $base-font-size: 16px !default;
 $base-line-height: 24px !default;
 

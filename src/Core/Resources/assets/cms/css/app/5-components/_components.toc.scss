@@ -23,7 +23,7 @@
             opacity: 1;
 
             &:before {
-                @include position(absolute, $top: 2px, $left: -14px);
+                @include position(absolute, $top: 0, $left: -14px);
                 font-size: 14px;
                 font-family: "FontAwesome";
                 content: "\f105";
@@ -32,6 +32,10 @@
 
         &:hover {
             text-decoration: underline;
+        }
+
+        &:focus {
+            outline: none;
         }
     }
 }

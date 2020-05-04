@@ -1,6 +1,6 @@
 import { init as initACropper, getCropperInstance, crop } from '../../modules/a_cropper';
 
-const cropperIgnoreClasses = ':not(.cropper-hide):not(.cropper-hidden)';
+const cropperIgnoreClasses = ':not(.cropper-u-hidden):not(.cropper-hidden)';
 let modal = null;
 
 function getComponentConfig(elmId, ratio) {
@@ -37,21 +37,22 @@ function saveCrop(id) {
   });
 
   document.querySelectorAll(`[data-id="${id.replace('_asset', '')}"]`).forEach((elm) => {
-    elm.classList.remove('is-hidden');
+    elm.classList.remove('u-hidden');
   });
 
   if (document.querySelector('.js-open-modal.js-not-on-preview')) {
-    document.querySelector('.js-open-modal.js-not-on-preview').classList.add('is-hidden');
+    document.querySelector('.js-open-modal.js-not-on-preview').classList.add('u-hidden');
   }
 
   document.querySelectorAll(`[data-id="${id.replace('_asset', '')}"]`).forEach((elm) => {
     if (elm.querySelector('img')) {
       elm.querySelector('img').src = fieldData.cropper.getCroppedCanvas().toDataURL();
-    } else if (elm.querySelector('.c-img-upload__img')) {
-      elm.querySelector('.c-img-upload__img').insertAdjacentHTML(
-        'beforeend',
-        `<img src="${fieldData.cropper.getCroppedCanvas().toDataURL()}" width="100">`,
+    } else if (elm.querySelector('.c-img-upload__wrapper-img')) {
+      elm.querySelector('.c-img-upload__wrapper-img').insertAdjacentHTML(
+        'afterbegin',
+        `<img class="c-img-upload__img" src="${fieldData.cropper.getCroppedCanvas().toDataURL()}">`,
       );
+      elm.querySelector('.c-img-upload__wrapper-img').classList.remove('u-hidden');
     }
   });
   document.querySelector(`.ws-cropper_modal[data-id="${id}"] .ws-cropper_crop img`).src = '';
@@ -86,7 +87,7 @@ function showCropper(elm, cropperIndex) {
   const cropperSelector = `.ws-cropper_modal[data-id="${elm.id}"]`;
   const config = getComponentConfig(elm.id, cropperConfig.ratioValue);
 
-  document.querySelector(`${cropperSelector} .ws-cropper_crop`).classList.add('hide');
+  document.querySelector(`${cropperSelector} .ws-cropper_crop`).classList.add('u-hidden');
   if (fieldData.cropper !== null) {
     document.querySelector(imageSelector).removeEventListener('crop', checkCropSize);
     fieldData.cropper.destroy();
@@ -97,7 +98,7 @@ function showCropper(elm, cropperIndex) {
   fieldData.cropper = crop(image, config);
 
   image.addEventListener('crop', checkCropSize);
-  document.querySelector(`${cropperSelector} .ws-cropper_crop`).classList.remove('hide');
+  document.querySelector(`${cropperSelector} .ws-cropper_crop`).classList.remove('u-hidden');
   document.querySelector(`${cropperSelector} .ws-cropper_details_ratio`).innerText = ratio;
   document.querySelector(`${cropperSelector} .ws-cropper_details_min_w`).innerText = cropperConfig.minimums.width;
   document.querySelector(`${cropperSelector} .ws-cropper_details_min_h`).innerText = cropperConfig.minimums.height;
@@ -131,7 +132,7 @@ function checkImagesSizes(elm, cropperIndex) {
         const msg = errorMessage.concat(`${min[1].width} x ${min[1].height}`);
         document.querySelector(`.ws-cropper_modal[data-id="${elm.id}"] .ws-cropper_details_obs`).innerText = msg;
         document.querySelectorAll(`.ws-cropper_confirm[data-id="${elm.id}"]`).forEach((input) => {
-          input.classList.add('hide');
+          input.classList.add('u-hidden');
         });
         cropper.cropper.clear();
       }
@@ -179,7 +180,7 @@ function initCropper(event) {
   modalCroppper.dataset.croppIndex = 1;
 
   document.querySelectorAll(`.ws-cropper_confirm[data-id="${elm.id}"]`).forEach(
-    input => input.classList.remove('hide'),
+    (input) => input.classList.remove('u-hidden'),
   );
 
   showCropper(elm, 0);
@@ -202,7 +203,7 @@ function init(assetElement, modalElement) {
   modal = modalElement;
   assetElement.addEventListener('change', initCropper);
 
-  document.querySelectorAll(`[data-id="${assetElement.id}"] .ws-cropper_container .btn-danger`).forEach((elm) => {
+  document.querySelectorAll(`[data-id="${assetElement.id}"] .ws-cropper_container .ws-cropper_cancel`).forEach((elm) => {
     elm.addEventListener('click', cancelCrop);
   });
 

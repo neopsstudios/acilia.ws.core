@@ -9,9 +9,10 @@ $table-cell-line-height: $base-line-height;
 
     &__collapse {
         display: none;
-        padding: 20px 30px;
-        background-color: $table-head-slim-background-color;
-        font-size: rem(14);
+
+        &.is-active {
+            display: table-row;
+        }
     }
 
     &__link {
@@ -35,6 +36,8 @@ $table-cell-line-height: $base-line-height;
 
     &__toggle {
         position: relative;
+        background-color: $color-transparent;
+        outline: none;
 
         &:hover {
             text-decoration: underline;
@@ -82,6 +85,10 @@ $table-cell-line-height: $base-line-height;
 }
 
 .c-table-collapse {
+    padding: 20px 30px;
+    background-color: $table-head-slim-background-color;
+    font-size: rem(14);
+
     &__item {
         font-size: rem(16);
         font-weight: $font-weight-semibold;
@@ -97,4 +104,8 @@ $table-cell-line-height: $base-line-height;
         line-height: rem(18);
         font-weight: $font-weight-normal;
     }
+}
+
+.ws-table-collapse {
+    cursor: pointer;
 }

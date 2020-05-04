@@ -1,0 +1,58 @@
+.c-sidebar {
+    $self: &;
+
+    &__icon {
+        margin-right: 15px;
+        font-size: rem(22);
+    }
+
+    &__item {
+        margin: 10px 0;
+
+        &.is-open {
+            box-shadow: inset 3px 0 0 0 #252529;
+        }
+    }
+
+    &--light {
+        border-right: 1px solid #e1e2e8;
+        background-color: #f4f6f9;
+
+        #{ $self }__brand {
+            border: 0;
+        }
+
+        #{ $self }__item {
+            &.is-open {
+                background-color: #f4f6f9;
+            }
+        }
+
+        #{ $self }__link {
+            margin: 10px 0;
+
+            &.is-active {
+                box-shadow: inset 3px 0 0 0 #252529;
+                color: #252529;
+                font-weight: $font-weight-semibold;
+            }
+
+            &:hover {
+                color: $color-info;
+                text-decoration: none;
+            }
+        }
+    }
+
+    &__submenu {
+        margin-left: 20px;
+
+        #{ $self }__link {
+            &.is-active {
+                box-shadow: inherit;
+                margin: 0;
+            }
+        }
+    }
+}
+

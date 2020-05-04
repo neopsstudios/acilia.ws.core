@@ -12,7 +12,7 @@ class AModal {
 
     const modalId = 'a-modal';
     const containerId = 'a-container';
-    const closeButtonClass = 'a-close';
+    const closeButtonClass = 'a-close fa fa-times';
     const closeButtonId = 'a-close';
     this.contentClass = 'a-content';
     this.overlayClass = 'a-overlay';
@@ -89,7 +89,7 @@ class AModal {
 
     this.container = document.querySelector(`#${containerId}[data-id='${options.identifier}']`);
 
-    const closeButtonElement = this.container.querySelector(`.${closeButtonClass}`);
+    const closeButtonElement = this.container.querySelector(`#${closeButtonId}`);
     if (options.closeButton === false) {
       this.options.closeButton = false;
       closeButtonElement.style.display = 'none';

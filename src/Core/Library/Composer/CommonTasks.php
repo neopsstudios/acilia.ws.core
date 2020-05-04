@@ -24,6 +24,9 @@ abstract class CommonTasks
                 throw new \Exception(sprintf('Error, symlink "%s" does not point to "%s".', $link, $target));
             }
         } else {
+            if (!file_exists(dirname($link))) {
+                mkdir(dirname($link));
+            }
             symlink($target, $link);
         }
     }

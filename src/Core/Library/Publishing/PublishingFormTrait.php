@@ -27,11 +27,17 @@ trait PublishingFormTrait
             ])
             ->add('publishSince', DateTimePickerType::class, [
                 'translation_domain' => 'ws_cms',
-                'label' => 'publishing.publishSince.label'
+                'label' => 'publishing.publishSince.label',
+                'attr' => [
+                    'placeholder' => 'publishing.publishSince.placeholder'
+                ]
             ])
             ->add('publishUntil', DateTimePickerType::class, [
                 'translation_domain' => 'ws_cms',
-                'label' => 'publishing.publishUntil.label'
+                'label' => 'publishing.publishUntil.label',
+                'attr' => [
+                    'placeholder' => 'publishing.publishSince.placeholder'
+                ]
             ]);
     }
 }

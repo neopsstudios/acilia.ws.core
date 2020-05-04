@@ -497,22 +497,20 @@
 
 {%- block ws_asset_image_widget -%}
     {# show image thumbnail if exists #}
-    <div class="c-img-upload {{ form.children.asset_image.vars.data == null ? 'is-hidden' }}" data-id="{{ id }}">
-        {% if form.children.asset_image.vars.data != null %}
-            <div class="c-img-upload__wrapper-img">
+    <div class="c-img-upload {{ form.children.asset_image.vars.data == null ? 'u-hidden' }}" data-id="{{ id }}">
+        <div class="c-img-upload__wrapper-img">
                 {% if form.children.asset_image.vars.data != null %}
-                    <img class="c-img-upload__img" src="{{ asset_get_image(form.children.asset_image.vars.data, 'thumb', '300x300') }}">
-                {% else %}
-                    <img class="c-img-upload__img" src="">
+                    <img
+                        class="c-img-upload__img"
+                        src="{{asset_get_image(form.children.asset_image.vars.data, 'thumb', '300x300') }}">
                 {% endif %}
-                <button
-                    class="c-btn c-btn--secondary c-img-upload__btn js-open-modal"
-                    type="button"
-                    data-id-asset-component="{{ form.children.asset.vars.id }}">
-                    {{ 'assets_image.change_modal_on_image'|trans({}, 'ws_cms') }}
-                </button>
-            </div>
-        {% endif %}
+            <button
+                class="c-btn c-btn--secondary c-img-upload__btn js-open-modal"
+                type="button"
+                data-id-asset-component="{{ form.children.asset.vars.id }}">
+                {{ 'assets_image.change_modal_on_image'|trans({}, 'ws_cms') }}
+            </button>
+        </div>
     </div>
 
     {# show file input field #}
@@ -535,26 +533,26 @@
     {# show cropper modal #}
     <div class="ws-cropper_modal" data-id="{{ form.children.asset.vars.id }}" style="display:none" data-cropp-index="0">
         <div class="ws-cropper_container">
-            <div class="ws-cropper_crop">
+            <div class="ws-cropper_crop u-mb-40">
                 <img>
             </div>
-            <div class="ws-cropper_aside">
-                <div class="ws-cropper_preview_wrapper u-mb-20">
+            <div class="ws-cropper_aside u-mb-20">
+                <div class="ws-cropper_preview_wrapper u-mr-30">
                     <h4 class="u-h4 u-font-medium u-mb-10">{{ 'cropper_preview'|trans({}, 'ws_cms') }}</h4>
                     <div class="ws-cropper_preview"></div>
                 </div>
                 <div class="ws-cropper_detail_wrapper">
-                    <h6 class="u-h6 u-font-medium u-mb-10">{{ 'cropper_title'|trans({}, 'ws_cms') }}:</h6>
-                    <table class="c-table u-text-center u-border-right-zero u-border-left-zero u-mb-20">
-                        <thead>
+                    <h4 class="u-h4 u-font-medium u-mb-10">{{ 'cropper_title'|trans({}, 'ws_cms') }}:</h4>
+                    <table class="c-table c-table--fixed u-text-center u-border-right-zero u-border-left-zero u-mb-20">
+                        <thead class="c-table__head">
                             <tr>
-                                <th
+                                <th 
                                     class="u-pt-small u-font-medium u-pb-xsmall ws-cropper_details_ratio">
                                 </th>
-                                <th
+                                <th 
                                     class="u-pt-small u-font-medium u-pb-xsmall ws-cropper_details_min_w">
                                 </th>
-                                <th
+                                <th 
                                     class="u-pt-small u-font-medium u-pb-xsmall ws-cropper_details_min_h">
                                 </th>
                             </tr>
@@ -576,17 +574,18 @@
                     <h6 class="u-h6 u-font-medium u-mb-10">{{ 'cropper_obs'|trans({}, 'ws_cms') }}</h6>
                     <p class="ws-cropper_details_obs"></p>
                 </div>
-                <div class="ws-cropper_actions">
-                    <button class="c-btn c-btn--success ws-cropper_confirm ws-cropper_next u-mr-5" data-id="{{ form.children.asset.vars.id }}">
-                        {{ 'next'|trans({}, 'ws_cms') }}
-                    </button>
-                    <button class="c-btn c-btn--info ws-cropper_confirm ws-cropper_save u-mr-5" data-id="{{ form.children.asset.vars.id }}">
-                        {{ 'confirm'|trans({}, 'ws_cms') }}
-                    </button>
-                    <button class="c-btn c-btn--secondary" data-id="{{ form.children.asset.vars.id }}">
-                        {{ 'cancel'|trans({}, 'ws_cms') }}
-                    </button>
-                </div>
+            </div>
+            <div class="ws-cropper_actions">
+                <div class="c-divider u-mv-small"></div>
+                <button class="c-btn c-btn--success ws-cropper_confirm ws-cropper_next u-mr-5" data-id="{{ form.children.asset.vars.id }}">
+                    {{ 'next'|trans({}, 'ws_cms') }}
+                </button>
+                <button class="c-btn c-btn--info ws-cropper_confirm ws-cropper_save u-mr-5" data-id="{{ form.children.asset.vars.id }}">
+                    {{ 'confirm'|trans({}, 'ws_cms') }}
+                </button>
+                <button class="c-btn c-btn--secondary ws-cropper_cancel" data-id="{{ form.children.asset.vars.id }}">
+                    {{ 'cancel'|trans({}, 'ws_cms') }}
+                </button>
             </div>
         </div>
     </div>
@@ -605,7 +604,7 @@
                         <div class="u-flex u-justify-end">
                             <div class="c-field c-field--inline has-icon-right u-hidden-down@tablet u-mr-small">
                                 <span class="c-field__icon">
-                                    <i class="fa fa-search"></i> 
+                                    <i class="fa fa-search"></i>
                                 </span>
                                 <label class="u-hidden-visually" for="navbar-search">Seach</label>
                                 <input
@@ -642,7 +641,7 @@
             </div>
         </div>
 
-        <figure class="c-img-modal__list-image js-image-item #extra-class" data-id="{{ form.children.asset.vars.id }}">
+        <figure class="c-img-modal__figure js-image-item #extra-class" data-id="{{ form.children.asset.vars.id }}">
             <div class="c-img-modal__img-actions">
                 <button
                         class="c-btn c-btn--info c-btn--small u-mr-xsmall js-list-image-use"
@@ -656,14 +655,13 @@
                         data-image-id="#image-id"
                         data-image-url="#image-original"
                         type="button">
-                    <i class="fa fa-crop" aria-hidden="true"></i>
                     {{ 'assets_image.image_list.crop'|trans({}, 'ws_cms') }}
                 </button>
             </div>
             <img
                     id="#image-id"
                     alt="#image-alt"
-                    class="lazy_loaded js-image"
+                    class="c-img-modal__img lazy_loaded js-image"
                     data-a-lazy
                     data-src="#image-thumb"
                     data-image="#image-original"/>

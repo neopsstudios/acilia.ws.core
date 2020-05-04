@@ -85,7 +85,9 @@ publishing.publishStatus.published.label: Published
 publishing.publishStatus.unpublished.label: Unpublished
 publishing.publishStatus.draft.label: Draft
 publishing.publishSince.label: Publish Since
+publishing.publishSince.placeholder: Publish Since
 publishing.publishUntil.label: Publish Until
+publishing.publishUntil.placeholder: Publish Until
 
 # Batch actions
 batch_action.confirm_message: This action will be applied to every item selected. Do you want to continue?

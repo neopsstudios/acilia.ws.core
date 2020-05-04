@@ -85,7 +85,9 @@ publishing.publishStatus.published.label: Publicado
 publishing.publishStatus.unpublished.label: Despublicado
 publishing.publishStatus.draft.label: Borrador
 publishing.publishSince.label: Publicar desde
+publishing.publishSince.placeholder: Publicar desde
 publishing.publishUntil.label: Publicar hasta
+publishing.publishUntil.placeholder: Publicar hasta
 
 # Batch actions
 batch_action.confirm_message: Esta acción se aplicará a cada elemento seleccionado. ¿Deseas continuar?

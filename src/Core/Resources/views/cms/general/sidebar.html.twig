@@ -8,8 +8,7 @@
                         href="#"
                         aria-expanded="false"
                     >
-                        <i class="fa fa-caret-square-o-down u-mr-5"></i>
-                        {{ menu.label|trans({}, menu.translationDomain) }}
+                        {{ menu.label|trans({}, menu.translationDomain)|raw  }}
                     </a>
                     <ul class="c-sidebar__submenu collapse">
                         {% for submenu in menu.children %}
@@ -31,8 +30,7 @@
                     class="c-sidebar__link {{ in_route(menu.collapsedRoutes, 'is-active') }}"
                     href="{{ path(menu.routeName, menu.routeOptions) }}"
                 >
-                    <i class="fa fa-home u-mr-5"></i>
-                    {{ menu.label|trans({}, menu.translationDomain) }}
+                    {{ menu.label|trans({}, menu.translationDomain)|raw  }}
                 </a>
             {% endif %}
         {% endif %}

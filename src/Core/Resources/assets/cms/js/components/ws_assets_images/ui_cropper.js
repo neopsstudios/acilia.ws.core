@@ -28,35 +28,41 @@ function cancelCrop(event) {
 }
 
 function saveCrop(id) {
-  const fieldData = getCropperInstance(id);
-  const hiddenFields = id.replace('asset', 'cropper_');
-  fieldData.config.forEach((config) => {
-    const idSelector = `${hiddenFields}${config.ratio.replace(':', 'x')}`;
-    const value = `${config.data.width};${config.data.height};${config.data.x};${config.data.y}`;
-    document.getElementById(idSelector).value = value;
-  });
+  try {
+    const fieldData = getCropperInstance(id);
+    const hiddenFields = id.replace('asset', 'cropper_');
+    fieldData.config.forEach((config) => {
+      const idSelector = `${hiddenFields}${config.ratio.replace(':', 'x')}`;
+      const value = `${config.data.width};${config.data.height};${config.data.x};${config.data.y}`;
+      document.getElementById(idSelector).value = value;
+    });
 
-  document.querySelectorAll(`[data-id="${id.replace('_asset', '')}"]`).forEach((elm) => {
-    elm.classList.remove('u-hidden');
-  });
+    document.querySelectorAll(`[data-id="${id.replace('_asset', '')}"]`).forEach((elm) => {
+      elm.classList.remove('u-hidden');
+    });
 
-  if (document.querySelector('.js-open-modal.js-not-on-preview')) {
-    document.querySelector('.js-open-modal.js-not-on-preview').classList.add('u-hidden');
-  }
-
-  document.querySelectorAll(`[data-id="${id.replace('_asset', '')}"]`).forEach((elm) => {
-    if (elm.querySelector('img')) {
-      elm.querySelector('img').src = fieldData.cropper.getCroppedCanvas().toDataURL();
-    } else if (elm.querySelector('.c-img-upload__wrapper-img')) {
-      elm.querySelector('.c-img-upload__wrapper-img').insertAdjacentHTML(
-        'afterbegin',
-        `<img class="c-img-upload__img" src="${fieldData.cropper.getCroppedCanvas().toDataURL()}">`,
-      );
-      elm.querySelector('.c-img-upload__wrapper-img').classList.remove('u-hidden');
+    if (document.querySelector('.js-open-modal.js-not-on-preview')) {
+      document.querySelector('.js-open-modal.js-not-on-preview').classList.add('u-hidden');
     }
-  });
-  document.querySelector(`.ws-cropper_modal[data-id="${id}"] .ws-cropper_crop img`).src = '';
-  modal.close();
+
+    document.querySelectorAll(`[data-id="${id.replace('_asset', '')}"]`).forEach((elm) => {
+      const element = elm;
+      if (element.querySelector('img')) {
+        element.querySelector('img').src = fieldData.cropper.getCroppedCanvas().toDataURL();
+      } else if (element.querySelector('.c-img-upload__wrapper-img')) {
+        element.querySelector('.c-img-upload__wrapper-img').insertAdjacentHTML(
+          'afterbegin',
+          `<img class="c-img-upload__img" src="${fieldData.cropper.getCroppedCanvas().toDataURL()}">`,
+        );
+        element.querySelector('.c-img-upload__wrapper-img').classList.remove('u-hidden');
+      }
+    });
+    document.querySelector(`.ws-cropper_modal[data-id="${id}"] .ws-cropper_crop img`).src = '';
+    modal.close();
+  } catch (error) {
+    // this catch is to catch the error
+    // 'InternalError: "too much recursion"' from the cropper library
+  }
 }
 
 function setPreview(elementId, src) {
@@ -65,50 +71,60 @@ function setPreview(elementId, src) {
 }
 
 function checkCropSize(event) {
-  const parent = event.currentTarget.closest('.ws-cropper_modal');
-  // get the current index
-  const index = parseInt(parent.dataset.croppIndex, 10) - 1;
-  const { minimums } = getCropperInstance(parent.dataset.id).config[index];
-  const { width, height } = event.detail;
+  try {
+    const parent = event.currentTarget.closest('.ws-cropper_modal');
+    // get the current index
+    const index = parseInt(parent.dataset.croppIndex, 10) - 1;
+    const { minimums } = getCropperInstance(parent.dataset.id).config[index];
+    const { width, height } = event.detail;
 
-  if (width < minimums.width || height < minimums.height) {
-    getCropperInstance(parent.dataset.id).cropper.setData({
-      width: Math.max(minimums.width, width),
-      height: Math.max(minimums.height, height),
-    });
+    if (width < minimums.width || height < minimums.height) {
+      getCropperInstance(parent.dataset.id).cropper.setData({
+        width: Math.max(minimums.width, width),
+        height: Math.max(minimums.height, height),
+      });
+    }
+  } catch (error) {
+    // this catch is to catch the error
+    // 'InternalError: "too much recursion"' from the cropper library
   }
 }
 
 function showCropper(elm, cropperIndex) {
-  const fieldData = getCropperInstance(elm.id);
-  const croppersConfig = fieldData.config;
-  const cropperConfig = croppersConfig[cropperIndex];
-  const imageSelector = `.ws-cropper_modal[data-id="${elm.id}"] img${cropperIgnoreClasses}`;
-  const cropperSelector = `.ws-cropper_modal[data-id="${elm.id}"]`;
-  const config = getComponentConfig(elm.id, cropperConfig.ratioValue);
+  try {
+    const fieldData = getCropperInstance(elm.id);
+    const croppersConfig = fieldData.config;
+    const cropperConfig = croppersConfig[cropperIndex];
+    const imageSelector = `.ws-cropper_modal[data-id="${elm.id}"] img${cropperIgnoreClasses}`;
+    const cropperSelector = `.ws-cropper_modal[data-id="${elm.id}"]`;
+    const config = getComponentConfig(elm.id, cropperConfig.ratioValue);
 
-  document.querySelector(`${cropperSelector} .ws-cropper_crop`).classList.add('u-hidden');
-  if (fieldData.cropper !== null) {
-    document.querySelector(imageSelector).removeEventListener('crop', checkCropSize);
-    fieldData.cropper.destroy();
-  }
+    document.querySelector(`${cropperSelector} .ws-cropper_crop`).classList.add('u-hidden');
+    if (fieldData.cropper !== null) {
+      document.querySelector(imageSelector).removeEventListener('crop', checkCropSize);
+      fieldData.cropper.destroy();
+    }
 
-  const ratio = cropperConfig.ratio.replace('_', ':');
-  const image = document.querySelector(imageSelector);
-  fieldData.cropper = crop(image, config);
+    const ratio = cropperConfig.ratio.replace('_', ':');
+    const image = document.querySelector(imageSelector);
+    fieldData.cropper = crop(image, config);
 
-  image.addEventListener('crop', checkCropSize);
-  document.querySelector(`${cropperSelector} .ws-cropper_crop`).classList.remove('u-hidden');
-  document.querySelector(`${cropperSelector} .ws-cropper_details_ratio`).innerText = ratio;
-  document.querySelector(`${cropperSelector} .ws-cropper_details_min_w`).innerText = cropperConfig.minimums.width;
-  document.querySelector(`${cropperSelector} .ws-cropper_details_min_h`).innerText = cropperConfig.minimums.height;
+    image.addEventListener('crop', checkCropSize);
+    document.querySelector(`${cropperSelector} .ws-cropper_crop`).classList.remove('u-hidden');
+    document.querySelector(`${cropperSelector} .ws-cropper_details_ratio`).innerText = ratio;
+    document.querySelector(`${cropperSelector} .ws-cropper_details_min_w`).innerText = cropperConfig.minimums.width;
+    document.querySelector(`${cropperSelector} .ws-cropper_details_min_h`).innerText = cropperConfig.minimums.height;
 
-  if (croppersConfig.length > (cropperIndex + 1)) {
-    document.querySelector(`${cropperSelector} .ws-cropper_save`).style.display = 'none';
-    document.querySelector(`${cropperSelector} .ws-cropper_next`).style.display = 'inline-block';
-  } else {
-    document.querySelector(`${cropperSelector} .ws-cropper_save`).style.display = 'inline-block';
-    document.querySelector(`${cropperSelector} .ws-cropper_next`).style.display = 'none';
+    if (croppersConfig.length > (cropperIndex + 1)) {
+      document.querySelector(`${cropperSelector} .ws-cropper_save`).style.display = 'none';
+      document.querySelector(`${cropperSelector} .ws-cropper_next`).style.display = 'inline-block';
+    } else {
+      document.querySelector(`${cropperSelector} .ws-cropper_save`).style.display = 'inline-block';
+      document.querySelector(`${cropperSelector} .ws-cropper_next`).style.display = 'none';
+    }
+  } catch (error) {
+    // this catch is to catch the error
+    // 'InternalError: "too much recursion"' from the cropper library
   }
 }
 

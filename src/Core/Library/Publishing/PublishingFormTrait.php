@@ -36,7 +36,7 @@ trait PublishingFormTrait
                 'translation_domain' => 'ws_cms',
                 'label' => 'publishing.publishUntil.label',
                 'attr' => [
-                    'placeholder' => 'publishing.publishSince.placeholder'
+                    'placeholder' => 'publishing.publishUntil.placeholder'
                 ]
             ]);
     }

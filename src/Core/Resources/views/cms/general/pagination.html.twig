@@ -8,17 +8,19 @@
 
 {% apply spaceless %}
 <div class="u-flex u-justify-between u-mt-small">
-    <div class="dataTables_info">
-        {{
-            'pagination.info'|trans(
-                {
-                    '%count%': totalCount,
-                    '%from%': ((currentPage - 1) * limit) + 1,
-                    '%to%': ((currentPage - 1) * limit) + currentCount
-                }
-            , 'ws_cms')
-        }}
-    </div>
+    {% if totalCount > 0 %}
+        <div class="dataTables_info">
+            {{
+                'pagination.info'|trans(
+                    {
+                        '%count%': totalCount,
+                        '%from%': ((currentPage - 1) * limit) + 1,
+                        '%to%': ((currentPage - 1) * limit) + currentCount
+                    }
+                , 'ws_cms')
+            }}
+        </div>
+    {% endif %}
 
     {% if nbPages > 1 %}
         {% set nearbyPagesLimit = 4 %}

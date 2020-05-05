@@ -178,10 +178,13 @@ async function initCropper(event) {
   const modalCroppper = document.querySelector(`.ws-cropper_modal[data-id="${elm.id}"]`);
   let imageSrc = '';
 
+  if (event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length) {
+    // if file is from drag and drop, we assign it to the elm object, to use the same logic.
+    elm.files = event.dataTransfer.files;
+  }
+
   if (elm.files && elm.files.length) {
     imageSrc = window.URL.createObjectURL(elm.files[0]);
-  } else if (event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length) {
-    imageSrc = window.URL.createObjectURL(event.dataTransfer.files[0]);
   } else if (currentTarget.dataset.imageUrl) {
     imageSrc = currentTarget.dataset.imageUrl;
   }

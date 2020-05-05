@@ -128,34 +128,30 @@ function showCropper(elm, cropperIndex) {
   }
 }
 
-function checkImagesSizes(elm, cropperIndex) {
-  const { cmsTranslations } = window;
-  const errorMessage = cmsTranslations.ws_cms_components.cropper.error;
-  const cropper = getCropperInstance(elm.id);
+async function checkImagesSizes(imageSrc, minimums) {
+  const imageLoader = new Promise((resolve, reject) => {
+    const img = document.createElement('img');
+    img.src = imageSrc;
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = imageSrc;
+  });
 
-  const image = document.querySelector(`.ws-cropper_modal[data-id="${elm.id}"] img${cropperIgnoreClasses}`);
-  if (image.width === 0 && image.height === 0) {
-    return setTimeout(() => checkImagesSizes(elm, cropperIndex), 100);
-  }
+  const validatorData = { isValid: true };
+  const imageTag = await imageLoader;
 
-  const minimums = JSON.parse(elm.dataset.minimums);
 
   Object.entries(minimums).forEach((min) => {
     if (min[1] !== undefined && min[1].height !== undefined && min[1].width !== undefined) {
-      if (image.naturalHeight < min[1].height || image.naturalWidth < min[1].width) {
-        getCropperInstance(elm.id).cropper.disabled = true;
-
-        const msg = errorMessage.concat(`${min[1].width} x ${min[1].height}`);
-        document.querySelector(`.ws-cropper_modal[data-id="${elm.id}"] .ws-cropper_details_obs`).innerText = msg;
-        document.querySelectorAll(`.ws-cropper_confirm[data-id="${elm.id}"]`).forEach((input) => {
-          input.classList.add('u-hidden');
-        });
-        cropper.cropper.clear();
+      if (imageTag.naturalHeight < min[1].height || imageTag.naturalWidth < min[1].width) {
+        validatorData.isValid = false;
+        validatorData.minHeight = min[1].height;
+        validatorData.minWidth = min[1].width;
       }
     }
   });
 
-  return true;
+  return validatorData;
 }
 
 function nextCrop(event) {
@@ -175,39 +171,57 @@ function nextCrop(event) {
   }
 }
 
-function initCropper(event) {
+async function initCropper(event) {
   const id = event.currentTarget.id || event.currentTarget.dataset.id;
+  const { currentTarget } = event;
   const elm = document.querySelector(`#${id}[data-component="ws_cropper"]`);
   const modalCroppper = document.querySelector(`.ws-cropper_modal[data-id="${elm.id}"]`);
+  let imageSrc = '';
 
   if (elm.files && elm.files.length) {
-    setPreview(elm.id, window.URL.createObjectURL(elm.files[0]));
+    imageSrc = window.URL.createObjectURL(elm.files[0]);
   } else if (event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length) {
-    elm.files = event.dataTransfer.files;
-    setPreview(elm.id, window.URL.createObjectURL(event.dataTransfer.files[0]));
-  } else if (event.currentTarget.dataset.imageUrl) {
-    setPreview(elm.id, event.currentTarget.dataset.imageUrl);
-    document.getElementById(`${id}_data`).value = event.currentTarget.dataset.imageId;
+    imageSrc = window.URL.createObjectURL(event.dataTransfer.files[0]);
+  } else if (currentTarget.dataset.imageUrl) {
+    imageSrc = currentTarget.dataset.imageUrl;
   }
 
-  initACropper(elm);
+  const imgValidator = await checkImagesSizes(imageSrc, JSON.parse(elm.dataset.minimums));
 
-  modalCroppper.querySelector('.ws-cropper_details_obs').innerText = '';
-  modalCroppper.dataset.croppIndex = 1;
-
-  document.querySelectorAll(`.ws-cropper_confirm[data-id="${elm.id}"]`).forEach(
-    (input) => input.classList.remove('u-hidden'),
-  );
-
-  showCropper(elm, 0);
-
-  if (elm.dataset.displayMode === 'list') {
-    modal.refresh(`.ws-cropper_modal[data-id="${elm.id}"]`);
+  if (!imgValidator.isValid) {
+    const { error } = window.cmsTranslations.ws_cms_components.cropper;
+    const errorMsg = error.replace('%width%', imgValidator.minWidth).replace('%height%', imgValidator.minHeight);
+    const alert = document.querySelector('.c-img-modal__wrapper .c-alert.c-alert--danger');
+    if (alert && error) {
+      alert.innerHTML = errorMsg;
+      alert.classList.remove('u-hidden');
+      setTimeout(() => {
+        alert.classList.add('u-hidden');
+      }, 10000);
+    }
   } else {
-    modal.open(`.ws-cropper_modal[data-id="${elm.id}"]`);
-  }
+    setPreview(elm.id, imageSrc);
+    if (currentTarget.dataset.imageUrl) {
+      document.getElementById(`${id}_data`).value = currentTarget.dataset.imageId;
+    }
 
-  checkImagesSizes(elm, 0);
+    initACropper(elm);
+
+    modalCroppper.querySelector('.ws-cropper_details_obs').innerText = '';
+    modalCroppper.dataset.croppIndex = 1;
+
+    document.querySelectorAll(`.ws-cropper_confirm[data-id="${elm.id}"]`).forEach(
+      (input) => input.classList.remove('u-hidden'),
+    );
+
+    showCropper(elm, 0);
+
+    if (elm.dataset.displayMode === 'list') {
+      modal.refresh(`.ws-cropper_modal[data-id="${elm.id}"]`);
+    } else {
+      modal.open(`.ws-cropper_modal[data-id="${elm.id}"]`);
+    }
+  }
 }
 
 function init(assetElement, modalElement) {

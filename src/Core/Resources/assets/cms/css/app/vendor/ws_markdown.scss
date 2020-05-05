@@ -1,2 +1,12 @@
 @import '../../../node_modules/simplemde/dist/simplemde.min';
 
+// simplemde is using an old version of FontAwesome,
+// this fix is made to fix H icon, that was renamed to heading in the new version of the font
+.fa.fa-header:before {
+  content: "\f1dc";
+}
+
+.ws-img-markdown__new-upload {
+  display: none;
+}
+

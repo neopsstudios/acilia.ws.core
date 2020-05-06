@@ -8,7 +8,7 @@ let nextPage = 0;
 let stillData = true;
 let working = false;
 let dataId = '';
-let endpointUrl = window.cmsSettings.ws_cms_components.assets_images.endpoint;
+let endpointUrl = '';
 
 function removeListElements(list) {
   list.querySelectorAll('.js-image-item').forEach((element) => {
@@ -107,13 +107,17 @@ function getElementsOnScroll() {
 function init(containerId = null) {
   if (containerId) {
     dataId = containerId;
+    endpointUrl = window.cmsSettings.ws_cms_components.assets_images.endpoint;
     imageListContainer = document.querySelector(`.js-img-selector-images-list[data-id="${containerId}"]`);
+
     if (imageListContainer.querySelector('.js-no-more-images')) {
       imageListContainer.removeChild(imageListContainer.querySelector('.js-no-more-images'));
     }
+
     if (!stillData) {
       stillData = true;
     }
+
     nextPage = parseInt(imageListContainer.dataset.nextPage, 10);
     endpointUrl = `${endpointUrl}?page=1`;
     imageListContainer.addEventListener('scroll', getElementsOnScroll);

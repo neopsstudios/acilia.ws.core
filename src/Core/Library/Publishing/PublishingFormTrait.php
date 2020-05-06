@@ -11,9 +11,9 @@ trait PublishingFormTrait
     protected function addPublishingFields(FormBuilderInterface $builder)
     {
         $publishingOptions = [
+            'publishing.publishStatus.draft.label' => PublishingEntityInterface::STATUS_DRAFT,
             'publishing.publishStatus.published.label' => PublishingEntityInterface::STATUS_PUBLISHED,
-            'publishing.publishStatus.unpublished.label' => PublishingEntityInterface::STATUS_UNPUBLISHED,
-            'publishing.publishStatus.draft.label' => PublishingEntityInterface::STATUS_DRAFT
+            'publishing.publishStatus.unpublished.label' => PublishingEntityInterface::STATUS_UNPUBLISHED
         ];
 
         $builder

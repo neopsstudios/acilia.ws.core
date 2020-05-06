@@ -26,7 +26,7 @@
     {{ include('@WSCore/cms/general/alerts.html.twig') }}
 
     <a class="c-navbar__logout u-mr-small" href="{{ app.user ? logout_path() : '' }}" title="{{ 'logout'|trans({}, 'ws_cms') }}">
-        <i class="c-navbar__logout-icon fa fa-power-off" aria-hidden="true"></i>
+        <i class="fal fa-sign-out-alt fa-lg"></i>
     </a>
 
     {{ include('@WSCore/cms/general/dropdown_profile.html.twig') }}

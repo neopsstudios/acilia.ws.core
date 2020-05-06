@@ -1,9 +1,8 @@
 .c-sidebar {
     $self: &;
 
-    &__icon {
-        margin-right: 15px;
-        font-size: rem(22);
+    &__text {
+        padding-left: 10px;
     }
 
     &__item {
@@ -12,6 +11,21 @@
         &.is-open {
             box-shadow: inset 3px 0 0 0 #252529;
         }
+
+        &.has-submenu > .c-sidebar__link::after { 
+            content: initial;
+        }
+
+        &.is-open {
+
+            > .c-sidebar__link::after {
+                content: initial;
+            }
+        }
+    }
+
+    &__link {
+        position: relative;
     }
 
     &--light {
@@ -55,4 +69,6 @@
         }
     }
 }
+
+
 

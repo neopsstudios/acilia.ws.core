@@ -1,7 +1,12 @@
-.c-navbar__logout {
-    color:  $grey-800;
+.c-navbar {
+    svg {
+        path {
+            fill: $grey-800;
+        }
+
+        &:hover path {
+            fill: $grey-600;
+        }
+    }
 }
 
-.c-navbar__logout-icon {
-    font-size: 20px;
-}

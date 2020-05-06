@@ -29,13 +29,15 @@ trait RouteTrait
 
     protected function generateUrl(string $route, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
     {
-        $route = $this->container->get('router')->getRoute($route);
+        $routeDefinition = $this->container->get('router')->getRoute($route);
+        if (null !== $routeDefinition) {
+            $request = $this->container->get('request_stack')->getCurrentRequest();
 
-        $request = $this->container->get('request_stack')->getCurrentRequest();
-        foreach ($request->attributes->get('_route_params') as $param => $value) {
-            if (preg_match(sprintf('/{%s}/', $param), $route->getPath())) {
-                if (!isset($parameters[$param])) {
-                    $parameters[$param] = $value;
+            foreach ($request->attributes->get('_route_params') as $param => $value) {
+                if (preg_match(sprintf('/{%s}/', $param), $routeDefinition->getPath())) {
+                    if (!isset($parameters[$param])) {
+                        $parameters[$param] = $value;
+                    }
                 }
             }
         }

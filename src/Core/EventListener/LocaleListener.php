@@ -33,6 +33,7 @@ class LocaleListener
 
             setlocale(LC_TIME, $locale);
             setlocale(LC_COLLATE, $locale);
+            setlocale(LC_MONETARY, $locale);
         }
 
         if (! empty($this->contextService->getDomain()->getTimezone())) {

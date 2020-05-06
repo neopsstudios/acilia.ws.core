@@ -5,6 +5,7 @@ namespace WS\Core\Twig\Extension;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
+use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 
 class CRUDExtension extends AbstractExtension
@@ -34,7 +35,7 @@ class CRUDExtension extends AbstractExtension
         return '-';
     }
 
-    public function listFilter(\Twig_Environment $environment, $filter, $value)
+    public function listFilter(Environment $environment, $filter, $value)
     {
         $twigFilter = $environment->getFilter($filter);
         if ($twigFilter instanceof TwigFilter) {

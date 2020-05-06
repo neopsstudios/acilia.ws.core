@@ -16,7 +16,6 @@ class ContextService
     protected $context;
     /** @var Domain */
     protected $domain;
-    protected $locale;
     protected $device;
 
     public function __construct($debug, DomainService $domainService)

@@ -22,13 +22,15 @@
                         role="form"
                         accept-charset="UTF-8"
                     >
-                        <div class="u-flex u-mr-auto">
-                            <h4 class="c-toolbar__title u-mr-10">{{ 'title'|trans([], trans_prefix) }}</h4>
-                            <a class="c-btn c-btn--success" href="{{ path("#{route_prefix}_create") }}">
-                                <i class="fa fa-plus u-mr-5"></i>
-                                {{ 'new'|trans({}, 'ws_cms') }}
-                            </a>
-                        </div>
+                        {% block crud_create_action %}
+                            <div class="u-flex u-mr-auto">
+                                <h4 class="c-toolbar__title u-mr-10">{{ 'title'|trans([], trans_prefix) }}</h4>
+                                <a class="c-btn c-btn--success" href="{{ path("#{route_prefix}_create") }}">
+                                    <i class="fa fa-plus u-mr-5"></i>
+                                    {{ 'new'|trans({}, 'ws_cms') }}
+                                </a>
+                            </div>
+                        {% endblock %}
 
                         {{ include(
                             '@WSCore/cms/general/batch.html.twig',
@@ -176,7 +178,10 @@
                                             </td>
                                         {% endblock %}
                                     {% endfor %}
+
+                                    {% block crud_table_body_row_actions %}
                                     <td class="c-table__cell u-text-right">
+                                        {% block crud_table_body_row_action %}{% endblock %}
                                         <button
                                             class="c-btn c-btn--danger js-genericDelete"
                                             data-id="{{ entity.id }}"
@@ -188,6 +193,7 @@
                                             {{ 'delete'|trans({}, 'ws_cms') }}
                                         </button>
                                     </td>
+                                    {% endblock %}
                                 </tr>
                             {% endfor %}
                             </tbody>

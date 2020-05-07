@@ -77,6 +77,13 @@ class AssetImageService implements FactoryCollectorInterface
             ->setMimeType((string) $imageFile->getMimeType())
         ;
 
+        $assetImageInfo = getimagesize($imageFile->getPathname());
+        if (false !== $assetImageInfo) {
+            $assetImage
+                ->setWidth($assetImageInfo[0])
+                ->setHeight($assetImageInfo[1]);
+        }
+
         try {
             // set asset image into entity
             $ref = new \ReflectionMethod(get_class($entity), sprintf('set%s', ucfirst((string) $imageField)));
@@ -100,6 +107,8 @@ class AssetImageService implements FactoryCollectorInterface
         $assetImage
             ->setFilename($sourceAsset->getFilename())
             ->setMimeType($sourceAsset->getMimeType())
+            ->setWidth($sourceAsset->getWidth())
+            ->setHeight($sourceAsset->getHeight())
         ;
 
         try {

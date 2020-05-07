@@ -35,6 +35,16 @@ class AssetImage
     private $mimeType;
 
     /**
+     * @ORM\Column(name="image_width", type="integer", nullable=true)
+     */
+    private $width;
+
+    /**
+     * @ORM\Column(name="image_height", type="integer", nullable=true)
+     */
+    private $height;
+
+    /**
      * @Assert\DateTime()
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="image_created_at", type="datetime", nullable=false)
@@ -85,6 +95,30 @@ class AssetImage
     public function setMimeType(string $mimeType): self
     {
         $this->mimeType = $mimeType;
+
+        return $this;
+    }
+
+    public function getWidth(): ?int
+    {
+        return $this->width;
+    }
+
+    public function setWidth(?int $width): self
+    {
+        $this->width = $width;
+
+        return $this;
+    }
+
+    public function getHeight(): ?int
+    {
+        return $this->height;
+    }
+
+    public function setHeight(?int $height): self
+    {
+        $this->height = $height;
 
         return $this;
     }

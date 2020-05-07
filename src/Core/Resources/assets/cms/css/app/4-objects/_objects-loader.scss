@@ -1,9 +1,9 @@
 .o-loader-wrapper {
-    @include position(fixed, $right: 0, $bottom: 50px, $left: 0);
+    @include position(fixed, $right: 0, $bottom: 48px, $left: 0);
     z-index: 5;
     display: none;
     width: 100%;
-    height: calc(100vh - 510px);
+    height: calc(100vh - 505px);
     margin: auto;
 
     &:before {

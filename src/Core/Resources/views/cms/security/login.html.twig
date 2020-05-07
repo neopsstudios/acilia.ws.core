@@ -13,10 +13,6 @@
                 <h1 class="u-h4 u-text-center u-mb-zero">{{ 'login.header'|trans({}, 'ws_cms') }}</h1>
             </header>
 
-            {% if error %}
-                <div class="alert alert-danger">{{ error.message }}</div>
-            {% endif %}
-            
             <form class="c-card__body" action="{{ path('ws_cms_login') }}" method="post" role="form" accept-charset="UTF-8">
                 <div class="c-field u-mb-small">
                     <label class="c-field__label" for="username">{{ 'login.email'|trans({}, 'ws_cms') }}</label> 
@@ -32,6 +28,9 @@
 
                 <input type="hidden" name="_target_path" value="{{ path('ws_dashboard') }}" />
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                {% if error %}
+                    <div class="c-alert c-alert--border-danger u-align-items-center u-mv-10"><i class="fal fa-exclamation-triangle u-pr-5"></i>{{ error.message }}</div>
+                {% endif %}
                 <p class="u-text-xsmall u-text-center"> WideStand &copy; Acilia Software {{ 'now'|date('Y') }}</p>
             </form>
         </div>

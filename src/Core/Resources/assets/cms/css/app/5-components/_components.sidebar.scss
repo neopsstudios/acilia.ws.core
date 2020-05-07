@@ -49,6 +49,10 @@
                 box-shadow: inset 3px 0 0 0 #252529;
                 color: #252529;
                 font-weight: $font-weight-semibold;
+
+                i {
+                    color: #252529;
+                }
             }
 
             &:hover {

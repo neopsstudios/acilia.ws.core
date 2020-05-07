@@ -193,7 +193,10 @@ class ImageService
 
         $this->storageService->save(
             $this->getFilePath($assetImage, 'original'),
-            $this->storageService->get($this->getFilePath($sourceAssetImage, 'original'), StorageService::CONTEXT_PUBLIC),
+            $this->storageService->get(
+                $this->getFilePath($sourceAssetImage, 'original'),
+                StorageService::CONTEXT_PUBLIC
+            ),
             StorageService::CONTEXT_PUBLIC
         );
 

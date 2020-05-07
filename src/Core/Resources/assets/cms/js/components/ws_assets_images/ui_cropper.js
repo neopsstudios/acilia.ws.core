@@ -194,9 +194,9 @@ async function initCropper(event) {
   if (!imgValidator.isValid) {
     const { error } = window.cmsTranslations.ws_cms_components.cropper;
     const errorMsg = error.replace('%width%', imgValidator.minWidth).replace('%height%', imgValidator.minHeight);
-    const alert = document.querySelector('.c-img-modal__wrapper .c-alert.c-alert--danger');
+    const alert = document.querySelector('.c-img-modal__wrapper .c-alert.c-alert--border-warning');
     if (alert && error) {
-      alert.innerHTML = errorMsg;
+      alert.innerHTML = `<i class="fal fa-exclamation-triangle u-pr-5 u-color-warning"></i>` + errorMsg;
       alert.classList.remove('u-hidden');
       setTimeout(() => {
         alert.classList.add('u-hidden');

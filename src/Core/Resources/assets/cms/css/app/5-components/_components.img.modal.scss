@@ -6,11 +6,15 @@
         height: 100%;
     }
 
-    &__search {
-
+    &__alert-wrapper {
+        position: relative;
+        height: 40px;
     }
 
-    &__drag {
+    &__alert {
+        @include position(absolute, $top: 10px, $left: 0);
+        box-sizing: border-box;
+        margin: 0;
     }
 
     // Overwrite styles for plugin drag and drop
@@ -55,7 +59,7 @@
         gap: 20px;
         box-sizing: content-box;
         width: 100%;
-        height: calc(100vh - 450px);
+        height: calc(100vh - 510px);
         margin-top: 20px;
         padding-right: 18px;
         overflow-y: scroll;

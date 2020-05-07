@@ -3,20 +3,20 @@ window.FontAwesomeKitConfig = {
     "enabled": false
   },
   "autoA11y": {
-    "enabled": true
+    "enabled": false
   },
   "baseUrl": "https://kit-pro.fontawesome.com",
   "detectConflictsUntil": null,
   "license": "pro",
   "method": "css",
   "minify": {
-    "enabled": true
+    "enabled": false
   },
   "v4FontFaceShim": {
-    "enabled": true
+    "enabled": false
   },
   "v4shim": {
-    "enabled": true
+    "enabled": false
   },
   "version": "latest"
 };

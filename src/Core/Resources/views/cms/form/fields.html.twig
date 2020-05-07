@@ -624,8 +624,6 @@
                     </div>
                 </div>
 
-                <div class="c-alert c-alert--danger u-hidden"></div>
-
                 <div class="c-img-modal__drag">
                     <div class="dropzone dz-clickable js-img-selector-new" data-id="{{ form.children.asset.vars.id }}">
                         <div class="dz-message" data-dz-message="">
@@ -636,6 +634,11 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="c-img-modal__alert-wrapper">
+                    <div class="c-img-modal__alert c-alert c-alert--border-warning u-hidden"></div>
+                </div>
+
                 <div class="c-img-modal__list js-img-selector-images-list" data-id="{{ form.children.asset.vars.id }}" data-next-page="2">
                     <div class="o-loader-wrapper js-loader">
                         <div class="o-loader"></div>

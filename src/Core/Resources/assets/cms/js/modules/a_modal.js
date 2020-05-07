@@ -12,7 +12,7 @@ class AModal {
 
     const modalId = 'a-modal';
     const containerId = 'a-container';
-    const closeButtonClass = 'a-close fa fa-times';
+    const closeButtonClass = 'a-close fal fa-times';
     const closeButtonId = 'a-close';
     this.contentClass = 'a-content';
     this.overlayClass = 'a-overlay';

@@ -40,7 +40,7 @@
                           class="c-input"
                           placeholder="{{ setting.placeholder is defined and setting.placeholder is not empty ? setting.placeholder|trans({}, setting.translationDomain) }}"
                           rows="6">{{ setting.value }}</textarea>
-                <small class="c-field__message u-block u-mt-5">
+                <small class="c-field__message u-mt-5">
                     <i class="fa fa-info-circle"></i>
                     {% if setting.description is not empty %}{{ setting.description|trans({}, setting.translationDomain) }}{% endif %}
                 </small>
@@ -52,7 +52,7 @@
                        type="text" class="c-input"
                        placeholder="{{ setting.placeholder is defined and setting.placeholder is not empty ? setting.placeholder|trans({}, setting.translationDomain) }}"
                        value="{{ setting.value }}">
-                <small class="c-field__message u-block u-mt-5">
+                <small class="c-field__message u-mt-5">
                     {% if setting.description is not empty %}
                         <i class="fa fa-info-circle"></i>
                         {{ setting.description|trans({}, setting.translationDomain) }}

@@ -1,25 +1,121 @@
+$easing: cubic-bezier(.25, 1.7, .35, .8);
+$duration: .5s;
+$arrow-width: 8px;
+$arrow-height: 2.5px;
+
+.o-arrow-wrapper {
+    @include position(absolute, $top: 0, $right: 0, $bottom: 0);
+    width: 10px;
+    height: 2px;
+    margin: auto;
+}
+
 .o-arrow {
-    display: inline-block;
-    margin-left: 7px;
-    width: 8px;
-    height: 5px;
+    position: relative;
+    cursor: pointer;
 
-    &__svg {
+    &__left,
+    &__right {
+        position: absolute;
+        background-color: transparent;
+        top: 0;
+        width: $arrow-width;
+        height: $arrow-height;
+        display: block;
+        float: right;
 
-        &--up {
-            transform: rotate(-90deg);
+        &:after {
+            content:"";
+            background-color: $grey-600;
+            width: $arrow-width;
+            height: $arrow-height;
+            display: block;
+            float: right;
+            transition: all $duration $easing;
+            z-index: -1;
+        }
+    }
+
+    &__left {
+        left:0;
+        transform: rotate(35deg);
+
+        &:after {
+            border-radius: 3px;
+        }
+    }
+
+    &__right {
+        left: 4px;
+        transform: rotate(-35deg);
+
+        &:after {
+            border-radius: 3px;
+        }
+    }
+
+}
+
+.c-sidebar__item {
+    &:hover {
+        .o-arrow {
+            &__left,
+            &__right {
+                &:after {
+                    background-color: $blue-300;
+                }
+            }
+        }
+    }
+
+    .o-arrow {
+        right: 20px;
+    }
+
+    &.is-open .o-arrow {
+        &__left:after {
+            transform-origin: center center;
+            transform: rotate(-70deg);
         }
 
-        &--down {
-            transform: rotate(90deg);
-        }
+        &__right{
+            left: 5px;
 
-        &--left {
-            transform: rotate(180deg);
-        }
-
-        &--black {
-            fill: $color-default-text;
+            &:after {
+                transform-origin: center center;
+                transform: rotate(70deg);
+            }
         }
     }
 }
+
+.c-sidebar__link {
+    &:hover {
+        .o-arrow {
+            &__left,
+            &__right {
+
+                &:after {
+                    background-color: $blue-100;
+                }
+            }
+        }
+    }
+}
+
+.c-dropdown.show .o-arrow {
+    &__left:after {
+        transform-origin: center center;
+        transform: rotate(-70deg);
+    }
+
+    &__right{
+        left: 5px;
+
+        &:after {
+            transform-origin: center center;
+            transform: rotate(70deg);
+        }
+    }
+}
+

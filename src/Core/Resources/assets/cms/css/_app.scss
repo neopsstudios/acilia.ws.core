@@ -1,4 +1,5 @@
 // app
+@import 'app/vendor/fontawesome';
 @import 'app/vendor/a_datePicker';
 @import 'app/vendor/a_notification';
 @import 'app/vendor/a_select';
@@ -33,6 +34,7 @@
 @import 'app/4-objects/_objects-tab';
 @import 'app/4-objects/_objects.page';
 @import 'app/5-components/_components.article';
+@import 'app/5-components/_components.avatars';
 @import "app/5-components/_components.buttons";
 @import 'app/5-components/_components.breadcrumb';
 @import 'app/5-components/_components.choices';
@@ -42,8 +44,8 @@
 @import 'app/5-components/_components.input';
 @import 'app/5-components/_components.markdown';
 @import 'app/5-components/_components.modal';
-@import 'app/5-components/_components.navbar';
 @import 'app/5-components/_components.sidebar';
+@import 'app/5-components/_components.navbar';
 @import 'app/5-components/_components.tables';
 @import 'app/5-components/_components.toc';
 @import 'app/5-components/_components.toolbar';

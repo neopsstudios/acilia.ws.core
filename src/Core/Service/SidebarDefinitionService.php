@@ -26,7 +26,7 @@ class SidebarDefinitionService implements SidebarDefinitionInterface
             [
                 'roles' => [],
                 'translation_domain' => 'ws_cms',
-                'icon' => 'fa-tachometer-alt',
+                'icon' => 'fa-tachometer-alt-fast',
                 'collapsed_routes' => ['ws_dashboard'],
                 'order' => 1
             ]

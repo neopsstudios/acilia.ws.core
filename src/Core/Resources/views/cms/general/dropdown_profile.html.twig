@@ -1,4 +1,4 @@
-<div class="c-dropdown dropdown" data-toggle="dropdown-profile" data-component="ws_dropdown">
+<div class="c-dropdown dropdown u-pr-15" data-toggle="dropdown-profile" data-component="ws_dropdown">
     <a
         class="c-avatar c-avatar--xsmall has-dropdown dropdown-toggle"
         href="#"
@@ -7,8 +7,16 @@
         aria-haspopup="true"
         aria-expanded="false"
     >
-        <img class="c-avatar__img" src="{{ asset('cms/images/avatar-72.jpg')}}" alt="{{ app.user.name }}">
+        {# TODO integrar #}
+        <i class="fal fa-user-circle fa-lg"></i>
+        {# <img class="c-avatar__img" src="{{ asset('cms/images/avatar-72.jpg')}}" alt="{{ app.user.name }}"> #}
     </a>
+    <div class="o-arrow-wrapper">
+        <span class="o-arrow">
+            <span class="o-arrow__left"></span>
+            <span class="o-arrow__right"></span>
+        </span>
+    </div>
 
     <div class="c-dropdown__menu dropdown-menu dropdown-menu-right dropdown-profile" aria-labelledby="dropdwonMenuAvatar">
         <a class="c-dropdown__item dropdown-item" href="{{ path('ws_administrator_profile') }}">

@@ -1,6 +1,7 @@
 // modules
 import './modules/genericDelete';
 import './modules/batchActions';
+import './modules/fontawesome';
 import { init as moduleNotifications } from './modules/a_notifications';
 
 // components

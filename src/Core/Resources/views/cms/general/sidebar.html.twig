@@ -8,7 +8,16 @@
                         href="#"
                         aria-expanded="false"
                     >
-                        {{ menu.label|trans({}, menu.translationDomain)|raw  }}
+                        <i class="fal fa-lg {{ menu.icon }}" aria-hidden="true"></i>
+                        <span class="c-sidebar__text">
+                            {{ menu.label|trans({}, menu.translationDomain)|raw  }}
+                        </span>
+                        <div class="o-arrow-wrapper">
+                            <span class="o-arrow">
+                              <span class="o-arrow__left"></span>
+                              <span class="o-arrow__right"></span>
+                            </span>
+                        </div>
                     </a>
                     <ul class="c-sidebar__submenu collapse">
                         {% for submenu in menu.children %}
@@ -18,7 +27,10 @@
                                         class="c-sidebar__link js-submenu-children {{ in_route(submenu.collapsedRoutes, 'is-active', null, submenu.routeOptions) }}"
                                         href="{{ path(submenu.routeName, submenu.routeOptions) }}"
                                     >
-                                        {{ submenu.label|trans({}, submenu.translationDomain) }}
+                                        <i class="fal fa-lg {{ submenu.icon }}" aria-hidden="true"></i>
+                                        <span class="c-sidebar__text">
+                                            {{ submenu.label|trans({}, submenu.translationDomain) }}
+                                        </span>
                                     </a>
                                 </li>
                             {% endif %}
@@ -30,7 +42,10 @@
                     class="c-sidebar__link {{ in_route(menu.collapsedRoutes, 'is-active') }}"
                     href="{{ path(menu.routeName, menu.routeOptions) }}"
                 >
-                    {{ menu.label|trans({}, menu.translationDomain)|raw  }}
+                    <i class="fal fa-lg {{ menu.icon }}" aria-hidden="true"></i>
+                    <span class="c-sidebar__text">
+                        {{ menu.label|trans({}, menu.translationDomain)|raw  }}
+                    </span>
                 </a>
             {% endif %}
         {% endif %}

@@ -12,8 +12,6 @@ use Psr\Log\LoggerInterface;
 
 class AssetImageService implements FactoryCollectorInterface
 {
-    const ALLOW_SORT = 'filename';
-
     protected $logger;
     protected $em;
 
@@ -33,6 +31,11 @@ class AssetImageService implements FactoryCollectorInterface
         $this->contextService = $contextService;
     }
 
+    public function getSortFields(): array
+    {
+        return ['createdAt', 'filename'];
+    }
+
     /**
      * @param string $filter
      * @param int $page
@@ -41,25 +44,29 @@ class AssetImageService implements FactoryCollectorInterface
      * @param string $dir
      *
      * @return array
+     * @throws \Exception
      */
     public function getAll(?string $filter, int $page, int $limit, string $sort = '', string $dir = ''): array
     {
         $offset = ($page - 1) * $limit;
 
-        if ($sort === self::ALLOW_SORT) {
-            $orderBy = ["$sort" => $dir ? strtoupper($dir) : 'ASC'];
+        if ($sort) {
+            if (!in_array($sort, $this->getSortFields())) {
+                throw new \Exception('Sort by this field is not allowed');
+            }
+            $orderBy = [(string) $sort => $dir ? strtoupper($dir) : 'ASC'];
         } else {
-            $orderBy = [];
+            $orderBy = ['id' => 'DESC'];
         }
-
-        $domain = $this->contextService->getDomain();
 
         try {
-            return $this->repository->getAll($domain, $filter, $orderBy, $limit, $offset);
+            return $this->repository->getAll($this->contextService->getDomain(), $filter, $orderBy, $limit, $offset);
+
         } catch (\Exception $e) {
             $this->logger->error(sprintf('Error fetching image assets. Error %s', $e->getMessage()));
-            return [];
         }
+
+        return [];
     }
 
     public function createFromUploadedFile(UploadedFile $imageFile, $entity = null, string $imageField = null): AssetImage
@@ -70,12 +77,15 @@ class AssetImageService implements FactoryCollectorInterface
             ->setMimeType((string) $imageFile->getMimeType())
         ;
 
-        // Set Asset Image into Entity
-        $fieldSetter = sprintf('set%s', ucfirst((string) $imageField));
-        if (method_exists($entity, $fieldSetter)) {
-            $ref = new \ReflectionMethod(get_class($entity), $fieldSetter);
+        try {
+            // set asset image into entity
+            $ref = new \ReflectionMethod(get_class($entity), sprintf('set%s', ucfirst((string) $imageField)));
             $ref->invoke($entity, $assetImage);
+
+        } catch (\ReflectionException $e) {
+            $this->logger->error(sprintf('Error setting AssetImage into Entity. Error: %s', $e->getMessage()));
         }
+
 
         // Save Asset Image
         $this->em->persist($assetImage);
@@ -92,14 +102,16 @@ class AssetImageService implements FactoryCollectorInterface
             ->setMimeType($sourceAsset->getMimeType())
         ;
 
-        // Set Asset Image into Entity
-        $fieldSetter = sprintf('set%s', ucfirst($imageField));
-        if (method_exists($entity, $fieldSetter)) {
-            $ref = new \ReflectionMethod(get_class($entity), $fieldSetter);
+        try {
+            // set asset image into entity
+            $ref = new \ReflectionMethod(get_class($entity), sprintf('set%s', ucfirst($imageField)));
             $ref->invoke($entity, $assetImage);
+
+        } catch (\ReflectionException $e) {
+            $this->logger->error(sprintf('Error setting AssetImage into Entity. Error: %s', $e->getMessage()));
         }
 
-        // Save Asset Image
+        // save asset image
         $this->em->persist($assetImage);
         $this->em->flush();
 

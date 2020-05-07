@@ -28,35 +28,41 @@ function cancelCrop(event) {
 }
 
 function saveCrop(id) {
-  const fieldData = getCropperInstance(id);
-  const hiddenFields = id.replace('asset', 'cropper_');
-  fieldData.config.forEach((config) => {
-    const idSelector = `${hiddenFields}${config.ratio.replace(':', 'x')}`;
-    const value = `${config.data.width};${config.data.height};${config.data.x};${config.data.y}`;
-    document.getElementById(idSelector).value = value;
-  });
+  try {
+    const fieldData = getCropperInstance(id);
+    const hiddenFields = id.replace('asset', 'cropper_');
+    fieldData.config.forEach((config) => {
+      const idSelector = `${hiddenFields}${config.ratio.replace(':', 'x')}`;
+      const value = `${config.data.width};${config.data.height};${config.data.x};${config.data.y}`;
+      document.getElementById(idSelector).value = value;
+    });
 
-  document.querySelectorAll(`[data-id="${id.replace('_asset', '')}"]`).forEach((elm) => {
-    elm.classList.remove('u-hidden');
-  });
+    document.querySelectorAll(`[data-id="${id.replace('_asset', '')}"]`).forEach((elm) => {
+      elm.classList.remove('u-hidden');
+    });
 
-  if (document.querySelector('.js-open-modal.js-not-on-preview')) {
-    document.querySelector('.js-open-modal.js-not-on-preview').classList.add('u-hidden');
-  }
-
-  document.querySelectorAll(`[data-id="${id.replace('_asset', '')}"]`).forEach((elm) => {
-    if (elm.querySelector('img')) {
-      elm.querySelector('img').src = fieldData.cropper.getCroppedCanvas().toDataURL();
-    } else if (elm.querySelector('.c-img-upload__wrapper-img')) {
-      elm.querySelector('.c-img-upload__wrapper-img').insertAdjacentHTML(
-        'afterbegin',
-        `<img class="c-img-upload__img" src="${fieldData.cropper.getCroppedCanvas().toDataURL()}">`,
-      );
-      elm.querySelector('.c-img-upload__wrapper-img').classList.remove('u-hidden');
+    if (document.querySelector('.js-open-modal.js-not-on-preview')) {
+      document.querySelector('.js-open-modal.js-not-on-preview').classList.add('u-hidden');
     }
-  });
-  document.querySelector(`.ws-cropper_modal[data-id="${id}"] .ws-cropper_crop img`).src = '';
-  modal.close();
+
+    document.querySelectorAll(`[data-id="${id.replace('_asset', '')}"]`).forEach((elm) => {
+      const element = elm;
+      if (element.querySelector('img')) {
+        element.querySelector('img').src = fieldData.cropper.getCroppedCanvas().toDataURL();
+      } else if (element.querySelector('.c-img-upload__wrapper-img')) {
+        element.querySelector('.c-img-upload__wrapper-img').insertAdjacentHTML(
+          'afterbegin',
+          `<img class="c-img-upload__img" src="${fieldData.cropper.getCroppedCanvas().toDataURL()}">`,
+        );
+        element.querySelector('.c-img-upload__wrapper-img').classList.remove('u-hidden');
+      }
+    });
+    document.querySelector(`.ws-cropper_modal[data-id="${id}"] .ws-cropper_crop img`).src = '';
+    modal.close();
+  } catch (error) {
+    // this catch is to catch the error
+    // 'InternalError: "too much recursion"' from the cropper library
+  }
 }
 
 function setPreview(elementId, src) {
@@ -65,81 +71,87 @@ function setPreview(elementId, src) {
 }
 
 function checkCropSize(event) {
-  const parent = event.currentTarget.closest('.ws-cropper_modal');
-  // get the current index
-  const index = parseInt(parent.dataset.croppIndex, 10) - 1;
-  const { minimums } = getCropperInstance(parent.dataset.id).config[index];
-  const { width, height } = event.detail;
+  try {
+    const parent = event.currentTarget.closest('.ws-cropper_modal');
+    // get the current index
+    const index = parseInt(parent.dataset.croppIndex, 10) - 1;
+    const { minimums } = getCropperInstance(parent.dataset.id).config[index];
+    const { width, height } = event.detail;
 
-  if (width < minimums.width || height < minimums.height) {
-    getCropperInstance(parent.dataset.id).cropper.setData({
-      width: Math.max(minimums.width, width),
-      height: Math.max(minimums.height, height),
-    });
+    if (width < minimums.width || height < minimums.height) {
+      getCropperInstance(parent.dataset.id).cropper.setData({
+        width: Math.max(minimums.width, width),
+        height: Math.max(minimums.height, height),
+      });
+    }
+  } catch (error) {
+    // this catch is to catch the error
+    // 'InternalError: "too much recursion"' from the cropper library
   }
 }
 
 function showCropper(elm, cropperIndex) {
-  const fieldData = getCropperInstance(elm.id);
-  const croppersConfig = fieldData.config;
-  const cropperConfig = croppersConfig[cropperIndex];
-  const imageSelector = `.ws-cropper_modal[data-id="${elm.id}"] img${cropperIgnoreClasses}`;
-  const cropperSelector = `.ws-cropper_modal[data-id="${elm.id}"]`;
-  const config = getComponentConfig(elm.id, cropperConfig.ratioValue);
+  try {
+    const fieldData = getCropperInstance(elm.id);
+    const croppersConfig = fieldData.config;
+    const cropperConfig = croppersConfig[cropperIndex];
+    const imageSelector = `.ws-cropper_modal[data-id="${elm.id}"] img${cropperIgnoreClasses}`;
+    const cropperSelector = `.ws-cropper_modal[data-id="${elm.id}"]`;
+    const config = getComponentConfig(elm.id, cropperConfig.ratioValue);
 
-  document.querySelector(`${cropperSelector} .ws-cropper_crop`).classList.add('u-hidden');
-  if (fieldData.cropper !== null) {
-    document.querySelector(imageSelector).removeEventListener('crop', checkCropSize);
-    fieldData.cropper.destroy();
-  }
+    document.querySelector(`${cropperSelector} .ws-cropper_crop`).classList.add('u-hidden');
+    if (fieldData.cropper !== null) {
+      document.querySelector(imageSelector).removeEventListener('crop', checkCropSize);
+      fieldData.cropper.destroy();
+    }
 
-  const ratio = cropperConfig.ratio.replace('_', ':');
-  const image = document.querySelector(imageSelector);
-  fieldData.cropper = crop(image, config);
+    const ratio = cropperConfig.ratio.replace('_', ':');
+    const image = document.querySelector(imageSelector);
+    fieldData.cropper = crop(image, config);
 
-  image.addEventListener('crop', checkCropSize);
-  document.querySelector(`${cropperSelector} .ws-cropper_crop`).classList.remove('u-hidden');
-  document.querySelector(`${cropperSelector} .ws-cropper_details_ratio`).innerText = ratio;
-  document.querySelector(`${cropperSelector} .ws-cropper_details_min_w`).innerText = cropperConfig.minimums.width;
-  document.querySelector(`${cropperSelector} .ws-cropper_details_min_h`).innerText = cropperConfig.minimums.height;
+    image.addEventListener('crop', checkCropSize);
+    document.querySelector(`${cropperSelector} .ws-cropper_crop`).classList.remove('u-hidden');
+    document.querySelector(`${cropperSelector} .ws-cropper_details_ratio`).innerText = ratio;
+    document.querySelector(`${cropperSelector} .ws-cropper_details_min_w`).innerText = cropperConfig.minimums.width;
+    document.querySelector(`${cropperSelector} .ws-cropper_details_min_h`).innerText = cropperConfig.minimums.height;
 
-  if (croppersConfig.length > (cropperIndex + 1)) {
-    document.querySelector(`${cropperSelector} .ws-cropper_save`).style.display = 'none';
-    document.querySelector(`${cropperSelector} .ws-cropper_next`).style.display = 'inline-block';
-  } else {
-    document.querySelector(`${cropperSelector} .ws-cropper_save`).style.display = 'inline-block';
-    document.querySelector(`${cropperSelector} .ws-cropper_next`).style.display = 'none';
+    if (croppersConfig.length > (cropperIndex + 1)) {
+      document.querySelector(`${cropperSelector} .ws-cropper_save`).style.display = 'none';
+      document.querySelector(`${cropperSelector} .ws-cropper_next`).style.display = 'inline-block';
+    } else {
+      document.querySelector(`${cropperSelector} .ws-cropper_save`).style.display = 'inline-block';
+      document.querySelector(`${cropperSelector} .ws-cropper_next`).style.display = 'none';
+    }
+  } catch (error) {
+    // this catch is to catch the error
+    // 'InternalError: "too much recursion"' from the cropper library
   }
 }
 
-function checkImagesSizes(elm, cropperIndex) {
-  const { cmsTranslations } = window;
-  const errorMessage = cmsTranslations.ws_cms_components.cropper.error;
-  const cropper = getCropperInstance(elm.id);
+async function checkImagesSizes(imageSrc, minimums) {
+  const imageLoader = new Promise((resolve, reject) => {
+    const img = document.createElement('img');
+    img.src = imageSrc;
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = imageSrc;
+  });
 
-  const image = document.querySelector(`.ws-cropper_modal[data-id="${elm.id}"] img${cropperIgnoreClasses}`);
-  if (image.width === 0 && image.height === 0) {
-    return setTimeout(() => checkImagesSizes(elm, cropperIndex), 100);
-  }
+  const validatorData = { isValid: true };
+  const imageTag = await imageLoader;
 
-  const minimums = JSON.parse(elm.dataset.minimums);
 
   Object.entries(minimums).forEach((min) => {
     if (min[1] !== undefined && min[1].height !== undefined && min[1].width !== undefined) {
-      if (image.naturalHeight < min[1].height || image.naturalWidth < min[1].width) {
-        getCropperInstance(elm.id).cropper.disabled = true;
-
-        const msg = errorMessage.concat(`${min[1].width} x ${min[1].height}`);
-        document.querySelector(`.ws-cropper_modal[data-id="${elm.id}"] .ws-cropper_details_obs`).innerText = msg;
-        document.querySelectorAll(`.ws-cropper_confirm[data-id="${elm.id}"]`).forEach((input) => {
-          input.classList.add('u-hidden');
-        });
-        cropper.cropper.clear();
+      if (imageTag.naturalHeight < min[1].height || imageTag.naturalWidth < min[1].width) {
+        validatorData.isValid = false;
+        validatorData.minHeight = min[1].height;
+        validatorData.minWidth = min[1].width;
       }
     }
   });
 
-  return true;
+  return validatorData;
 }
 
 function nextCrop(event) {
@@ -159,39 +171,60 @@ function nextCrop(event) {
   }
 }
 
-function initCropper(event) {
+async function initCropper(event) {
   const id = event.currentTarget.id || event.currentTarget.dataset.id;
+  const { currentTarget } = event;
   const elm = document.querySelector(`#${id}[data-component="ws_cropper"]`);
   const modalCroppper = document.querySelector(`.ws-cropper_modal[data-id="${elm.id}"]`);
+  let imageSrc = '';
+
+  if (event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length) {
+    // if file is from drag and drop, we assign it to the elm object, to use the same logic.
+    elm.files = event.dataTransfer.files;
+  }
 
   if (elm.files && elm.files.length) {
-    setPreview(elm.id, window.URL.createObjectURL(elm.files[0]));
-  } else if (event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length) {
-    elm.files = event.dataTransfer.files;
-    setPreview(elm.id, window.URL.createObjectURL(event.dataTransfer.files[0]));
-  } else if (event.currentTarget.dataset.imageUrl) {
-    setPreview(elm.id, event.currentTarget.dataset.imageUrl);
-    document.getElementById(`${id}_data`).value = event.currentTarget.dataset.imageId;
+    imageSrc = window.URL.createObjectURL(elm.files[0]);
+  } else if (currentTarget.dataset.imageUrl) {
+    imageSrc = currentTarget.dataset.imageUrl;
   }
 
-  initACropper(elm);
+  const imgValidator = await checkImagesSizes(imageSrc, JSON.parse(elm.dataset.minimums));
 
-  modalCroppper.querySelector('.ws-cropper_details_obs').innerText = '';
-  modalCroppper.dataset.croppIndex = 1;
-
-  document.querySelectorAll(`.ws-cropper_confirm[data-id="${elm.id}"]`).forEach(
-    (input) => input.classList.remove('u-hidden'),
-  );
-
-  showCropper(elm, 0);
-
-  if (elm.dataset.displayMode === 'list') {
-    modal.refresh(`.ws-cropper_modal[data-id="${elm.id}"]`);
+  if (!imgValidator.isValid) {
+    const { error } = window.cmsTranslations.ws_cms_components.cropper;
+    const errorMsg = error.replace('%width%', imgValidator.minWidth).replace('%height%', imgValidator.minHeight);
+    const alert = document.querySelector('.c-img-modal__wrapper .c-alert.c-alert--danger');
+    if (alert && error) {
+      alert.innerHTML = errorMsg;
+      alert.classList.remove('u-hidden');
+      setTimeout(() => {
+        alert.classList.add('u-hidden');
+      }, 10000);
+    }
   } else {
-    modal.open(`.ws-cropper_modal[data-id="${elm.id}"]`);
-  }
+    setPreview(elm.id, imageSrc);
+    if (currentTarget.dataset.imageUrl) {
+      document.getElementById(`${id}_data`).value = currentTarget.dataset.imageId;
+    }
 
-  checkImagesSizes(elm, 0);
+    initACropper(elm);
+
+    modalCroppper.querySelector('.ws-cropper_details_obs').innerText = '';
+    modalCroppper.dataset.croppIndex = 1;
+
+    document.querySelectorAll(`.ws-cropper_confirm[data-id="${elm.id}"]`).forEach(
+      (input) => input.classList.remove('u-hidden'),
+    );
+
+    showCropper(elm, 0);
+
+    if (elm.dataset.displayMode === 'list') {
+      modal.refresh(`.ws-cropper_modal[data-id="${elm.id}"]`);
+    } else {
+      modal.open(`.ws-cropper_modal[data-id="${elm.id}"]`);
+    }
+  }
 }
 
 function init(assetElement, modalElement) {

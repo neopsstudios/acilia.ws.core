@@ -46,7 +46,7 @@ cropper_minHeight: Alto min.
 cropper_width: ancho
 cropper_height: alto
 cropper_obs: Obs.
-cropper_widthHeightError: "Esta imagen no contiene el mínimo ancho x alto requerido: "
+cropper_widthHeightError: "Esta imagen no contiene el ancho y alto mínimo requerido, %width%px X %height%px"
 assets_image.open_modal: Selecciona una imagen
 assets_image.add_modal_on_image: Añadir
 assets_image.open_modal_on_image: Abrir

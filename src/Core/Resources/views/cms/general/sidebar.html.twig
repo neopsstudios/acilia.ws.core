@@ -1,6 +1,6 @@
 <ul class="c-sidebar__list">
-    {% for menu in get_sidebar() %}
-        {% if menu.roles is empty or is_granted(menu.roles) %}
+    {% for menu in ws_sidebar_get() %}
+        {% if menu.roles is empty or ws_sidebar_is_granted(menu.roles) %}
             {% if menu.container %}
                 <li class="c-sidebar__item has-submenu {{ in_route(menu.collapsedRoutes, 'is-open') }}">
                     <a
@@ -21,7 +21,7 @@
                     </a>
                     <ul class="c-sidebar__submenu collapse">
                         {% for submenu in menu.children %}
-                            {% if is_granted(submenu.roles) %}
+                            {% if ws_sidebar_is_granted(submenu.roles) %}
                                 <li>
                                     <a
                                         class="c-sidebar__link js-submenu-children {{ in_route(submenu.collapsedRoutes, 'is-active', null, submenu.routeOptions) }}"

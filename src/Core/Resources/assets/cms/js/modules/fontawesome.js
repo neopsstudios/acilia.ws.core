@@ -8,7 +8,7 @@ window.FontAwesomeKitConfig = {
   "baseUrl": "https://kit-pro.fontawesome.com",
   "detectConflictsUntil": null,
   "license": "pro",
-  "method": "js",
+  "method": "css",
   "minify": {
     "enabled": true
   },

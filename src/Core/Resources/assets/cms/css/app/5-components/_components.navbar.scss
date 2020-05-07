@@ -1,12 +1,9 @@
 .c-navbar {
-    svg {
-        path {
-            fill: $grey-800;
-        }
+    .fal {
+        color: $grey-800;
 
-        &:hover path {
-            fill: $grey-600;
+        &:hover {
+            color: $grey-600;
         }
     }
 }
-

@@ -68,4 +68,9 @@ class Router extends BaseRouter
 
         return $locale;
     }
+
+    public function getRoute(string $name)
+    {
+        return $this->getRouteCollection()->get($name);
+    }
 }

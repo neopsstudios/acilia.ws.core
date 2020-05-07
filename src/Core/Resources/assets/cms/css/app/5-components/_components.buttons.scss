@@ -10,3 +10,13 @@
         @include linear-gradient(to bottom, darken($color-brand, 6%), darken($color-brand, 6%));
     }
 }
+
+.c-btn--delete {
+    transition: all .2s ease-in-out;
+
+    &:hover {
+        @include linear-gradient(to bottom, $red-100, $red-300);
+        border-color: $red-300;
+        color: $color-white;
+    }
+}

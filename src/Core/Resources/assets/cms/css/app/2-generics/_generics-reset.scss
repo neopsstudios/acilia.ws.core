@@ -33,7 +33,7 @@ footer, header, hgroup, menu, nav, section {
 body {
     font-family: $base-font-family;
     font-weight: $font-weight-normal;
-    line-height: 1;
+    line-height: 1.5;
     color: $body-color;
 
     &.is-active {

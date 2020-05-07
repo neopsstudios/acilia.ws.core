@@ -56,6 +56,7 @@
         position: relative;
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-auto-rows: min-content;
         gap: 20px;
         box-sizing: content-box;
         width: 100%;

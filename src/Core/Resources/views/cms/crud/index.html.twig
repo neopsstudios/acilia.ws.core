@@ -180,16 +180,16 @@
                                     {% endfor %}
 
                                     {% block crud_table_body_row_actions %}
-                                    <td class="c-table__cell u-text-right">
+                                    <td class="c-table__cell">
                                         {% block crud_table_body_row_action %}{% endblock %}
                                         <button
-                                            class="c-btn c-btn--danger js-genericDelete"
+                                            class="c-btn c-btn--secondary c-btn--delete js-genericDelete"
                                             data-id="{{ entity.id }}"
                                             data-url="{{ path("#{route_prefix}_delete", { 'id': entity.id }) }}"
                                             data-title="{{ 'title'|trans([], trans_prefix) }}"
                                             data-message="{{ 'delete_warning'|trans([], trans_prefix) }}"
                                         >
-                                            <i class="fa fa-trash-o u-mr-5"></i>
+                                            <i class="fal fa-trash-alt u-mr-5"></i>
                                             {{ 'delete'|trans({}, 'ws_cms') }}
                                         </button>
                                     </td>

@@ -13,7 +13,7 @@
         {% if setting.type == 'boolean' %}
             <div class="l-form__item l-form__item--large c-field">
                 <div class="c-choice c-choice--checkbox">
-                    <input class="c-choice__input" type="checkbox" id="{{ setting.code }}" name="{{ setting.code }}"  value="1" {% if setting.value %}checked="checked"{% endif %}>
+                    <input class="c-choice__input ws-setting-option" type="checkbox" id="{{ setting.code }}" name="{{ setting.code }}"  value="1" {% if setting.value %}checked="checked"{% endif %}>
                     <label class="c-choice__label" for="{{ setting.code }}">
                         {% if setting.description is not empty %}
                             {{ setting.description|trans({}, setting.translationDomain) }}
@@ -37,7 +37,7 @@
         {% elseif setting.type == 'textarea' %}
             <div class="l-form__item l-form__item--large c-field">
                 <textarea name="{{ setting.code }}"
-                          class="c-input"
+                          class="c-input ws-setting-option"
                           placeholder="{{ setting.placeholder is defined and setting.placeholder is not empty ? setting.placeholder|trans({}, setting.translationDomain) }}"
                           rows="6">{{ setting.value }}</textarea>
                 <small class="c-field__message u-mt-5">
@@ -49,7 +49,8 @@
         {% else %}
             <div class="l-form__item l-form__item--large c-field">
                 <input name="{{ setting.code }}"
-                       type="text" class="c-input"
+                       type="text" 
+                       class="c-input ws-setting-option"
                        placeholder="{{ setting.placeholder is defined and setting.placeholder is not empty ? setting.placeholder|trans({}, setting.translationDomain) }}"
                        value="{{ setting.value }}">
                 <small class="c-field__message u-mt-5">

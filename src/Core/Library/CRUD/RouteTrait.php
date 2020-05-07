@@ -2,6 +2,8 @@
 
 namespace WS\Core\Library\CRUD;
 
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
 trait RouteTrait
 {
     protected function getRouteNamePrefix() : string
@@ -23,5 +25,23 @@ trait RouteTrait
         }
 
         return strtolower($prefix);
+    }
+
+    protected function generateUrl(string $route, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
+    {
+        $routeDefinition = $this->container->get('router')->getRoute($route);
+        if (null !== $routeDefinition) {
+            $request = $this->container->get('request_stack')->getCurrentRequest();
+
+            foreach ($request->attributes->get('_route_params') as $param => $value) {
+                if (preg_match(sprintf('/{%s}/', $param), $routeDefinition->getPath())) {
+                    if (!isset($parameters[$param])) {
+                        $parameters[$param] = $value;
+                    }
+                }
+            }
+        }
+
+        return $this->container->get('router')->generate($route, $parameters, $referenceType);
     }
 }

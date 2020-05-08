@@ -1,5 +1,5 @@
 function menubAction(event) {
-  if (event.target.classList.contains('js-submenu-children')) {
+  if (event.target.closest('.js-submenu-children')) {
     return true;
   }
 

@@ -10,6 +10,12 @@ trait PublishingFormTrait
 {
     protected function addPublishingFields(FormBuilderInterface $builder)
     {
+        $this->addPublishingFieldStatus($builder, true);
+        $this->addPublishingFieldDates($builder);
+    }
+
+    protected function addPublishingFieldStatus(FormBuilderInterface $builder, bool $required)
+    {
         $publishingOptions = [
             'publishing.publishStatus.draft.label' => PublishingEntityInterface::STATUS_DRAFT,
             'publishing.publishStatus.published.label' => PublishingEntityInterface::STATUS_PUBLISHED,
@@ -21,10 +27,17 @@ trait PublishingFormTrait
                 'translation_domain' => 'ws_cms',
                 'label' => 'publishing.publishStatus.label',
                 'choices' => $publishingOptions,
+                'required' => $required,
                 'attr' => [
                     'data-component' => 'ws_select'
                 ],
             ])
+        ;
+    }
+
+    protected function addPublishingFieldDates(FormBuilderInterface $builder)
+    {
+        $builder
             ->add('publishSince', DateTimePickerType::class, [
                 'translation_domain' => 'ws_cms',
                 'label' => 'publishing.publishSince.label',

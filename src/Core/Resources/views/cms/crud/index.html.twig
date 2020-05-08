@@ -61,6 +61,25 @@
                         </button>
                     </form>
                 {% endblock %}
+                {% block crud_filter_extended %}
+                    {% if filterExtendedForm is not null %}
+                    <form
+                        class="c-toolbar c-toolbar--caption u-justify-space-between"
+                        id="user_filter_extended_form"
+                        role="form"
+                        accept-charset="UTF-8"
+                    >
+                        <div class="c-field c-field--inline has-icon-right u-hidden-down@tablet u-mr-10">
+                            {{ form_widget(filterExtendedForm) }}
+                        </div>
+                        <button type="submit" class="c-btn c-btn--info">
+                            <i class="fa fa-search u-mr-5"></i>
+                            {{ 'search'|trans({}, 'ws_cms') }}
+                        </button>
+
+                    </form>
+                {% endif %}
+                {% endblock %}
 
                 <div class="c-doc-article u-mt-10 {{ data|length > 0 ? 'u-hidden' }}">
                     <div class="c-doc-article__content-full">

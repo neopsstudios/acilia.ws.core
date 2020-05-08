@@ -28,6 +28,10 @@ abstract class AbstractRepository extends ServiceEntityRepository
 
     abstract public function getFilterFields();
 
+    public function processFilterExtended(QueryBuilder $qb, ?array $filterExtendedData)
+    {
+    }
+
     /**
      * @param Domain $domain
      * @param string $filter
@@ -37,7 +41,7 @@ abstract class AbstractRepository extends ServiceEntityRepository
      *
      * @return mixed
      */
-    public function getAll(Domain $domain, ?string $filter, array $orderBy = null, int $limit = null, int $offset = null)
+    public function getAll(Domain $domain, ?string $filter, ?array $filterExtendedData, array $orderBy = null, int $limit = null, int $offset = null)
     {
         $alias = 't';
         $qb = $this->createQueryBuilder($alias);
@@ -54,6 +58,8 @@ abstract class AbstractRepository extends ServiceEntityRepository
             $qb->setFirstResult($offset);
             $qb->setMaxResults($limit);
         }
+
+        $this->processFilterExtended($qb, $filterExtendedData);
 
         $this->setDomainRestriction($alias, $qb, $domain);
 
@@ -77,13 +83,15 @@ abstract class AbstractRepository extends ServiceEntityRepository
      * @param string|null $filter
      * @return int
      */
-    public function getAllCount(Domain $domain, ?string $filter)
+    public function getAllCount(Domain $domain, ?string $filter, ?array $filterExtendedData)
     {
         $alias = 't';
 
         $qb = $this->createQueryBuilder($alias)->select(sprintf(sprintf('count(%s.id)', $alias)));
 
         $this->setFilter($alias, $qb, $filter);
+
+        $this->processFilterExtended($qb, $filterExtendedData);
 
         $this->setDomainRestriction($alias, $qb, $domain);
 

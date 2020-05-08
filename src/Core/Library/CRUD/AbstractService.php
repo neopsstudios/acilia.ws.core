@@ -68,7 +68,7 @@ abstract class AbstractService implements DBLoggerInterface
      * @return array
      * @throws \Exception
      */
-    public function getAll(?string $filter, int $page, int $limit, string $sort = '', string $dir = '')
+    public function getAll(?string $filter, ?array $filterExtendedData, int $page, int $limit, string $sort = '', string $dir = '')
     {
         if ($sort) {
             if (!in_array($sort, $this->getSortFields())) {
@@ -79,8 +79,8 @@ abstract class AbstractService implements DBLoggerInterface
             $orderBy = ['id' => 'DESC'];
         }
 
-        $entities = $this->repository->getAll($this->contextService->getDomain(), $filter, $orderBy, $limit, ($page - 1) * $limit);
-        $total = $this->repository->getAllCount($this->contextService->getDomain(), $filter);
+        $entities = $this->repository->getAll($this->contextService->getDomain(), $filter, $filterExtendedData, $orderBy, $limit, ($page - 1) * $limit);
+        $total = $this->repository->getAllCount($this->contextService->getDomain(), $filter, $filterExtendedData);
 
         return ['total' => $total, 'data' => $entities];
     }

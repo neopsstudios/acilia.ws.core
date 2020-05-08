@@ -2,6 +2,7 @@
 
 namespace WS\Core\Library\CRUD;
 
+use Symfony\Component\Form\Form;
 use WS\Core\Library\DataExport\DataExportInterface;
 use WS\Core\Library\DataExport\Provider\CsvExportProvider;
 use WS\Core\Service\DataExportService;
@@ -166,6 +167,27 @@ abstract class AbstractController extends BaseController
         return $errors;
     }
 
+    protected function getFilterExtendedFormType()
+    {
+        return null;
+    }
+
+    protected function getFilterExtendedForm()
+    {
+        $formType = $this->getFilterExtendedFormType();
+
+        if (null !== $formType) {
+            $form = $this->createForm($formType, null, [
+                'csrf_protection' => false,
+                'method' => 'GET',
+                'translation_domain' => $this->getTranslatorPrefix()
+            ]);
+            return $form;
+        }
+
+        return null;
+    }
+
     /**
      * @Route("/", name="index")
      *
@@ -190,7 +212,20 @@ abstract class AbstractController extends BaseController
 
         $filter = (string) $request->get('f');
 
-        $data = $this->getService()->getAll($filter, $page, $limit, (string)$request->get('sort'), (string)$request->get('dir'));
+        // Filter Extended
+        $filterExtended = $this->getFilterExtendedForm();
+        $filterExtendedView = null;
+        $filterExtendedData = null;
+
+        if ($filterExtended instanceof Form) {
+            $filterExtended->handleRequest($request);
+            if ($filterExtended->isSubmitted() && $filterExtended->isValid()) {
+                $filterExtendedData = $filterExtended->getData();
+            }
+            $filterExtendedView = $filterExtended->createView();
+        }
+
+        $data = $this->getService()->getAll($filter, $filterExtendedData, $page, $limit, (string)$request->get('sort'), (string)$request->get('dir'));
 
         $paginationData = [
             'currentPage' => $page,
@@ -227,7 +262,8 @@ abstract class AbstractController extends BaseController
                     'trans_prefix' => $this->getTranslatorPrefix(),
                     'route_prefix' => $this->getRouteNamePrefix(),
                     'list_fields' => $listFields,
-                    'batch_actions' => $this->getBatchActions()
+                    'batch_actions' => $this->getBatchActions(),
+                    'filterExtendedForm' => $filterExtendedView
                 ],
                 $extraData
             )

@@ -27,27 +27,28 @@ class SidebarDefinition
             'icon' => 'fa-angle-right',
             'order' => 999,
             'roles' => [],
-            'collapsed_routes' => []
+            'collapsed_routes' => [],
+            'divider' => false
 
         ], $options);
     }
 
-    public function getCode() : string
+    public function getCode(): string
     {
         return $this->code;
     }
 
-    public function getLabel() : string
+    public function getLabel(): string
     {
         return $this->label;
     }
 
-    public function isContainer() : bool
+    public function isContainer(): bool
     {
         return $this->options['container'];
     }
 
-    public function getRouteName() : ?string
+    public function getRouteName(): ?string
     {
         if (isset($this->route['route_name'])) {
             return $this->route['route_name'];
@@ -56,7 +57,7 @@ class SidebarDefinition
         return '#';
     }
 
-    public function getRouteOptions() : array
+    public function getRouteOptions(): array
     {
         if (isset($this->route['route_options'])) {
             return $this->route['route_options'];
@@ -65,26 +66,26 @@ class SidebarDefinition
         return [];
     }
 
-    public function getRoles() : array
+    public function getRoles(): array
     {
         return $this->options['roles'];
     }
 
-    public function setRoles(array $roles) : SidebarDefinition
+    public function setRoles(array $roles): SidebarDefinition
     {
         $this->options['roles'] = $roles;
 
         return $this;
     }
 
-    public function addRole(string $role) : SidebarDefinition
+    public function addRole(string $role): SidebarDefinition
     {
         $this->options['roles'][] = $role;
 
         return $this;
     }
 
-    public function getCollapsedRoutes() : array
+    public function getCollapsedRoutes(): array
     {
         return $this->options['collapsed_routes'];
     }
@@ -96,14 +97,14 @@ class SidebarDefinition
         return $this;
     }
 
-    public function addCollapsedRoute(string $collapsedRoute) : SidebarDefinition
+    public function addCollapsedRoute(string $collapsedRoute): SidebarDefinition
     {
         $this->options['collapsed_routes'][] = $collapsedRoute;
 
         return $this;
     }
 
-    public function getIcon() : string
+    public function getIcon(): string
     {
         return $this->options['icon'];
     }
@@ -126,32 +127,37 @@ class SidebarDefinition
     /**
      * @return SidebarDefinition[]
      */
-    public function getChildren() : array
+    public function getChildren(): array
     {
         return $this->children;
     }
 
-    public function setChildren(array $children) : SidebarDefinition
+    public function setChildren(array $children): SidebarDefinition
     {
         $this->children = $children;
 
         return $this;
     }
 
-    public function setOrder(int $order) : SidebarDefinition
+    public function setOrder(int $order): SidebarDefinition
     {
         $this->options['order'] = $order;
 
         return $this;
     }
 
-    public function getOrder() : ?int
+    public function getOrder(): ?int
     {
         return $this->options['order'];
     }
 
-    public function getTranslationDomain() : string
+    public function getTranslationDomain(): string
     {
         return $this->options['translation_domain'];
+    }
+    
+    public function hasDivider(): bool 
+    {
+        return $this->options['divider'];
     }
 }

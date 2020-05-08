@@ -8,7 +8,7 @@
                         href="#"
                         aria-expanded="false"
                     >
-                        <i class="fal fa-lg {{ menu.icon }}" aria-hidden="true"></i>
+                        <i class="fal fa-1x {{ menu.icon }}" aria-hidden="true"></i>
                         <span class="c-sidebar__text">
                             {{ menu.label|trans({}, menu.translationDomain)|raw  }}
                         </span>
@@ -27,7 +27,7 @@
                                         class="c-sidebar__link js-submenu-children {{ ws_cms_in_route(submenu.collapsedRoutes, 'is-active', null, submenu.routeOptions) }}"
                                         href="{{ path(submenu.routeName, submenu.routeOptions) }}"
                                     >
-                                        <i class="fal fa-lg {{ submenu.icon }}" aria-hidden="true"></i>
+                                        <i class="fal fa-1x {{ submenu.icon }}" aria-hidden="true"></i>
                                         <span class="c-sidebar__text">
                                             {{ submenu.label|trans({}, submenu.translationDomain) }}
                                         </span>
@@ -42,7 +42,7 @@
                     class="c-sidebar__link {{ ws_cms_in_route(menu.collapsedRoutes, 'is-active') }}"
                     href="{{ path(menu.routeName, menu.routeOptions) }}"
                 >
-                    <i class="fal fa-lg {{ menu.icon }}" aria-hidden="true"></i>
+                    <i class="fal fa-1x {{ menu.icon }}" aria-hidden="true"></i>
                     <span class="c-sidebar__text">
                         {{ menu.label|trans({}, menu.translationDomain)|raw  }}
                     </span>

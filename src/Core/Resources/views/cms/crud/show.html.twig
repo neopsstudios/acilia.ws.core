@@ -17,15 +17,23 @@
 
 {% block content %}
     {{ form_start(form) }}
+
     <div class="container">
         <div class="c-doc-article">
-            <div class="u-flex u-mr-auto">
-                <h2 class="c-doc-article__title u-h2 u-mb-30">{{ 'title'|trans({}, trans_prefix) }}</h2>
-            </div>
+
+            {% block crud_show_title %}
+                <div class="u-flex u-mr-auto">
+                    <h2 class="c-doc-article__title u-h2 u-mb-30">{{ 'title'|trans({}, trans_prefix) }}</h2>
+                </div>
+            {% endblock %}
+
             {{ form_widget(form) }}
+
             <div class="c-divider u-mv-small"></div>
+
             <button type="submit" class="c-btn c-btn--info">{{ 'save'|trans({}, 'ws_cms') }}</button>
             <a href="{{ ws_cms_path("#{route_prefix}_index") }}" class="c-btn c-btn--secondary">{{ 'cancel'|trans({}, 'ws_cms') }}</a>
+            
             {{ form_end(form, {'render_rest': false}) }}
         </div>
     </div>

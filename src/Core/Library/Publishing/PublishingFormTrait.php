@@ -41,16 +41,16 @@ trait PublishingFormTrait
             ->add('publishSince', DateTimePickerType::class, [
                 'translation_domain' => 'ws_cms',
                 'label' => 'publishing.publishSince.label',
-                'attr' => [
+                'attr' => array_merge(DateTimePickerType::DATE_TIME_PICKER_ATTR, [
                     'placeholder' => 'publishing.publishSince.placeholder'
-                ]
+                ])
             ])
             ->add('publishUntil', DateTimePickerType::class, [
                 'translation_domain' => 'ws_cms',
                 'label' => 'publishing.publishUntil.label',
-                'attr' => [
+                'attr' => array_merge(DateTimePickerType::DATE_TIME_PICKER_ATTR, [
                     'placeholder' => 'publishing.publishUntil.placeholder'
-                ]
+                ])
             ]);
     }
 }

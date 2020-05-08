@@ -1,8 +1,8 @@
 <ul class="c-sidebar__list">
-    {% for menu in ws_sidebar_get() %}
-        {% if menu.roles is empty or ws_sidebar_is_granted(menu.roles) %}
+    {% for menu in ws_cms_sidebar_get() %}
+        {% if menu.roles is empty or ws_cms_sidebar_is_granted(menu.roles) %}
             {% if menu.container %}
-                <li class="c-sidebar__item has-submenu {{ in_route(menu.collapsedRoutes, 'is-open') }}">
+                <li class="c-sidebar__item has-submenu {{ ws_cms_in_route(menu.collapsedRoutes, 'is-open') }}">
                     <a
                         class="c-sidebar__link"
                         href="#"
@@ -21,10 +21,10 @@
                     </a>
                     <ul class="c-sidebar__submenu collapse">
                         {% for submenu in menu.children %}
-                            {% if ws_sidebar_is_granted(submenu.roles) %}
+                            {% if ws_cms_sidebar_is_granted(submenu.roles) %}
                                 <li>
                                     <a
-                                        class="c-sidebar__link js-submenu-children {{ in_route(submenu.collapsedRoutes, 'is-active', null, submenu.routeOptions) }}"
+                                        class="c-sidebar__link js-submenu-children {{ ws_cms_in_route(submenu.collapsedRoutes, 'is-active', null, submenu.routeOptions) }}"
                                         href="{{ path(submenu.routeName, submenu.routeOptions) }}"
                                     >
                                         <i class="fal fa-lg {{ submenu.icon }}" aria-hidden="true"></i>
@@ -39,7 +39,7 @@
                 </li>
             {% else %}
                 <a
-                    class="c-sidebar__link {{ in_route(menu.collapsedRoutes, 'is-active') }}"
+                    class="c-sidebar__link {{ ws_cms_in_route(menu.collapsedRoutes, 'is-active') }}"
                     href="{{ path(menu.routeName, menu.routeOptions) }}"
                 >
                     <i class="fal fa-lg {{ menu.icon }}" aria-hidden="true"></i>

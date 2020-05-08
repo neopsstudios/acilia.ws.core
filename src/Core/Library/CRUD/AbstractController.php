@@ -314,7 +314,7 @@ abstract class AbstractController extends BaseController
 
                     $this->addFlash('cms_success', $this->trans('create_success', [], $this->getTranslatorPrefix()));
 
-                    return $this->redirect($this->generateUrl($this->getRouteNamePrefix() . '_index'));
+                    return $this->redirect($this->wsGenerateUrl($this->getRouteNamePrefix() . '_index'));
                 } catch (\Exception $e) {
                     $this->addFlash('cms_error', $this->trans('create_error', [], $this->getTranslatorPrefix()));
                 }
@@ -377,7 +377,7 @@ abstract class AbstractController extends BaseController
 
                     $this->addFlash('cms_success', $this->trans('edit_success', [], $this->getTranslatorPrefix()));
 
-                    return $this->redirect($this->generateUrl($this->getRouteNamePrefix() . '_index'));
+                    return $this->redirect($this->wsGenerateUrl($this->getRouteNamePrefix() . '_index'));
                 } catch (\Exception $e) {
                     $this->addFlash('cms_error', $this->trans('edit_error', [], $this->getTranslatorPrefix()));
                 }

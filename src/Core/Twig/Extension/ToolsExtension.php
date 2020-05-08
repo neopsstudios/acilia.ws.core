@@ -9,27 +9,23 @@ use WS\Core\Service\AlertService;
 use WS\Core\Service\ContextService;
 use WS\Core\Service\DashboardService;
 use WS\Core\Service\SettingService;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\TwigFunction;
 use Twig\Extension\AbstractExtension;
 
 class ToolsExtension extends AbstractExtension
 {
-    protected $requestStack;
     protected $contextService;
     protected $alertService;
     protected $settingService;
     protected $dashboardService;
 
     public function __construct(
-        RequestStack $requestStack,
         ContextService $contextService,
         AlertService $alertService,
         SettingService $settingService,
         DashboardService $dashboardService
     ) {
-        $this->requestStack = $requestStack;
+
         $this->contextService = $contextService;
         $this->alertService = $alertService;
         $this->settingService = $settingService;
@@ -39,7 +35,6 @@ class ToolsExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('in_route', [$this, 'checkIfInRoute'], ['is_safe' => ['html']]),
             new TwigFunction('get_current_domain', [$this, 'getCurrentDomain']),
             new TwigFunction('get_locale_domain', [$this, 'getLocaleDomain']),
             new TwigFunction('has_locale_domain', [$this, 'hasLocaleDomain']),
@@ -54,36 +49,6 @@ class ToolsExtension extends AbstractExtension
             new TwigFunction('get_dashboard_widgets', [$this, 'getDashboardWidgets']),
             new TwigFunction('render_dashboard_widget', [$this, 'renderDashboardWidget'], ['is_safe' => ['html']])
         ];
-    }
-
-    public function checkIfInRoute($routePrefix, $class = 'active', $condition = null, $routeParameters = [])
-    {
-        if (! is_array($routePrefix)) {
-            $routePrefix = [$routePrefix];
-        }
-        if ($this->requestStack->getMasterRequest() instanceof Request) {
-            foreach ($routePrefix as $route) {
-                if (strpos($this->requestStack->getMasterRequest()->get('_route'), $route) === 0) {
-                    if ($condition === false) {
-                        return '';
-                    }
-
-                    if ($routeParameters) {
-                        $routeParams = $this->requestStack->getMasterRequest()->get('_route_params');
-
-                        foreach ($routeParameters as $k => $v) {
-                            if (!isset($routeParams[$k]) || $routeParams[$k] != $v) {
-                                return '';
-                            }
-                        }
-                    }
-
-                    return $class;
-                }
-            }
-        }
-
-        return '';
     }
 
     public function getCurrentDomain()

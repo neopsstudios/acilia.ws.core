@@ -5,7 +5,7 @@
         <span class="c-sidebar-toggle__bar"></span>
     </button>
 
-    {% set breadcrumbs = [{ 'name': 'dashboard.menu'|trans({}, 'ws_cms'), 'path': path('ws_dashboard') }]|merge(get_breadcrumbs()) %}
+    {% set breadcrumbs = [{ 'name': 'dashboard.menu'|trans({}, 'ws_cms'), 'path': ws_cms_path('ws_dashboard') }]|merge(get_breadcrumbs()) %}
 
     <ol class="u-mr-auto c-breadcrumb">
         {% for breadcrumb in breadcrumbs %}

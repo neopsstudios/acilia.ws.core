@@ -69,8 +69,19 @@ class Router extends BaseRouter
         return $locale;
     }
 
-    public function getRoute(string $name)
+    public function getContextParams(string $name, array $params): array
     {
-        return $this->getRouteCollection()->get($name);
+        $contextParams = [];
+
+        $routeDefinition = $this->getRouteCollection()->get($name);
+        if (null !== $routeDefinition) {
+            foreach ($params as $param => $value) {
+                if (preg_match(sprintf('/{%s}/', $param), $routeDefinition->getPath())) {
+                    $contextParams[$param] = $value;
+                }
+            }
+        }
+
+        return $contextParams;
     }
 }

@@ -27,20 +27,14 @@ trait RouteTrait
         return strtolower($prefix);
     }
 
-    protected function generateUrl(string $route, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
+    protected function wsGenerateUrl(string $route, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
     {
-        $routeDefinition = $this->container->get('router')->getRoute($route);
-        if (null !== $routeDefinition) {
-            $request = $this->container->get('request_stack')->getCurrentRequest();
+        $request = $this->container->get('request_stack')->getCurrentRequest();
 
-            foreach ($request->attributes->get('_route_params') as $param => $value) {
-                if (preg_match(sprintf('/{%s}/', $param), $routeDefinition->getPath())) {
-                    if (!isset($parameters[$param])) {
-                        $parameters[$param] = $value;
-                    }
-                }
-            }
-        }
+        $parameters = array_merge(
+            $this->container->get('router')->getContextParams($route, $request->attributes->get('_route_params')),
+            $parameters
+        );
 
         return $this->container->get('router')->generate($route, $parameters, $referenceType);
     }

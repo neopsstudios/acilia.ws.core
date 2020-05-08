@@ -25,7 +25,7 @@
                         {% block crud_create_action %}
                             <div class="u-flex u-mr-auto">
                                 <h4 class="c-toolbar__title u-mr-10">{{ 'title'|trans([], trans_prefix) }}</h4>
-                                <a class="c-btn c-btn--success" href="{{ path("#{route_prefix}_create") }}">
+                                <a class="c-btn c-btn--success" href="{{ ws_cms_path("#{route_prefix}_create") }}">
                                     <i class="fa fa-plus u-mr-5"></i>
                                     {{ 'new'|trans({}, 'ws_cms') }}
                                 </a>
@@ -165,7 +165,7 @@
                                             <td class="c-table__cell">
                                                 <a
                                                     class="c-table__link"
-                                                    href="{{ path("#{route_prefix}_edit", { 'id': entity.id }) }}"
+                                                    href="{{ ws_cms_path("#{route_prefix}_edit", { 'id': entity.id }) }}"
                                                 >
                                                     {% if field.isDate|default(false) %}
                                                         {{ ws_cms_crud_list_is_date(attribute(entity, field.name)) }}
@@ -185,7 +185,7 @@
                                         <button
                                             class="c-btn c-btn--secondary c-btn--delete js-genericDelete"
                                             data-id="{{ entity.id }}"
-                                            data-url="{{ path("#{route_prefix}_delete", { 'id': entity.id }) }}"
+                                            data-url="{{ ws_cms_path("#{route_prefix}_delete", { 'id': entity.id }) }}"
                                             data-title="{{ 'title'|trans([], trans_prefix) }}"
                                             data-message="{{ 'delete_warning'|trans([], trans_prefix) }}"
                                         >

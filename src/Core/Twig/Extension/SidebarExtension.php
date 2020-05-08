@@ -45,12 +45,11 @@ class SidebarExtension extends AbstractExtension
         }
 
         try {
-            array_walk($roles, function(&$value) {
+            array_walk($roles, function (&$value) {
                 $value = sprintf('is_granted(\'%s\')', $value);
             });
 
             return $this->securityChecker->isGranted(new Expression(implode(' or ', $roles)));
-
         } catch (AuthenticationCredentialsNotFoundException $e) {
             return false;
         }

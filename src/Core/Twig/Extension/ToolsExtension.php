@@ -25,7 +25,6 @@ class ToolsExtension extends AbstractExtension
         SettingService $settingService,
         DashboardService $dashboardService
     ) {
-
         $this->contextService = $contextService;
         $this->alertService = $alertService;
         $this->settingService = $settingService;

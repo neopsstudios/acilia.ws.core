@@ -20,7 +20,6 @@ class DBLoggerService extends AbstractProcessingHandler
     {
         $connection = $this->em->getConnection();
         if ($connection) {
-
             $sql = 'INSERT INTO ws_log (log_id, log_channel, log_message, log_level, log_datetime) VALUES (NULL, ?, ?, ?, ?)';
             $stmt = $connection->prepare($sql);
 

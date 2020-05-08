@@ -61,7 +61,6 @@ class AssetImageService implements FactoryCollectorInterface
 
         try {
             return $this->repository->getAll($this->contextService->getDomain(), $filter, $orderBy, $limit, $offset);
-
         } catch (\Exception $e) {
             $this->logger->error(sprintf('Error fetching image assets. Error %s', $e->getMessage()));
         }
@@ -90,7 +89,6 @@ class AssetImageService implements FactoryCollectorInterface
                 // set asset image into entity
                 $ref = new \ReflectionMethod(get_class($entity), $fieldSetter);
                 $ref->invoke($entity, $assetImage);
-
             } catch (\ReflectionException $e) {
                 $this->logger->error(sprintf('Error setting AssetImage into Entity. Error: %s', $e->getMessage()));
             }
@@ -117,7 +115,6 @@ class AssetImageService implements FactoryCollectorInterface
             // set asset image into entity
             $ref = new \ReflectionMethod(get_class($entity), sprintf('set%s', ucfirst($imageField)));
             $ref->invoke($entity, $assetImage);
-
         } catch (\ReflectionException $e) {
             $this->logger->error(sprintf('Error setting AssetImage into Entity. Error: %s', $e->getMessage()));
         }

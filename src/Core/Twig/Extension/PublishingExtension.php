@@ -30,6 +30,5 @@ class PublishingExtension extends AbstractExtension
         }
 
         return '-';
-
     }
 }

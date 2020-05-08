@@ -1,4 +1,6 @@
-import SimpleMDE from 'simplemde';
+// add this line because eslint demands that the package be on dependencies
+// eslint-disable-next-line import/no-extraneous-dependencies
+import EasyMDE from 'easymde';
 import { init as initMarkdownImage, handleImage } from './ws_markdown/ws_markdown_image';
 
 const config = {
@@ -11,9 +13,9 @@ const config = {
   autoDownloadFontAwesome: false,
   hideIcons: ['image', 'side-by-side'],
   toolbar: [
-    'bold', 'italic', 'heading', '|', 'quote', 'unordered-list', 'ordered-list', 'link', 'preview', 'fullscreen',
+    'bold', 'italic', 'heading', '|', 'quote', 'unordered-list', 'ordered-list', 'link', 'preview',
     {
-      name: 'custom',
+      name: 'Insert Image',
       action: function addImage(editor) {
         document.querySelector('[data-component="ws_markdown_image"]').click();
         handleImage().then((image) => {
@@ -21,14 +23,14 @@ const config = {
         });
       },
       className: 'fa fa-image',
-      title: 'custom',
+      title: 'Insert Image',
     },
   ],
 };
 
 function createMarkdown(elm) {
   config.element = elm;
-  return new SimpleMDE(config);
+  return new EasyMDE(config);
 }
 
 function init() {

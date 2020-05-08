@@ -17,6 +17,7 @@ class PageConfigurationExtension extends AbstractExtension
     {
         $this->title = 'CMS';
         $this->header = 'CMS';
+        $this->subheader = '';
         $this->breadcrumbs = [];
     }
 
@@ -60,19 +61,27 @@ class PageConfigurationExtension extends AbstractExtension
     public function configure($config)
     {
         if (isset($config['title'])) {
-            $this->title = $config['title'];
+            if (empty($this->title)) {
+                $this->title = $config['title'];
+            }
         }
 
         if (isset($config['header'])) {
-            $this->header = $config['header'];
+            if (empty($this->header)) {
+                $this->header = $config['header'];
+            }
         }
 
         if (isset($config['subheader'])) {
-            $this->subheader = $config['subheader'];
+            if (empty($this->subheader)) {
+                $this->subheader = $config['subheader'];
+            }
         }
 
         if (isset($config['breadcrumbs']) && is_array($config['breadcrumbs'])) {
-            $this->breadcrumbs = $config['breadcrumbs'];
+            if (empty($this->breadcrumbs)) {
+                $this->breadcrumbs = $config['breadcrumbs'];
+            }
         }
     }
 }

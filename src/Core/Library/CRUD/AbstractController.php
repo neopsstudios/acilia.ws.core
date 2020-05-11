@@ -97,10 +97,6 @@ abstract class AbstractController extends BaseController
 
     protected function getTemplate($template, $entity = null): string
     {
-        if ($this->useCRUDTemplate($template)) {
-            return sprintf('@WSCore/cms/crud/%s', $template);
-        }
-
         $routePrefix = '';
         $controllerClass = get_class($this);
         $classPath = explode('\\', $controllerClass);
@@ -110,7 +106,14 @@ abstract class AbstractController extends BaseController
             $routePrefix = sprintf('@%s%s/%s/%s', $classPath[0], $classPath[1], strtolower($classPath[3]), $controllerName);
         }
 
-        return sprintf('%s/%s', $routePrefix, $template);
+        $templateFile = sprintf('%s/%s', $routePrefix, $template);
+        if ($this->useCRUDTemplate($template)) {
+            if (!$this->container->get('twig')->getLoader()->exists($templateFile)) {
+                $templateFile = sprintf('@WSCore/cms/crud/%s', $template);
+            }
+        }
+
+        return $templateFile;
     }
 
     protected function denyAccessUnlessAllowed(string $action): void

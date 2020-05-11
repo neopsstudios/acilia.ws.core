@@ -7,9 +7,42 @@
 } %}
 
 {% block content %}
-    <div class="row">
-        {% for widget in get_dashboard_widgets() %}
-            {{ render_dashboard_widget(widget) }}
-        {% endfor %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-lg-4">
+                <div class="c-card u-p-medium u-text-center u-mb-medium">
+                    {{ source('@WSCore/cms/icons/edit.svg') }}
+                    <h4 class="u-h6 u-font-medium u-mb-small">
+                        Accede rapidamente a la creación de un nuevo articulo.
+                    </h4>
+                    <a class="c-btn c-btn--brand" href="#">Nuevo Articulo</a>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-lg-4">
+                <div class="c-card u-p-medium u-text-center u-mb-medium">
+                    {{ source('@WSCore/cms/icons/widget.svg') }}
+                    <h4 class="u-h6 u-font-medium u-mb-small">
+                        Accede rapidamente a la creación de un nuevo widget.
+                    </h4>
+                    <a class="c-btn c-btn--brand" href="#">Nuevo Widget</a>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-lg-4">
+                <div class="c-card u-p-medium u-text-center u-mb-medium">
+                    {{ source('@WSCore/cms/icons/jobs.svg') }}
+                    <h4 class="u-h6 u-font-medium u-mb-small">
+                        Añade una nueva oferta de trabajo para la sección "Buscamos talento".
+                    </h4>
+                    <a class="c-btn c-btn--brand" href="#">Nuevo Oferta</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {% for widget in get_dashboard_widgets() %}
+                {{ render_dashboard_widget(widget) }}
+            {% endfor %}
+        </div>
     </div>
 {% endblock content %}

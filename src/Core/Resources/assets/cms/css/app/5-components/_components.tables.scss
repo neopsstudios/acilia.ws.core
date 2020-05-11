@@ -21,7 +21,7 @@ $table-cell-line-height: $base-line-height;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        color: $table-cell-color;
+        color: $grey-700;
         font-size: $table-cell-font-size;
         font-weight: $font-weight-normal;
         line-height: $table-cell-line-height;
@@ -31,6 +31,11 @@ $table-cell-line-height: $base-line-height;
             white-space: initial;
             overflow: initial;
             text-overflow: initial;
+        }
+
+        &:hover {
+            color: $gunmetal-200;
+            text-decoration: none;
         }
     }
 

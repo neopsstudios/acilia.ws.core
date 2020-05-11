@@ -1,11 +1,11 @@
 {% set domains = get_domains() %}
 {% if domains|length > 1 %}
-    <div class="c-dropdown dropdown" data-toggle="dropdown-language" data-component="ws_dropdown">
-        <a id="languageDropdownButton" href="#" class="c-notification u-flex u-align-items-center dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+    <div class="c-dropdown dropdown u-mr-15" data-toggle="dropdown-language" data-component="ws_dropdown">
+        <a id="languageDropdownButton" href="#" class="c-notification u-mr-0 u-flex u-align-items-center dropdown-toggle" aria-haspopup="true" aria-expanded="false">
             <span class="c-notification__icon u-pr-5">
                 <i class="fal fa-globe-europe"></i>
             </span>
-            <p class="u-text-xsmall u-pr-10">
+            <p class="c-navbar__text u-text-xsmall u-pr-15">
                 {{ ('language.' ~ get_current_domain().locale)|trans({}, 'ws_cms') }}
             </p>
             <div class="o-arrow-wrapper">

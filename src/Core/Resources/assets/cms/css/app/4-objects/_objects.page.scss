@@ -1,4 +1,11 @@
-.o-page__content {
-	overflow: visible;
+.o-page {
+    &__content {
+        overflow: visible;
+    }
+
+    &__sidebar {
+        z-index: 2;
+    }
 }
+
 

@@ -62,23 +62,23 @@
                     </form>
                 {% endblock %}
                 {% block crud_filter_extended %}
-                    {% if filterExtendedForm is not null %}
-                    <form
-                        class="c-toolbar c-toolbar--caption u-justify-space-between"
-                        id="user_filter_extended_form"
-                        role="form"
-                        accept-charset="UTF-8"
-                    >
-                        <div class="c-field c-field--inline has-icon-right u-hidden-down@tablet u-mr-10">
-                            {{ form_widget(filterExtendedForm) }}
-                        </div>
-                        <button type="submit" class="c-btn c-btn--info">
-                            <i class="fa fa-search u-mr-5"></i>
-                            {{ 'search'|trans({}, 'ws_cms') }}
-                        </button>
+{#                     {% if filterExtendedForm is not null %}
+                        <form
+                            class="c-toolbar c-toolbar--caption u-justify-space-between"
+                            id="user_filter_extended_form"
+                            role="form"
+                            accept-charset="UTF-8"
+                        >
+                            <div class="c-field c-field--inline has-icon-right u-hidden-down@tablet u-mr-10">
+                                {{ form_widget(filterExtendedForm) }}
+                            </div>
+                            <button type="submit" class="c-btn c-btn--info">
+                                <i class="fa fa-search u-mr-5"></i>
+                                {{ 'search'|trans({}, 'ws_cms') }}
+                            </button>
 
-                    </form>
-                {% endif %}
+                        </form>
+                    {% endif %} #}
                 {% endblock %}
 
                 <div class="c-doc-article u-mt-10 {{ data|length > 0 ? 'u-hidden' }}">
@@ -105,56 +105,56 @@
 
                         {% block crud_table_head %}
                             <thead class="c-table__head c-table__head--slim">
-                            <tr class="c-table__row">
-                                {% if batch_actions is not empty %}
-                                    <th class="c-table__cell c-table__cell--head no-sort">
-                                        <div class="c-choice c-choice--checkbox">
-                                            <input
-                                                type="checkbox"
-                                                id="checkbox-batch"
-                                                name="checkboxes"
-                                                class="c-choice__input js-batchAll"
-                                            >
-                                            <label class="c-choice__label c-choice__label--batch" for="checkbox-batch"></label>
-                                        </div>
-                                    </th>
-                                {% endif %}
-
-                                {% for field in list_fields %}
-                                    {% set sortClass = 'no-sort' %}
-                                    {% if field.sortable %}
-                                        {% set sortClass = 'sorting' %}
-                                        {% if field.name in sortedField %}
-                                            {% set sortClass = sortClass ~ dirClass %}
-                                        {% endif %}
+                                <tr class="c-table__row">
+                                    {% if batch_actions is not empty %}
+                                        <th class="c-table__cell c-table__cell--head no-sort">
+                                            <div class="c-choice c-choice--checkbox">
+                                                <input
+                                                    type="checkbox"
+                                                    id="checkbox-batch"
+                                                    name="checkboxes"
+                                                    class="c-choice__input js-batchAll"
+                                                >
+                                                <label class="c-choice__label c-choice__label--batch" for="checkbox-batch"></label>
+                                            </div>
+                                        </th>
                                     {% endif %}
 
-                                    <th
-                                        class="c-table__cell c-table__cell--head"
-                                        {{ field.width is defined ? "width=#{field.width}" }}
-                                    >
-
+                                    {% for field in list_fields %}
+                                        {% set sortClass = 'no-sort' %}
                                         {% if field.sortable %}
-                                            {% set sortableParams = {
-                                                "sort":field.name,
-                                                "dir":newDir
-                                            } %}
-
-                                            <div class="c-table__sorting {{ sortClass }}">
-                                                <a
-                                                    class="c-table__sorting-link d-block"
-                                                    href={{"?#{params|merge(sortableParams)|url_encode}"}}
-                                                >
-                                                    {{ "fields.#{field.name}.label"|trans([], trans_prefix) }}
-                                                </a>
-                                            </div>
-                                        {% else %}
-                                            {{ "fields.#{field.name}.label"|trans([], trans_prefix) }}
+                                            {% set sortClass = 'sorting' %}
+                                            {% if field.name in sortedField %}
+                                                {% set sortClass = sortClass ~ dirClass %}
+                                            {% endif %}
                                         {% endif %}
-                                    </th>
-                                {% endfor %}
-                                <th class="c-table__cell c-table__cell--head">{{ 'actions'|trans({}, 'ws_cms') }}</th>
-                            </tr>
+
+                                        <th
+                                            class="c-table__cell c-table__cell--head"
+                                            {{ field.width is defined ? "width=#{field.width}" }}
+                                        >
+
+                                            {% if field.sortable %}
+                                                {% set sortableParams = {
+                                                    "sort":field.name,
+                                                    "dir":newDir
+                                                } %}
+
+                                                <div class="c-table__sorting {{ sortClass }}">
+                                                    <a
+                                                        class="c-table__sorting-link d-block"
+                                                        href={{"?#{params|merge(sortableParams)|url_encode}"}}
+                                                    >
+                                                        {{ "fields.#{field.name}.label"|trans([], trans_prefix) }}
+                                                    </a>
+                                                </div>
+                                            {% else %}
+                                                {{ "fields.#{field.name}.label"|trans([], trans_prefix) }}
+                                            {% endif %}
+                                        </th>
+                                    {% endfor %}
+                                    <th class="c-table__cell c-table__cell--head">{{ 'actions'|trans({}, 'ws_cms') }}</th>
+                                </tr>
                             </thead>
                         {% endblock %}
 

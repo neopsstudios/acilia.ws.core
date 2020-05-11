@@ -9,7 +9,16 @@
         margin: 10px 0;
 
         &.is-open {
-            box-shadow: inset 3px 0 0 0 #252529;
+            position: relative;
+            box-shadow: none;
+
+            &:before {
+                @include position(absolute, $top: 0, $left: 15px);
+                width: 3px;
+                height: 100%;
+                background-color: $color-sidebar-active;
+                content: '';
+            }
         }
 
         &.has-submenu > .c-sidebar__link::after { 
@@ -29,8 +38,9 @@
     }
 
     &--light {
-        border-right: 1px solid #e1e2e8;
-        background-color: #f4f6f9;
+        border-right: 0;
+        box-shadow: 0 4px 16px 0 rgba(96, 101, 123, .14);
+        background-color: $color-white;
 
         #{ $self }__brand {
             border: 0;
@@ -38,7 +48,7 @@
 
         #{ $self }__item {
             &.is-open {
-                background-color: #f4f6f9;
+                background-color: $color-white;
             }
         }
 
@@ -46,12 +56,21 @@
             margin: 10px 0;
 
             &.is-active {
-                box-shadow: inset 3px 0 0 0 #252529;
-                color: #252529;
+                position: relative;
+                box-shadow: none;
+                color: $color-sidebar-active;
                 font-weight: $font-weight-semibold;
 
+                &:before {
+                    @include position(absolute, $top: 0, $left: 15px);
+                    width: 3px;
+                    height: 100%;
+                    background-color: $color-sidebar-active;
+                    content: '';
+                }
+
                 i {
-                    color: #252529;
+                    color: $color-sidebar-active;
                 }
             }
 
@@ -69,6 +88,10 @@
             &.is-active {
                 box-shadow: inherit;
                 margin: 0;
+
+                &:before {
+                    content: initial;
+                }
             }
         }
     }

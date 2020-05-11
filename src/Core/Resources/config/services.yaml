@@ -55,7 +55,7 @@ services:
 
     WS\Core\EventListener\ExceptionListener:
         tags:
-            - { name: kernel.event_listener, event: kernel.exception, method: onException }
+            - { name: kernel.event_listener, event: kernel.exception, method: onException, priority: 256 }
 
     # Data Collector
     WS\Core\Library\DataCollector\BuildCollector:

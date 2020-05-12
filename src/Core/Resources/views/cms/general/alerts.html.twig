@@ -20,7 +20,7 @@
         >
             {% for alert in get_alerts() %}
                 {% if alert.routeName is not null %}
-                    <a href="{{ path(alert.routeName) }}" class="c-dropdown__item dropdown-item o-media">
+                    <a href="{{ path(alert.routeName, alert.routeOptions) }}" class="c-dropdown__item dropdown-item o-media">
                         <div class="o-media__body">
                             <p class="u-text-mute">{{ alert.message|raw }}</p>
                         </div>

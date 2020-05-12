@@ -3,16 +3,19 @@
 
 namespace WS\Core\Library\Router\Loader;
 
+use WS\Core\Service\NavigationService;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouteCollection;
 
 class Loader
 {
     private $localizationStrategy;
+    private $navigationService;
 
-    public function __construct(LocalizationStrategyInterface $localizationStrategy)
+    public function __construct(LocalizationStrategyInterface $localizationStrategy, NavigationService $navigationService)
     {
         $this->localizationStrategy = $localizationStrategy;
+        $this->navigationService = $navigationService;
     }
 
     public function getParameters(RequestContext $context)
@@ -45,6 +48,17 @@ class Loader
                 }
             }
         }
+
+        // Process Navigational routs
+        foreach ($collection->all() as $name => $route) {
+            $routeOptions = $route->getOptions();
+            if (isset($routeOptions['navigation']) && $routeOptions['navigation'] === true) {
+                $this->navigationService->addNavigation($name, $route);
+                $collection->remove($name);
+            }
+        }
+
+        $this->navigationService->compileNavigations();
 
         return $collection;
     }

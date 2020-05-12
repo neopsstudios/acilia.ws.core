@@ -2,19 +2,27 @@
 
 namespace WS\Core\Library\Router;
 
+use WS\Core\Service\NavigationService;
+use WS\Core\Library\Router\Loader\Loader;
 use Symfony\Bundle\FrameworkBundle\Routing\Router as BaseRouter;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
-use WS\Core\Library\Router\Loader\Loader;
 
 class Router extends BaseRouter
 {
     /** @var Loader */
     protected $loader;
     protected $defaultLocale;
+    /** @var NavigationService */
+    protected $navigationService;
 
     public function __construct()
     {
         call_user_func_array(array('Symfony\Bundle\FrameworkBundle\Routing\Router', '__construct'), func_get_args());
+    }
+
+    public function setNavigationService(NavigationService $navigationService)
+    {
+        $this->navigationService = $navigationService;
     }
 
     public function setLoader(Loader $loader)
@@ -44,10 +52,26 @@ class Router extends BaseRouter
             // let symfony generate the route
             return $generator->generate($name, $parameters, $referenceType);
         } catch (RouteNotFoundException $e) {
+            // Try with the providers
+            if ($this->navigationService) {
+                if ($this->navigationService->hasRoute($name)) {
+                    return $this->navigationService->generateRoute($name, $parameters);
+                }
+            }
         }
 
         // let ws generate the route
-        return $generator->generate(sprintf('%s/%s', $name, $locale), $parameters, $referenceType);
+        $wsName = sprintf('%s/%s', $name, $locale);
+        try {
+            return $generator->generate($wsName, $parameters, $referenceType);
+        } catch (RouteNotFoundException $e) {
+            // Try with the providers
+            if ($this->navigationService->hasRoute($wsName)) {
+                return $this->navigationService->generateRoute($wsName, $parameters);
+            }
+        }
+
+        throw new RouteNotFoundException(sprintf('Route "%s" not found', $name));
     }
 
     public function getRouteCollection()

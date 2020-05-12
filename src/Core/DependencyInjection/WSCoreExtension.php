@@ -9,6 +9,8 @@ use WS\Core\Library\CRUD\AbstractController;
 use WS\Core\Library\CRUD\CRUDCompilerPass;
 use WS\Core\Library\FactoryCollector\FactoryCollectorCompilerPass;
 use WS\Core\Library\FactoryCollector\FactoryCollectorInterface;
+use WS\Core\Library\Navigation\NavigationCompilerPass;
+use WS\Core\Library\Navigation\NavigationProviderInterface;
 use WS\Core\Service\ActivityLogService;
 use WS\Core\Library\ActivityLog\ActivityLogCompilerPass;
 use WS\Core\Library\ActivityLog\ActivityLogInterface;
@@ -73,6 +75,9 @@ class WSCoreExtension extends Extension implements PrependExtensionInterface
 
         // Tag CRUD Controllers
         $container->registerForAutoconfiguration(AbstractController::class)->addTag(CRUDCompilerPass::TAG);
+
+        // Tag Navigation Providers
+        $container->registerForAutoconfiguration(NavigationProviderInterface::class)->addTag(NavigationCompilerPass::TAG);
 
         // Configure services
         $configuration = new Configuration();

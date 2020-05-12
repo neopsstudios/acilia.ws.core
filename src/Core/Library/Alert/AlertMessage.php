@@ -7,12 +7,14 @@ class AlertMessage
     protected $message;
     protected $iconClass;
     protected $routeName;
+    protected $routeOptions;
 
-    public function __construct($message, $iconClass = null, $routeName = null)
+    public function __construct($message, $iconClass = null, $routeName = null, $routeOptions = [])
     {
         $this->message = $message;
         $this->iconClass = $iconClass;
         $this->routeName = $routeName;
+        $this->routeOptions = $routeOptions;
     }
 
     public function getMessage()
@@ -28,5 +30,10 @@ class AlertMessage
     public function getRouteName()
     {
         return $this->routeName;
+    }
+
+    public function getRouteOptions()
+    {
+        return $this->routeOptions;
     }
 }

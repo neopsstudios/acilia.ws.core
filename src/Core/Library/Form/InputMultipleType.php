@@ -10,7 +10,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class InputMultipleType extends AbstractType
 {
     const INPUT_MULTIPLE_TYPE_ATTR = [
-        'data-component' => 'ws_input-choices',
+        'data-component' => 'ws_input-multiple',
     ];
 
     protected $translator;

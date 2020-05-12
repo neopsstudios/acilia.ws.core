@@ -47,7 +47,7 @@ function init() {
     throw Error('No CMS Translations defined.');
   }
 
-  const inputMultiples = document.querySelectorAll('[data-component="ws_input-choices"]');
+  const inputMultiples = document.querySelectorAll('[data-component="ws_input-multiple"]');
   const inputMultipleConfig = cmsSettings.ws_cms_components.input_multiple;
   const inputMultipleTranslations = cmsTranslations.ws_cms_components.input_multiple;
 

@@ -8,14 +8,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class InputMultipleType extends AbstractType
 {
+    const INPUT_MULTIPLE_TYPE_ATTR = [
+        'data-component' => 'ws_input-multiple',
+    ];
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'widget' => 'single_text',
             'required' => false,
-            'attr' => [
-                'data-component' => 'ws_input-multiple',
-            ]
+            'attr' => self::INPUT_MULTIPLE_TYPE_ATTR
         ]);
     }
 

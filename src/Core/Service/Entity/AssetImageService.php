@@ -60,7 +60,7 @@ class AssetImageService implements FactoryCollectorInterface
         }
 
         try {
-            return $this->repository->getAll($this->contextService->getDomain(), $filter, $orderBy, $limit, $offset);
+            return $this->repository->getAll($this->contextService->getDomain(), $filter, [], $orderBy, $limit, $offset);
         } catch (\Exception $e) {
             $this->logger->error(sprintf('Error fetching image assets. Error %s', $e->getMessage()));
         }

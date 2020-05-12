@@ -8,7 +8,8 @@
 
 {% block content %}
     <div class="container">
-        <div class="row">
+        {# TODO integrar para Aciliacorpo #}
+{#         <div class="row">
             <div class="col-sm-12 col-lg-4">
                 <div class="c-card u-p-medium u-text-center u-mb-medium">
                     {{ source('@WSCore/cms/icons/edit.svg') }}
@@ -21,11 +22,11 @@
 
             <div class="col-sm-12 col-lg-4">
                 <div class="c-card u-p-medium u-text-center u-mb-medium">
-                    {{ source('@WSCore/cms/icons/widget.svg') }}
+                    {{ source('@WSCore/cms/icons/project.svg') }}
                     <h4 class="u-h6 u-font-medium u-mb-small">
-                        Accede rapidamente a la creación de un nuevo widget.
+                        Añade un nuevo proyecto en el portafolio de Nuestros proyectos.
                     </h4>
-                    <a class="c-btn c-btn--brand" href="#">Nuevo Widget</a>
+                    <a class="c-btn c-btn--brand" href="#">Nuevo Proyecto</a>
                 </div>
             </div>
 
@@ -38,7 +39,7 @@
                     <a class="c-btn c-btn--brand" href="#">Nuevo Oferta</a>
                 </div>
             </div>
-        </div>
+        </div> #}
         <div class="row">
             {% for widget in get_dashboard_widgets() %}
                 {{ render_dashboard_widget(widget) }}

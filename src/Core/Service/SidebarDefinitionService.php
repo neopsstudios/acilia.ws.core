@@ -54,6 +54,7 @@ class SidebarDefinitionService implements SidebarDefinitionInterface
             'menu',
             null,
             [
+                'roles' => ['ROLE_WS_SETTINGS'],
                 'container' => SidebarDefinition::SIDEBAR_CONTAINER,
                 'translation_domain' => 'ws_cms_setting',
                 'icon' => 'fa-cogs',

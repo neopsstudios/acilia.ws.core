@@ -1,0 +1,13 @@
+.c-field {
+    &__label {
+        flex-basis: auto;
+    }
+
+    &--xsmall {
+        width: 150px;
+    }
+
+    &--small {
+        width: 200px;
+    }
+}

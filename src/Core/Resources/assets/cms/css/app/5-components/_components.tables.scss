@@ -5,6 +5,10 @@ $table-cell-line-height: $base-line-height;
 .c-table {
     &__cell {
         font-weight: $font-weight-normal;
+
+        &--batch {
+            width: 50px;
+        }
     }
 
     &__collapse {

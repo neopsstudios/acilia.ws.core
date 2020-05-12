@@ -17,68 +17,63 @@
             <div class="c-table-responsive@desktop">
                 {% block crud_filter %}
                     <form
-                        class="c-toolbar c-toolbar--caption u-justify-space-between"
-                        id="user_filter_form"
+                        class="c-toolbar c-toolbar--column c-toolbar--caption u-justify-space-between"
+                        id="user_filter_extended_form"
                         role="form"
                         accept-charset="UTF-8"
                     >
-                        {% block crud_create_action %}
-                            <div class="u-flex u-mr-auto">
-                                <h4 class="c-toolbar__title u-mr-10">{{ 'title'|trans([], trans_prefix) }}</h4>
-                                <a class="c-btn c-btn--success" href="{{ ws_cms_path("#{route_prefix}_create") }}">
-                                    <i class="fa fa-plus u-mr-5"></i>
-                                    {{ 'new'|trans({}, 'ws_cms') }}
-                                </a>
-                            </div>
-                        {% endblock %}
+                        <div class="c-toolbar__row">
+                            {% block crud_create_action %}
+                                <div class="u-flex u-mr-auto">
+                                    <h4 class="c-toolbar__title u-mr-10">{{ 'title'|trans([], trans_prefix) }}</h4>
+                                    <a class="c-btn c-btn--success" href="{{ ws_cms_path("#{route_prefix}_create") }}">
+                                        <i class="fa fa-plus u-mr-5"></i>
+                                        {{ 'new'|trans({}, 'ws_cms') }}
+                                    </a>
+                                </div>
+                            {% endblock %}
 
-                        {{ include(
-                            '@WSCore/cms/general/batch.html.twig',
-                            { 'batch_actions': batch_actions, 'route_prefix': route_prefix },
-                            with_context = false
-                        ) }}
+                            {{ include(
+                                '@WSCore/cms/general/batch.html.twig',
+                                { 'batch_actions': batch_actions, 'route_prefix': route_prefix },
+                                with_context = false
+                            ) }}
 
-                        <div class="c-field c-field--inline has-icon-right u-hidden-down@tablet u-mr-10">
-                            <span class="c-field__icon">
-                                <i class="fa fa-search"></i>
-                            </span>
-                            <label class="u-hidden-visually" for="navbar-search">
-                                {{ 'search'|trans({}, 'ws_cms') }}
-                            </label>
-                            <input
-                                class="c-input c-input--small"
-                                id="navbar-search"
-                                type="text"
-                                placeholder="{{ 'search'|trans({}, 'ws_cms') }}"
-                                name="f"
-                                value="{{ app.request.get('f') }}"
-                                autocomplete="off"
-                            >
-                        </div>
-                        <button type="submit" class="c-btn c-btn--info">
-                            <i class="fa fa-search u-mr-5"></i>
-                            {{ 'search'|trans({}, 'ws_cms') }}
-                        </button>
-                    </form>
-                {% endblock %}
-                {% block crud_filter_extended %}
-{#                     {% if filterExtendedForm is not null %}
-                        <form
-                            class="c-toolbar c-toolbar--caption u-justify-space-between"
-                            id="user_filter_extended_form"
-                            role="form"
-                            accept-charset="UTF-8"
-                        >
                             <div class="c-field c-field--inline has-icon-right u-hidden-down@tablet u-mr-10">
-                                {{ form_widget(filterExtendedForm) }}
+                                <span class="c-field__icon">
+                                    <i class="fa fa-search"></i>
+                                </span>
+                                <label class="u-hidden-visually" for="navbar-search">
+                                    {{ 'search'|trans({}, 'ws_cms') }}
+                                </label>
+                                <input
+                                    class="c-input c-input--small"
+                                    id="navbar-search"
+                                    type="text"
+                                    placeholder="{{ 'search'|trans({}, 'ws_cms') }}"
+                                    name="f"
+                                    value="{{ app.request.get('f') }}"
+                                    autocomplete="off"
+                                >
                             </div>
                             <button type="submit" class="c-btn c-btn--info">
                                 <i class="fa fa-search u-mr-5"></i>
                                 {{ 'search'|trans({}, 'ws_cms') }}
                             </button>
+                        </div>
 
-                        </form>
-                    {% endif %} #}
+{#                         <div class="c-toolbar__row">
+                            {% block crud_filter_extended %}
+                                {% if filterExtendedForm is not null %}
+                                    {% for filterFormField in filterExtendedForm.children %}
+                                        <div class="c-field c-field--inline {% if not loop.last %}u-mr-10 {% endif %}">
+                                            {{ form_widget(filterFormField, {'attr': {'class': 'c-input--small'}}) }}
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endblock %}
+                        </div> #}
+                    </form>
                 {% endblock %}
 
                 <div class="c-doc-article u-mt-10 {{ data|length > 0 ? 'u-hidden' }}">
@@ -91,8 +86,7 @@
                 </div>
 
                 {% if data|length > 0 %}
-                    {# TODO: batch_actions #}
-                    <table class="c-table c-table--highlight">
+                    <table class="c-table c-table--fixed c-table--highlight">
                         {% if dir == 'asc' %}
                             {% set dirClass = '_asc' %}
                             {% set newDir = 'desc' %}
@@ -107,7 +101,7 @@
                             <thead class="c-table__head c-table__head--slim">
                                 <tr class="c-table__row">
                                     {% if batch_actions is not empty %}
-                                        <th class="c-table__cell c-table__cell--head no-sort">
+                                        <th class="c-table__cell c-table__cell--head c-table__cell--batch no-sort">
                                             <div class="c-choice c-choice--checkbox">
                                                 <input
                                                     type="checkbox"

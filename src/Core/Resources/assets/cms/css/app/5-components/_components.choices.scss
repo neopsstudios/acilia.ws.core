@@ -1,4 +1,47 @@
 .choices {
+    $self: &;
+
+    &__placeholder {
+        transition: opacity 0.3s;
+        color: $input-placeholder-color;
+        font-weight: $input-placeholder-font-weight;
+        opacity: 0.5;
+    }
+
+    &.is-open {
+        z-index: 3;
+
+        #{ $self }__inner {
+            border-radius: $base-border-radius;
+            border-color: $input-border-color;
+            color: $color-default-text;
+
+            &::placeholder {
+                transition: opacity 0.3s;
+                color: $input-placeholder-color;
+                font-weight: $input-placeholder-font-weight;
+                opacity: 0.5;
+            }
+
+            &:focus {
+                border-color: $input-focus-border-color;
+                outline: none;
+
+                &::placeholder {
+                    opacity: 0.2;
+                }
+            }
+
+            &.is-disabled,
+            &:disabled {
+                border-color: $input-disabled-border-color;
+                background-color: $input-disabled-background-color;
+                color: $input-disabled-color;
+                cursor: not-allowed;
+            }
+        }
+    }
+
     &__inner {
         display: flex;
         align-items: center;
@@ -30,6 +73,12 @@
     &__list {
         border-color: $input-border-color !important;
 
+        #{ $self }__item {
+            &--selectable {
+                padding-right: 10px !important;
+            }
+        }
+
         &--dropdown {
             border-color: $input-border-color !important;
         }
@@ -60,36 +109,6 @@
                 }
             }
         }
-    }
-}
-
-.is-open .choices__inner {
-    border-radius: $base-border-radius;
-    border-color: $input-border-color;
-    color: $color-default-text;
-
-    &::placeholder {
-        transition: opacity 0.3s;
-        color: $input-placeholder-color;
-        font-weight: $input-placeholder-font-weight;
-        opacity: 0.5;
-    }
-
-    &:focus {
-        border-color: $input-focus-border-color;
-        outline: none;
-
-        &::placeholder {
-            opacity: 0.2;
-        }
-    }
-
-    &.is-disabled,
-    &:disabled {
-        border-color: $input-disabled-border-color;
-        background-color: $input-disabled-background-color;
-        color: $input-disabled-color;
-        cursor: not-allowed;
     }
 }
 

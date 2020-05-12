@@ -98,3 +98,8 @@ batch_action.no_item_selected: Es necesario seleccionar elementos para realizar 
 batch_action.success_message: La acción ha sido realizada correctamente.
 batch_action.fail_message: Ha habido algún problema y la acción no ha podido ser completada.
 batch_action.remove_alert_title: Borrado múltiple
+
+# Input Multiple Widget
+input_multiple.add_item_message: 'Presiona Enter para agregar'
+input_multiple.unique_item_message: 'El valor ingresado ya esta en el listado'
+input_multiple.invalid_item_message: 'El valor ingresado no es valido'

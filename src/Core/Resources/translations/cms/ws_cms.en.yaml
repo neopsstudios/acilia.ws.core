@@ -98,3 +98,8 @@ batch_action.no_item_selected: You need to select some items to apply the action
 batch_action.success_message: The action has been applied to the items succesfully
 batch_action.fail_message: There was a problem and the action could not have been done.
 batch_action.remove_alert_title: Batch delete
+
+# Input Multiple Widget
+input_multiple.add_item_message: 'Press Enter to add'
+input_multiple.unique_item_message: 'The entered value is already on the list'
+input_multiple.invalid_item_message: 'The entered value is not valid'

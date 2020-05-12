@@ -46,6 +46,11 @@
                 },
                 assets_images: {
                     no_results: '{{ 'assets_images_noResults'|trans({}, 'ws_cms') }}'
+                },
+                input_multiple: {
+                    add_item: '{{ 'input_multiple.add_item_message'|trans({}, 'ws_cms') }}',
+                    unique_item: '{{ 'input_multiple.unique_item_message'|trans({}, 'ws_cms') }}',
+                    invalid_item: '{{ 'input_multiple.invalid_item_message'|trans({}, 'ws_cms') }}',
                 }
             },
             ws_cms_batch_actions: {
@@ -71,6 +76,12 @@
                 },
                 markdown_asset_image: {
                     endpoint: '{{ path('ws_asset_image_save_asset_image') }}'
+                },
+                input_multiple: {
+                    duplicate_items_allowed: false,
+                    edit_items: true,
+                    placeholder: true,
+                    remove_item_button: true,
                 }
             },
         };

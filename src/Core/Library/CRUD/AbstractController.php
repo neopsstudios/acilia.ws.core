@@ -253,6 +253,12 @@ abstract class AbstractController extends BaseController
             $extraData = $this->events[self::EVENT_INDEX_EXTRA_DATA]();
         }
 
+        $viewRoles = [
+            'create' => $this->calculateRole($this->getService()->getEntityClass(), 'create'),
+            'edit' => $this->calculateRole($this->getService()->getEntityClass(), 'edit'),
+            'delete' => $this->calculateRole($this->getService()->getEntityClass(), 'delete')
+        ];
+
         return $this->render(
             $this->getTemplate('index.html.twig'),
             array_merge(
@@ -266,7 +272,8 @@ abstract class AbstractController extends BaseController
                     'route_prefix' => $this->getRouteNamePrefix(),
                     'list_fields' => $listFields,
                     'batch_actions' => $this->getBatchActions(),
-                    'filterExtendedForm' => $filterExtendedView
+                    'filter_extended_form' => $filterExtendedView,
+                    'view_roles' => $viewRoles
                 ],
                 $extraData
             )

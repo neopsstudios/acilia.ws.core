@@ -6,6 +6,7 @@ logout: Logout
 search: Search
 new: New
 edit: Edit
+view: View
 delete: Delete
 delete_failed: An error occured deleting the element, please try again.
 delete_confirm: Yes, delete

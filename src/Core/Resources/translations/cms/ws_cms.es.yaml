@@ -6,6 +6,7 @@ logout: Salir
 search: Buscar
 new: Nuevo
 edit: Editar
+view: Ver
 delete: Eliminar
 delete_failed: Ha ocurrido un error al eliminar, intente nuevamente
 delete_confirm: Sí, borrar

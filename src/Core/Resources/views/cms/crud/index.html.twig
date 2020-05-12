@@ -4,12 +4,12 @@
     'title': 'title'|trans([], trans_prefix),
     'header': 'title'|trans([], trans_prefix),
     'breadcrumbs': [
-        {
-            'name': 'title'|trans({}, trans_prefix),
-            'main': true
-        }
-    ]
-} %}
+    {
+        'name': 'title'|trans({}, trans_prefix),
+        'main': true
+    }
+]
+    } %}
 
 {% block content %}
     <div class="row u-mb-large">
@@ -17,10 +17,10 @@
             <div class="c-table-responsive@desktop">
                 {% block crud_filter %}
                     <form
-                        class="c-toolbar c-toolbar--column c-toolbar--caption u-justify-space-between"
-                        id="user_filter_extended_form"
-                        role="form"
-                        accept-charset="UTF-8"
+                            class="c-toolbar c-toolbar--column c-toolbar--caption u-justify-space-between"
+                            id="user_filter_extended_form"
+                            role="form"
+                            accept-charset="UTF-8"
                     >
                         <div class="c-toolbar__row">
                             {% block crud_create_action %}
@@ -47,13 +47,13 @@
                                     {{ 'search'|trans({}, 'ws_cms') }}
                                 </label>
                                 <input
-                                    class="c-input c-input--small"
-                                    id="navbar-search"
-                                    type="text"
-                                    placeholder="{{ 'search'|trans({}, 'ws_cms') }}"
-                                    name="f"
-                                    value="{{ app.request.get('f') }}"
-                                    autocomplete="off"
+                                        class="c-input c-input--small"
+                                        id="navbar-search"
+                                        type="text"
+                                        placeholder="{{ 'search'|trans({}, 'ws_cms') }}"
+                                        name="f"
+                                        value="{{ app.request.get('f') }}"
+                                        autocomplete="off"
                                 >
                             </div>
                             <button type="submit" class="c-btn c-btn--info">
@@ -62,17 +62,17 @@
                             </button>
                         </div>
 
-{#                         <div class="c-toolbar__row">
-                            {% block crud_filter_extended %}
-                                {% if filterExtendedForm is not null %}
-                                    {% for filterFormField in filterExtendedForm.children %}
-                                        <div class="c-field c-field--inline {% if not loop.last %}u-mr-10 {% endif %}">
-                                            {{ form_widget(filterFormField, {'attr': {'class': 'c-input--small'}}) }}
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
-                            {% endblock %}
-                        </div> #}
+                        {#                         <div class="c-toolbar__row">
+                                                    {% block crud_filter_extended %}
+                                                        {% if filterExtendedForm is not null %}
+                                                            {% for filterFormField in filterExtendedForm.children %}
+                                                                <div class="c-field c-field--inline {% if not loop.last %}u-mr-10 {% endif %}">
+                                                                    {{ form_widget(filterFormField, {'attr': {'class': 'c-input--small'}}) }}
+                                                                </div>
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    {% endblock %}
+                                                </div> #}
                     </form>
                 {% endblock %}
 
@@ -99,56 +99,56 @@
 
                         {% block crud_table_head %}
                             <thead class="c-table__head c-table__head--slim">
-                                <tr class="c-table__row">
-                                    {% if batch_actions is not empty %}
-                                        <th class="c-table__cell c-table__cell--head c-table__cell--batch no-sort">
-                                            <div class="c-choice c-choice--checkbox">
-                                                <input
+                            <tr class="c-table__row">
+                                {% if batch_actions is not empty %}
+                                    <th class="c-table__cell c-table__cell--head c-table__cell--batch no-sort">
+                                        <div class="c-choice c-choice--checkbox">
+                                            <input
                                                     type="checkbox"
                                                     id="checkbox-batch"
                                                     name="checkboxes"
                                                     class="c-choice__input js-batchAll"
-                                                >
-                                                <label class="c-choice__label c-choice__label--batch" for="checkbox-batch"></label>
-                                            </div>
-                                        </th>
+                                            >
+                                            <label class="c-choice__label c-choice__label--batch" for="checkbox-batch"></label>
+                                        </div>
+                                    </th>
+                                {% endif %}
+
+                                {% for field in list_fields %}
+                                    {% set sortClass = 'no-sort' %}
+                                    {% if field.sortable %}
+                                        {% set sortClass = 'sorting' %}
+                                        {% if field.name in sortedField %}
+                                            {% set sortClass = sortClass ~ dirClass %}
+                                        {% endif %}
                                     {% endif %}
 
-                                    {% for field in list_fields %}
-                                        {% set sortClass = 'no-sort' %}
-                                        {% if field.sortable %}
-                                            {% set sortClass = 'sorting' %}
-                                            {% if field.name in sortedField %}
-                                                {% set sortClass = sortClass ~ dirClass %}
-                                            {% endif %}
-                                        {% endif %}
-
-                                        <th
+                                    <th
                                             class="c-table__cell c-table__cell--head"
                                             {{ field.width is defined ? "width=#{field.width}" }}
-                                        >
+                                    >
 
-                                            {% if field.sortable %}
-                                                {% set sortableParams = {
-                                                    "sort":field.name,
-                                                    "dir":newDir
-                                                } %}
+                                        {% if field.sortable %}
+                                            {% set sortableParams = {
+                                                "sort":field.name,
+                                                "dir":newDir
+                                            } %}
 
-                                                <div class="c-table__sorting {{ sortClass }}">
-                                                    <a
+                                            <div class="c-table__sorting {{ sortClass }}">
+                                                <a
                                                         class="c-table__sorting-link d-block"
                                                         href={{"?#{params|merge(sortableParams)|url_encode}"}}
-                                                    >
-                                                        {{ "fields.#{field.name}.label"|trans([], trans_prefix) }}
-                                                    </a>
-                                                </div>
-                                            {% else %}
-                                                {{ "fields.#{field.name}.label"|trans([], trans_prefix) }}
-                                            {% endif %}
-                                        </th>
-                                    {% endfor %}
-                                    <th class="c-table__cell c-table__cell--head">{{ 'actions'|trans({}, 'ws_cms') }}</th>
-                                </tr>
+                                                >
+                                                    {{ "fields.#{field.name}.label"|trans([], trans_prefix) }}
+                                                </a>
+                                            </div>
+                                        {% else %}
+                                            {{ "fields.#{field.name}.label"|trans([], trans_prefix) }}
+                                        {% endif %}
+                                    </th>
+                                {% endfor %}
+                                <th class="c-table__cell c-table__cell--head">{{ 'actions'|trans({}, 'ws_cms') }}</th>
+                            </tr>
                             </thead>
                         {% endblock %}
 
@@ -160,14 +160,14 @@
                                         <td class="c-table__cell">
                                             <div class="c-choice c-choice--checkbox">
                                                 <input
-                                                    class="c-choice__input js-batchItem"
-                                                    id="checkbox-item-{{ entity.id }}"
-                                                    name="checkboxes"
-                                                    type="checkbox"
+                                                        class="c-choice__input js-batchItem"
+                                                        id="checkbox-item-{{ entity.id }}"
+                                                        name="checkboxes"
+                                                        type="checkbox"
                                                 >
                                                 <label
-                                                    class="c-choice__label c-choice__label--batch"
-                                                    for="checkbox-item-{{ entity.id }}"
+                                                        class="c-choice__label c-choice__label--batch"
+                                                        for="checkbox-item-{{ entity.id }}"
                                                 >
                                                 </label>
                                             </div>
@@ -177,8 +177,8 @@
                                         {% block crud_table_body_row %}
                                             <td class="c-table__cell">
                                                 <a
-                                                    class="c-table__link"
-                                                    href="{{ ws_cms_path("#{route_prefix}_edit", { 'id': entity.id }) }}"
+                                                        class="c-table__link"
+                                                        href="{{ ws_cms_path("#{route_prefix}_edit", { 'id': entity.id }) }}"
                                                 >
                                                     {% if field.isDate|default(false) %}
                                                         {{ ws_cms_crud_list_is_date(attribute(entity, field.name)) }}
@@ -193,19 +193,19 @@
                                     {% endfor %}
 
                                     {% block crud_table_body_row_actions %}
-                                    <td class="c-table__cell">
-                                        {% block crud_table_body_row_action %}{% endblock %}
-                                        <button
-                                            class="c-btn c-btn--secondary c-btn--delete js-genericDelete"
-                                            data-id="{{ entity.id }}"
-                                            data-url="{{ ws_cms_path("#{route_prefix}_delete", { 'id': entity.id }) }}"
-                                            data-title="{{ 'title'|trans([], trans_prefix) }}"
-                                            data-message="{{ 'delete_warning'|trans([], trans_prefix) }}"
-                                        >
-                                            <i class="fal fa-trash-alt u-mr-5"></i>
-                                            {{ 'delete'|trans({}, 'ws_cms') }}
-                                        </button>
-                                    </td>
+                                        <td class="c-table__cell">
+                                            {% block crud_table_body_row_action %}{% endblock %}
+                                            <button
+                                                    class="c-btn c-btn--secondary c-btn--delete js-genericDelete"
+                                                    data-id="{{ entity.id }}"
+                                                    data-url="{{ ws_cms_path("#{route_prefix}_delete", { 'id': entity.id }) }}"
+                                                    data-title="{{ 'title'|trans([], trans_prefix) }}"
+                                                    data-message="{{ 'delete_warning'|trans([], trans_prefix) }}"
+                                            >
+                                                <i class="fal fa-trash-alt u-mr-5"></i>
+                                                {{ 'delete'|trans({}, 'ws_cms') }}
+                                            </button>
+                                        </td>
                                     {% endblock %}
                                 </tr>
                             {% endfor %}

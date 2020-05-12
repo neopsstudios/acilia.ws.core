@@ -39,6 +39,7 @@ class NavigationListener
                 $request = $event->getRequest();
                 $subRequest = $request->duplicate([], null, $attributes);
                 $response = $this->kernel->handle($subRequest, HttpKernelInterface::SUB_REQUEST);
+                $event->allowCustomResponseCode();
                 $event->setResponse($response);
             }
         }

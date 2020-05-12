@@ -81,6 +81,7 @@ error_page.go_back: Go back
 
 # Editorial Publishing
 publishing.publishStatus.label: Publish Status
+publishing.publishStatus.placeholder: Publish Status
 publishing.publishStatus.published.label: Published
 publishing.publishStatus.unpublished.label: Unpublished
 publishing.publishStatus.draft.label: Draft

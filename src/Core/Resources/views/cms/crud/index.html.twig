@@ -62,17 +62,17 @@
                             </button>
                         </div>
 
-                        {#                         <div class="c-toolbar__row">
-                                                    {% block crud_filter_extended %}
-                                                        {% if filterExtendedForm is not null %}
-                                                            {% for filterFormField in filterExtendedForm.children %}
-                                                                <div class="c-field c-field--inline {% if not loop.last %}u-mr-10 {% endif %}">
-                                                                    {{ form_widget(filterFormField, {'attr': {'class': 'c-input--small'}}) }}
-                                                                </div>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    {% endblock %}
-                                                </div> #}
+                        {% block crud_filter_extended %}
+                            <div class="c-toolbar__row">
+                                {% if filterExtendedForm is not null %}
+                                    {% for filterFormField in filterExtendedForm.children %}
+                                        <div class="c-field c-field--inline {% if not loop.last %}u-mr-10 {% endif %}">
+                                            {{ form_widget(filterFormField, {'attr': {'class': 'c-input--small'}}) }}
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        {% endblock %}
                     </form>
                 {% endblock %}
 

@@ -29,6 +29,7 @@ trait PublishingFormTrait
                 'choices' => $publishingOptions,
                 'required' => $required,
                 'attr' => [
+                    'placeholder' => 'publishing.publishStatus.placeholder',
                     'data-component' => 'ws_select'
                 ],
             ])

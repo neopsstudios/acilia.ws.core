@@ -81,6 +81,7 @@ error_page.go_back: Ir a atrás
 
 # Editorial Publishing
 publishing.publishStatus.label: Estado de Publicación
+publishing.publishStatus.placeholder: Estado de Publicación
 publishing.publishStatus.published.label: Publicado
 publishing.publishStatus.unpublished.label: Despublicado
 publishing.publishStatus.draft.label: Borrador

@@ -123,3 +123,12 @@
 .c-choice-wrapper--small .choices__inner {
     min-height: 39px;
 }
+
+.c-choice--checkbox {
+    .c-choice__input:checked + .c-choice__label::before {
+        border-color: $color-brand;
+        background-color: $color-brand;
+        font-family: 'Font Awesome 5 Pro';
+        content: "\f00c";
+    }
+}

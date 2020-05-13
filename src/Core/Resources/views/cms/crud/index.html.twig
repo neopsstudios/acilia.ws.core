@@ -27,8 +27,7 @@
                                 <div class="u-flex u-mr-auto">
                                     <h4 class="c-toolbar__title u-mr-10">{{ 'title'|trans([], trans_prefix) }}</h4>
                                     {% if is_granted(view_roles['create']) %}
-                                        <a class="c-btn c-btn--success" href="{{ ws_cms_path("#{route_prefix}_create") }}">
-                                            <i class="fa fa-plus u-mr-5"></i>
+                                        <a class="c-btn c-btn--brand" href="{{ ws_cms_path("#{route_prefix}_create") }}">
                                             {{ 'new'|trans({}, 'ws_cms') }}
                                         </a>
                                     {% endif %}
@@ -41,9 +40,9 @@
                                 with_context = false
                             ) }}
 
-                            <div class="c-field c-field--inline has-icon-right u-hidden-down@tablet u-mr-10">
+                            <div class="c-field c-field--medium has-icon-right u-hidden-down@tablet u-mr-10">
                                 <span class="c-field__icon">
-                                    <i class="fa fa-search"></i>
+                                    {{ source('@WSCore/cms/icons/search.svg') }}
                                 </span>
                                 <label class="u-hidden-visually" for="navbar-search">
                                     {{ 'search'|trans({}, 'ws_cms') }}
@@ -58,18 +57,25 @@
                                         autocomplete="off"
                                 >
                             </div>
-                            <button type="submit" class="c-btn c-btn--info">
-                                <i class="fa fa-search u-mr-5"></i>
+                            <button type="submit" class="c-btn c-btn--info u-mr-10">
+                                {{ source('@WSCore/cms/icons/search.svg') }}
                                 {{ 'search'|trans({}, 'ws_cms') }}
                             </button>
+                            {% if filter_extended_form is not null %}
+                                <button type="button" class="c-btn c-btn--secondary js-toggle-filter">
+                                    {{ source('@WSCore/cms/icons/filter.svg') }}
+                                    {{ 'filter'|trans({}, 'ws_cms') }}
+                                </button>
+                            {% endif %}
                         </div>
 
                         {% block crud_filter_extended %}
-                            <div class="c-toolbar__row">
+                            <div class="c-toolbar__row u-hidden u-border-top u-pt-20 u-mt-20 js-toggle-filter-row">
                                 {% if filter_extended_form is not null %}
                                     {% for filter_form_field in filter_extended_form.children %}
-                                        <div class="c-field c-field--inline {% if not loop.last %}u-mr-10 {% endif %}">
-                                            {{ form_widget(filter_form_field, {'attr': {'class': 'c-input--small'}}) }}
+                                        <div class="c-field c-field--small c-field--filters {% if not loop.last %}u-mr-10 {% endif %}">
+                                            {{ form_label(filter_form_field) }}
+                                            {{ form_widget(filter_form_field, {'attr': {'class': ''}}) }}
                                         </div>
                                     {% endfor %}
                                 {% endif %}
@@ -142,6 +148,7 @@
                                                         href={{"?#{params|merge(sortableParams)|url_encode}"}}
                                                 >
                                                     {{ "fields.#{field.name}.label"|trans([], trans_prefix) }}
+                                                    <i class="fad fa-sort u-pl-5"></i>
                                                 </a>
                                             </div>
                                         {% else %}
@@ -149,7 +156,7 @@
                                         {% endif %}
                                     </th>
                                 {% endfor %}
-                                <th class="c-table__cell c-table__cell--head">{{ 'actions'|trans({}, 'ws_cms') }}</th>
+                                <th class="c-table__cell c-table__cell--head c-table__cell--actions">{{ 'actions'|trans({}, 'ws_cms') }}</th>
                             </tr>
                             </thead>
                         {% endblock %}

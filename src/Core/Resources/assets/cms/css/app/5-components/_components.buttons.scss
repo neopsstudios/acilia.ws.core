@@ -13,6 +13,7 @@
 
 .c-btn--delete {
     transition: all .2s ease-in-out;
+    color: $grey-700;
 
     &:hover {
         @include linear-gradient(to bottom, $red-100, $red-300);

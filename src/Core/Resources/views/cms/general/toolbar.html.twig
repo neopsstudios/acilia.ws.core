@@ -3,7 +3,7 @@
 
     <div class="c-field c-field--inline has-icon-right u-hidden-down@tablet u-mr-small">
         <span class="c-field__icon">
-            <i class="fa fa-search"></i> 
+            {{ source('@WSCore/cms/icons/search.svg') }}
         </span>
         <label class="u-hidden-visually" for="navbar-search">Seach</label>
         <input class="c-input" id="navbar-search" type="text" placeholder="{{ 'search'|trans({}, 'ws_cms') }}" name="f" value="{{ app.request.get('f') }}" autocomplete="off">

@@ -1,4 +1,6 @@
 .c-field {
+    $self: &;
+
     &__label {
         flex-basis: auto;
     }
@@ -9,5 +11,20 @@
 
     &--small {
         width: 200px;
+    }
+
+    &--medium {
+        width: 250px;
+    }
+
+    &--filters {
+        .choices__inner {
+            min-height: 39px;
+            max-height: 39px;
+        }
+
+        #{ $self }__label {
+            color: $grey-700;
+        }
     }
 }

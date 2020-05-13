@@ -4,7 +4,12 @@ $table-cell-line-height: $base-line-height;
 
 .c-table {
     &__cell {
+        color: $grey-700;
         font-weight: $font-weight-normal;
+
+        &--actions {
+            width: 200px;
+        }
 
         &--batch {
             width: 50px;
@@ -89,7 +94,8 @@ $table-cell-line-height: $base-line-height;
     &__sorting-link {
         position: relative;
         z-index: 2;
-        padding-right: 30px;
+        font-weight: $font-weight-medium;
+        color: $grey-700;
     }
 }
 

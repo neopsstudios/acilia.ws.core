@@ -4,6 +4,7 @@ bad_request: No podemos procesar tu solicitud
 alerts.tooltip: "{0} No tienes ninguna alerta|{1} Tienes una alerta sin definir|]1,Inf[ Tienes %count% alertas sin atender"
 logout: Salir
 search: Buscar
+filter: Filtros
 new: Nuevo
 edit: Editar
 view: Ver

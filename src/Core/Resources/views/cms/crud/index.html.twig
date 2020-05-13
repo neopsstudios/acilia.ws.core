@@ -73,7 +73,7 @@
                             <div class="c-toolbar__row u-hidden u-border-top u-pt-20 u-mt-20 js-toggle-filter-row">
                                 {% if filter_extended_form is not null %}
                                     {% for filter_form_field in filter_extended_form.children %}
-                                        <div class="c-field c-field--small c-field--filters {% if not loop.last %}u-mr-10 {% endif %}">
+                                        <div class="c-field c-field--medium c-field--filters {% if not loop.last %}u-mr-10 {% endif %}">
                                             {{ form_label(filter_form_field) }}
                                             {{ form_widget(filter_form_field, {'attr': {'class': ''}}) }}
                                         </div>
@@ -156,7 +156,7 @@
                                         {% endif %}
                                     </th>
                                 {% endfor %}
-                                <th class="c-table__cell c-table__cell--head c-table__cell--actions">{{ 'actions'|trans({}, 'ws_cms') }}</th>
+                                <th class="c-table__cell c-table__cell--head">{{ 'actions'|trans({}, 'ws_cms') }}</th>
                             </tr>
                             </thead>
                         {% endblock %}

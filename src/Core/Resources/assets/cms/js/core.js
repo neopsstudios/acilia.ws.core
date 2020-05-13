@@ -18,6 +18,7 @@ import componentRangeSlider from './components/ws_rangeSlider';
 import componentTooltip from './components/ws_tooltip';
 import componentDropdown from './components/ws_dropdown';
 import componentTableCollapse from './components/ws_table_collapse';
+import componentToggleChoice from './components/ws_toggle_choice';
 
 // controllers
 import settingsCntrl from './controllers/settings';
@@ -38,6 +39,7 @@ componentRangeSlider();
 componentTooltip();
 componentDropdown();
 componentTableCollapse();
+componentToggleChoice();
 
 if (document.querySelector('[data-page="settings"]')) {
   settingsCntrl();

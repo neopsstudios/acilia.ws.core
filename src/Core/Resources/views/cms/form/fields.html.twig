@@ -21,7 +21,6 @@
 
 {%- block form_widget_compound -%}
     {%- set type = form.vars.type|default('') -%}
-
     {%- if type == 'ws-asset-image' %}
         {{- block('ws_asset_image_widget') -}}
     {%- else -%}
@@ -53,10 +52,14 @@
 {%- endblock textarea_widget -%}
 
 {%- block choice_widget -%}
-    {% if expanded %}
-        {{- block('choice_widget_expanded') -}}
+    {% if form.vars.type|default('') == 'ws-toggle-choice' %}
+        {{- block('ws_toggle_choice') -}}
     {% else %}
-        {{- block('choice_widget_collapsed') -}}
+        {% if expanded %}
+            {{- block('choice_widget_expanded') -}}
+        {% else %}
+            {{- block('choice_widget_collapsed') -}}
+        {% endif %}
     {% endif %}
 {%- endblock choice_widget -%}
 
@@ -717,3 +720,15 @@
 {%- block ws_widget_class -%}
     {%- if attr['class'] is defined -%}{{ attr['class'] }}{%- endif -%}
 {%- endblock ws_widget_class -%}
+
+{%- block ws_toggle_choice -%}
+    <div class="c-toggle u-mb-small js-toggle" data-component="ws_toggle_choice">
+        {% for choice in choices %}
+            <div class="c-toggle__btn js-toggle-btn {% if choice is selectedchoice(value) %}is-active{% endif %}">
+                <label class="c-toggle__label" for="{{ id }}{{ loop.index }}">
+                    <input class="c-toggle__input js-toggle-input" value="{{ choice.value }}" id="{{ id }}{{ loop.index }}" name="{{ full_name }}" type="radio" {% if choice is selectedchoice(value) %} checked{% endif %}>{{ choice_translation_domain is same as(false) ? choice.label : choice.label|trans({}, choice_translation_domain) }}
+                </label>
+            </div>
+        {% endfor %}
+    </div>
+{%- endblock ws_toggle_choice -%}

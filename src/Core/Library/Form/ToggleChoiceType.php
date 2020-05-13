@@ -15,6 +15,7 @@ class ToggleChoiceType extends AbstractType
             'type' => 'ws-toggle-choice',
         ]);
     }
+
     public function getParent()
     {
         return ChoiceType::class;

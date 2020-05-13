@@ -1,12 +1,12 @@
 function handleToggle(event) {
-  const { target } = event;
+  const { target, currentTarget } = event;
   const element = !target.classList.contains('js-toggle-btn') ? target.closest('.js-toggle-btn') : target;
 
   if (element.classList.contains('js-toggle-btn')) {
     const sibling = element.nextElementSibling || element.previousElementSibling;
 
-    if (document.querySelector('.js-toggle-input:checked')) {
-      document.querySelector('.js-toggle-input:checked').checked = false;
+    if (currentTarget.querySelector('.js-toggle-input:checked')) {
+      currentTarget.querySelector('.js-toggle-input:checked').checked = false;
     }
 
     sibling.classList.remove('is-active');

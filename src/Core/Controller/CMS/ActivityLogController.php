@@ -33,7 +33,7 @@ class ActivityLogController extends AbstractController
      */
     public function index(Request $request) : Response
     {
-        if (!$this->isGranted('ROLE_WS_ACTIVITY_LOG')) {
+        if (!$this->isGranted('ROLE_WS_CORE_ACTIVITY_LOG')) {
             throw $this->createAccessDeniedException($this->translator->trans('not_allowed', [], 'ws_cms'));
         }
 

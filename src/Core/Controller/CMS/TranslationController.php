@@ -13,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @Route("/translation", name="ws_translation_")
- * @Security("is_granted('ROLE_WS_TRANSLATION')", message="not_allowed")
+ * @Security("is_granted('ROLE_WS_CORE_TRANSLATION')", message="not_allowed")
  */
 class TranslationController extends AbstractController
 {

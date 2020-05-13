@@ -22,7 +22,7 @@
         <a class="c-dropdown__item dropdown-item" href="{{ path('ws_administrator_profile') }}">
             {{ 'view_profile'|trans({}, 'ws_cms') }}
         </a>
-        {% if ws_activity_log_enabled() and is_granted('ROLE_WS_ACTIVITY_LOG') %}
+        {% if ws_activity_log_enabled() and is_granted('ROLE_WS_CORE_ACTIVITY_LOG') %}
             <a class="c-dropdown__item dropdown-item" href="{{ path('ws_activity_log_index') }}">
                 {{ 'title'|trans({}, 'ws_cms_activity_log') }}
             </a>

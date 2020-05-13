@@ -2,6 +2,7 @@
 
 namespace WS\Core\DependencyInjection;
 
+use WS\Core\Entity\Administrator;
 use WS\Core\EventListener\DeviceListener;
 use WS\Core\Library\DataExport\DataExportCompilerPass;
 use WS\Core\Library\DataExport\DataExportProviderInterface;
@@ -45,6 +46,23 @@ class WSCoreExtension extends Extension implements PrependExtensionInterface
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
         $loader->load('router.yaml');
+
+        $masterRole = 'ROLE_WS_CORE';
+        $actions = ['view', 'create', 'edit', 'delete'];
+        $entities = [
+            Administrator::class,
+        ];
+
+        $this->loadRoles($container, $masterRole, $entities, $actions);
+
+        $this->addRoles($container, [
+            'ROLE_WS_CORE' => [
+                'ROLE_WS_CORE_ADMINISTRATOR',
+                'ROLE_WS_CORE_TRANSLATION',
+                'ROLE_WS_CORE_ACTIVITY_LOG',
+                'ROLE_WS_CORE_SETTINGS'
+            ]
+        ]);
 
         // Tag with DB Channel to all DBLoggerInterface services
         $container->registerForAutoconfiguration(DBLoggerInterface::class)->addTag('monolog.logger', ['channel' => 'db']);

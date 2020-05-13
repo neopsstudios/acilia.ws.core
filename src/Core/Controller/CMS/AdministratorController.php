@@ -34,14 +34,6 @@ class AdministratorController extends AbstractController
         return 'ws_cms_administrator';
     }
 
-    protected function denyAccessUnlessAllowed(string $action): void
-    {
-        if (!$this->isGranted('ROLE_WS_ADMINISTRATOR')) {
-            $exception = $this->createAccessDeniedException($this->trans('not_allowed', [], 'ws_cms'));
-            throw $exception;
-        }
-    }
-
     protected function getListFields(): array
     {
         return [

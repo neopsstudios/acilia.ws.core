@@ -40,7 +40,7 @@ class SidebarDefinitionService implements SidebarDefinitionInterface
                 'route_name' => 'ws_translation_index'
             ],
             [
-                'roles' => ['ROLE_WS_TRANSLATION'],
+                'roles' => ['ROLE_WS_CORE_TRANSLATION'],
                 'translation_domain' => 'ws_cms_translation',
                 'icon' => 'fa-language',
                 'collapsed_routes' => ['ws_translation_'],
@@ -54,7 +54,7 @@ class SidebarDefinitionService implements SidebarDefinitionInterface
             'menu',
             null,
             [
-                'roles' => ['ROLE_WS_SETTINGS'],
+                'roles' => ['ROLE_WS_CORE_SETTINGS'],
                 'container' => SidebarDefinition::SIDEBAR_CONTAINER,
                 'translation_domain' => 'ws_cms_setting',
                 'icon' => 'fa-cogs',
@@ -92,7 +92,7 @@ class SidebarDefinitionService implements SidebarDefinitionInterface
                 'route_name' => 'ws_administrator_index'
             ],
             [
-                'roles' => ['ROLE_WS_ADMINISTRATOR'],
+                'roles' => ['ROLE_WS_CORE_ADMINISTRATOR'],
                 'translation_domain' => 'ws_cms_administrator',
                 'icon' => 'fa-user-shield',
                 'collapsed_routes' => ['ws_administrator_'],

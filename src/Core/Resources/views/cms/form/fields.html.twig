@@ -734,11 +734,11 @@
                         value="{{ choice.value }}"
                         {{ choice is selectedchoice(value) ? 'checked' }}
                     >
-                        {{
-                            choice_translation_domain is same as(false)
-                                ? choice.label
-                                : choice.label|trans({}, choice_translation_domain)
-                        }}
+                        {% if choice_translation_domain is same as(false) %}
+                            {{ choice.label }}
+                        {% else %}
+                            {{ choice.label|trans({}, choice_translation_domain) }}
+                        {% endif %}
                 </label>
             </div>
         {% endfor %}

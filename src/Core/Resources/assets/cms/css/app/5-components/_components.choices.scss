@@ -107,6 +107,10 @@
                 &:focus {
                     @include linear-gradient(to bottom, $btn-primary-focus-gradient);
                 }
+
+                &.is-highlighted {
+                    @include linear-gradient(to bottom, $btn-primary-focus-gradient);
+                }
             }
         }
     }

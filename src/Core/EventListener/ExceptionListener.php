@@ -34,12 +34,11 @@ class ExceptionListener
 
         // get the exception object from the received event
         $exception = $event->getThrowable();
-        
-        $code = Response::HTTP_INTERNAL_SERVER_ERROR;
-        if ($exception instanceof HttpExceptionInterface) {
-            $code = $exception->getStatusCode();
+        if (! $exception instanceof HttpExceptionInterface) {
+            return;
         }
 
+        $code = $exception->getStatusCode();
         if (in_array($code, [
             Response::HTTP_FORBIDDEN,
             Response::HTTP_NOT_FOUND,

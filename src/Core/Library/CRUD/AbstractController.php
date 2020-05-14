@@ -504,7 +504,7 @@ abstract class AbstractController extends BaseController
     }
 
     /**
-     * @Route ("/export", name="export", methods="POST"))
+     * @Route ("/export", name="export", methods="GET"))
      *
      * @param Request $request
      *

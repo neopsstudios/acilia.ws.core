@@ -12,12 +12,7 @@
                         <span class="c-sidebar__text">
                             {{ menu.label|trans({}, menu.translationDomain)|raw  }}
                         </span>
-                        <div class="o-arrow-wrapper">
-                            <span class="o-arrow">
-                              <span class="o-arrow__left"></span>
-                              <span class="o-arrow__right"></span>
-                            </span>
-                        </div>
+                        {{ source('@WSCore/cms/icons/arrow.svg') }}
                     </a>
                     <ul class="c-sidebar__submenu collapse">
                         {% for submenu in menu.children %}

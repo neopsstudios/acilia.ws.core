@@ -1,23 +1,18 @@
 {% set domains = get_domains() %}
 {% if domains|length > 1 %}
-    <div class="c-dropdown dropdown u-mr-15" data-toggle="dropdown-language" data-component="ws_dropdown">
+    <div class="c-dropdown dropdown u-mr-20" data-toggle="dropdown-language" data-component="ws_dropdown">
         <a id="languageDropdownButton" href="#" class="c-notification u-mr-0 u-flex u-align-items-center dropdown-toggle" aria-haspopup="true" aria-expanded="false">
             <span class="c-notification__icon u-pr-5">
                 <i class="fal fa-globe-europe"></i>
             </span>
-            <p class="c-navbar__text u-text-xsmall u-pr-15">
+            <p class="c-navbar__text u-text-xsmall u-pr-5">
                 {{ ('language.' ~ get_current_domain().locale)|trans({}, 'ws_cms') }}
             </p>
-            <div class="o-arrow-wrapper">
-                <span class="o-arrow">
-                    <span class="o-arrow__left"></span>
-                    <span class="o-arrow__right"></span>
-                </span>
-            </div>
+            {{ source('@WSCore/cms/icons/arrow.svg') }}
         </a>
 
         <div
-            class="c-dropdown__menu c-dropdown__menu--large dropdown-menu dropdown-menu-right dropdown-language"
+            class="c-dropdown__menu c-dropdown__menu--medium dropdown-menu dropdown-language"
             aria-labelledby="languageDropdownButton"
         >
             {% for domain in domains %}
@@ -25,12 +20,8 @@
                     href="{{ path('ws_switch_domain', { 'id': domain.id }) }}"
                     class="c-dropdown__item dropdown-item o-media {{ domain.id == get_current_domain().id ? 'is-active' }}"
                 >
-                    <div class="o-media__body">
-                        <p class="u-text-mute">
-                            {{ domain.host }} |
-                            {{ ('language.' ~ domain.locale)|trans({}, 'ws_cms') }}
-                        </p>
-                    </div>
+                    {{ domain.host }} |
+                    {{ ('language.' ~ domain.locale)|trans({}, 'ws_cms') }}
                 </a>
             {% endfor %}
         </div>

@@ -1,5 +1,5 @@
 {% if has_alerts() %}
-    <div class="c-dropdown dropdown u-mr-15 u-hidden-down@mobile" data-toggle="dropdown-alerts" data-component="ws_dropdown">
+    <div class="c-dropdown dropdown u-mr-20 u-hidden-down@mobile" data-toggle="dropdown-alerts" data-component="ws_dropdown">
         <a
             href="#"
             id="alertDropdownButton"
@@ -21,15 +21,11 @@
             {% for alert in get_alerts() %}
                 {% if alert.routeName is not null %}
                     <a href="{{ path(alert.routeName, alert.routeOptions) }}" class="c-dropdown__item dropdown-item o-media">
-                        <div class="o-media__body">
-                            <p class="u-text-mute">{{ alert.message|raw }}</p>
-                        </div>
+                        {{ alert.message|raw }}
                     </a>
                 {% else %}
                     <span class="c-dropdown__item dropdown-item o-media">
-                        <div class="o-media__body">
-                            <p class="u-text-mute">{{ alert.message|raw }}</p>
-                        </div>
+                        {{ alert.message|raw }}
                     </span>
                 {% endif %}
             {% endfor %}

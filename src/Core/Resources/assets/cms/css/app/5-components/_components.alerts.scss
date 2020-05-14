@@ -1,31 +1,29 @@
-.c-alert--border-success {
-    border: 1px solid $alert-success-background-color;
-    background-color: rgba($alert-success-background-color, .2);
-    color: $alert-success-background-color;
-    font-weight: $font-weight-normal;
-    font-size: rem(13);
-}
+.c-alert {
+    &[class*="--border"] {
+        font-weight: $font-weight-normal;
+        font-size: rem(13);
+    }
+    &--border-success {
+        border: 1px solid $alert-success-background-color;
+        background-color: rgba($alert-success-background-color, .2);
+        color: $alert-success-background-color;
+    }
 
-.c-alert--border-info {
-    border: 1px solid $alert-info-background-color;
-    background-color: rgba($alert-info-background-color, .2);
-    color: $alert-info-background-color;
-    font-weight: $font-weight-normal;
-    font-size: rem(13);
-}
+    &--border-info {
+        border: 1px solid $alert-info-background-color;
+        background-color: rgba($alert-info-background-color, .2);
+        color: $alert-info-background-color;
+    }
 
-.c-alert--border-warning {
-    border: 1px solid $alert-warning-background-color;
-    background-color: rgba($alert-warning-background-color, .2);
-    color: $alert-warning-background-color;
-    font-weight: $font-weight-normal;
-    font-size: rem(13);
-}
+    &--border-warning {
+        border: 1px solid $alert-warning-background-color;
+        background-color: rgba($alert-warning-background-color, .2);
+        color: $alert-warning-background-color;
+    }
 
-.c-alert--border-danger {
-    border: 1px solid $alert-danger-background-color;
-    background-color: rgba($alert-danger-background-color, .2);
-    color: $alert-danger-background-color;
-    font-weight: $font-weight-normal;
-    font-size: rem(13);
+    &--border-danger {
+        border: 1px solid $alert-danger-background-color;
+        background-color: rgba($alert-danger-background-color, .2);
+        color: $alert-danger-background-color;
+    }
 }

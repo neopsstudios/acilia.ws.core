@@ -18,10 +18,6 @@
     }
 
     &--filters {
-        .choices__inner {
-            // min-height: 39px;
-        }
-
         #{ $self }__label {
             color: $grey-700;
         }

@@ -1,23 +1,25 @@
-.c-btn--brand {
-    @include linear-gradient(to bottom, $color-brand, $color-brand);
-    border-color: $color-brand;
+.c-btn {
+    &--brand {
+        @include linear-gradient(to bottom, $color-brand, $color-brand);
+        border-color: $color-brand;
 
-    &:hover {
-        @include linear-gradient(to bottom, darken($color-brand, 4%), darken($color-brand, 4%));
+        &:hover {
+            @include linear-gradient(to bottom, darken($color-brand, 4%), darken($color-brand, 4%));
+        }
+
+        &:focus {
+            @include linear-gradient(to bottom, darken($color-brand, 6%), darken($color-brand, 6%));
+        }
     }
 
-    &:focus {
-        @include linear-gradient(to bottom, darken($color-brand, 6%), darken($color-brand, 6%));
-    }
-}
+    &--delete {
+        transition: all .2s ease-in-out;
+        color: $grey-700;
 
-.c-btn--delete {
-    transition: all .2s ease-in-out;
-    color: $grey-700;
-
-    &:hover {
-        @include linear-gradient(to bottom, $red-100, $red-300);
-        border-color: $red-300;
-        color: $color-white;
+        &:hover {
+            @include linear-gradient(to bottom, $red-100, $red-300);
+            border-color: $red-300;
+            color: $color-white;
+        }
     }
 }

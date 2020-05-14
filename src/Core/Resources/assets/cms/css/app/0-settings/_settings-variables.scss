@@ -1,21 +1,16 @@
 $background-color: #f2f2f6;
 
-$color-primary: #07084a;
+$color-primary: #252529;
 $color-secondary: #4deb96;
 $color-brand: #ffa600;
 $color-brand-secondary: #fb8332;
-$color-default-text: #38383d;
-$color-sidebar-active: #252529;
+$color-default-text: #9fa9ba;
+$color-sidebar-active: $color-primary;
 
 // Common
 $color-black: #000000;
 $color-white: #ffffff;
 $color-transparent: transparent;
-
-$color-disable: #edeff1;
-$color-error: #ec0000;
-$color-success: #55b45a;
-$color-warning: #ff9f0f;
 
 $base-font-family: 'IBM Plex Sans', sans-serif;
 // $base-font-family: 'Source Sans Pro', sans-serif;
@@ -30,12 +25,7 @@ $font-weight-bold: 700;
 $font-weight-base: normal;
 
 $body-color: $color-default-text;
-$button-text-color: #00411e;
-$title-color: #323233;
 $border-color: #dadae4;
 $max-width-container: 1140;
 $max-width-container-px: $max-width-container + px;
-$radio-size: 17px;
-$checkbox-size: 17px;
-$circle-diameter-small: 112px;
-$circle-diameter-big: 157px;
+

@@ -1,5 +1,6 @@
 <svg
     class="c-card__svg"
+    role="img"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 512 512">
     <linearGradient id="a" gradientUnits="userSpaceOnUse" x1="119.607" y1="164.942" x2="312.397" y2="164.942" class="gradient-element"><stop offset="0" class="primary-color-gradient" stop-color="#de4313"/><stop offset="1" class="secondary-color-gradient" stop-color="#fec163"/></linearGradient>

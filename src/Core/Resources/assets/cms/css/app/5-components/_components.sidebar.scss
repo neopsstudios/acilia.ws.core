@@ -21,7 +21,7 @@
             }
         }
 
-        &.has-submenu > .c-sidebar__link::after { 
+        &.has-submenu > .c-sidebar__link::after {
             content: initial;
         }
 
@@ -54,6 +54,7 @@
 
         #{ $self }__link {
             margin: 10px 0;
+            color: $grey-700;
 
             &.is-active {
                 position: relative;
@@ -72,11 +73,10 @@
                 i {
                     color: $color-sidebar-active;
                 }
-            }
 
-            &:hover {
-                color: $color-info;
-                text-decoration: none;
+                &:hover {
+                    color: $color-brand;
+                }
             }
         }
     }

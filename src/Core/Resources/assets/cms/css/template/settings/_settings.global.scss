@@ -74,13 +74,19 @@ $orange-300: #fd9a18 !default;
 $orange-400: #ff7800 !default;
 $orange-500: #f16911 !default;
 
+// WS
+$color-primary: #252529 !default;
+$color-disable: #edeff1;
+$color-brand: #ffa600;
+$color-brand-secondary: #fb8332;
+
 // states
-$color-success: $green-200 !default;
+$color-success: #55b45a !default;
 $color-info:    $blue-300 !default;
-$color-warning: $orange-300 !default;
-$color-danger:  $red-400 !default;
+$color-warning: #ff9f0f !default;
+$color-danger:  #ec0000 !default;
 $color-fancy:   $purple-400 !default;
-$color-mute:    $grey-800 !default;
+$color-mute:    $color-disable !default;
 
 // gradients
 $gradient-info:     $blue-300, $blue-400 !default;
@@ -124,8 +130,8 @@ $text-small-font-size: rem(12px) !default;
 $text-font-size: rem(14px) !default;
 $text-large-font-size: rem(16px) !default;
 
-$text-color: $gunmetal-200 !default;
-$text-strong-color: $gunmetal-200 !default;
+$text-color: $color-primary !default;
+$text-strong-color: $color-primary !default;
 $text-mark-color: $white !default;
 $text-mark-background-color: #ff0 !default;
 $text-mute-color: $color-mute !default;
@@ -139,20 +145,20 @@ $h5-font-size: rem(18px) !default;
 $h6-font-size: rem(16px) !default;
 
 $heading-margin-bottom: rem(8px) !default;
-$heading-color: $gunmetal-200 !default;
+$heading-color: $color-primary !default;
 $heading-font-weight: $font-weight-semibold !default;
 
 // Links
-$link-color: $blue-300 !default;
+$link-color: $color-brand !default;
 $link-text-decoration: none !default;
-$link-hover-color: $blue-300 !default;
-$link-hover-text-decoration: underline !default;
+$link-hover-color: $color-brand !default;
+$link-hover-text-decoration: none !default;
 
 
 //
 // 3. Borders
 // ========================================================================== */
-$base-border-radius: 5px !default;
+$base-border-radius: 4px !default;
 $base-border-style:  solid !default;
 $base-border-color:  $grey-300 !default;
 $base-border-width:  1px !default;
@@ -161,7 +167,7 @@ $base-border-width:  1px !default;
 //
 // 4. Icon Fonts
 // ========================================================================== */
-$base-icon-font: "FontAwesome" !default;
+$base-icon-font: "Font Awesome 5 Pro" !default;
 
 
 //

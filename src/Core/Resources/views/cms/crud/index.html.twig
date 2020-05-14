@@ -62,11 +62,25 @@
                                 {{ 'search'|trans({}, 'ws_cms') }}
                             </button>
                             {% if filter_extended_form is not null %}
-                                <button type="button" class="c-btn c-btn--secondary js-toggle-filter">
+                                <button type="button" class="c-btn c-btn--secondary u-mr-10 js-toggle-filter">
                                     {{ source('@WSCore/cms/icons/filter.svg') }}
                                     {{ 'filter'|trans({}, 'ws_cms') }}
                                 </button>
                             {% endif %}
+                            <div class="c-dropdown dropdown" data-toggle="dropdown-export" data-component="ws_dropdown">
+                                <button class="c-btn c-btn--secondary has-dropdown dropdown-toggle"
+                                        type="button"
+                                        id="ExportDropdownButton"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        {{ source('@WSCore/cms/icons/export.svg') }}
+                                        Exportar
+                                </button>
+                                <div class="c-dropdown__menu dropdown-menu dropdown-export" aria-labelledby="ExportDropdownButton">
+                                    <a class="c-dropdown__item dropdown-item" href="#">
+                                        <i class="fal fa-file-csv u-pr-5"></i> CSV
+                                    </a>
+                                </div>
+                            </div>
                         </div>
 
                         {% block crud_filter_extended %}

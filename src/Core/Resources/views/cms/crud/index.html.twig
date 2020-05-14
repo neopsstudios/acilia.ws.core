@@ -81,7 +81,7 @@
                                     {% block crud_export_formats %}
                                         <div class="c-dropdown__menu dropdown-menu dropdown-export" aria-labelledby="ExportDropdownButton">
                                             <a  class="c-dropdown__item dropdown-item"
-                                                href="{{ ws_cms_path("#{route_prefix}_export") }}">
+                                                href="{{ ws_cms_path("#{route_prefix}_export", app.request.query.all) }}">
                                                 <i class="fal fa-file-csv u-pr-5"></i> {{ 'export.csv'|trans({}, 'ws_cms') }}
                                             </a>
                                             {% block crud_export_format %}

@@ -519,10 +519,23 @@ abstract class AbstractController extends BaseController
             throw new NotFoundHttpException();
         }
 
-        $filter = (string) $request->get('f');
+        // Serach simple
+        $search = (string) $request->get('f');
+
+        // Filter extended
+        $filterExtended = $this->getFilterExtendedForm();
+        $filterExtendedData = null;
+
+        if ($filterExtended instanceof Form) {
+            $filterExtended->handleRequest($request);
+            if ($filterExtended->isSubmitted() && $filterExtended->isValid()) {
+                $filterExtendedData = $filterExtended->getData();
+            }
+        }
+
         $format = (string) strtolower($request->get('format', CsvExportProvider::EXPORT_FORMAT));
 
-        $data = $this->getService()->getDataExport($filter, (string)$request->get('sort'), (string)$request->get('dir'));
+        $data = $this->getService()->getDataExport($search, $filterExtendedData, (string)$request->get('sort'), (string)$request->get('dir'));
 
         $content = $this->dataExportService->export($data, $format);
         $headers = $this->dataExportService->headers($format);

@@ -11,6 +11,8 @@ use WS\Core\Library\CRUD\AbstractController;
 use WS\Core\Library\CRUD\CRUDCompilerPass;
 use WS\Core\Library\FactoryCollector\FactoryCollectorCompilerPass;
 use WS\Core\Library\FactoryCollector\FactoryCollectorInterface;
+use WS\Core\Library\Navbar\NavbarCompilerPass;
+use WS\Core\Library\Navbar\NavbarDefinitionInterface;
 use WS\Core\Library\Navigation\NavigationCompilerPass;
 use WS\Core\Library\Navigation\NavigationProviderInterface;
 use WS\Core\Service\ActivityLogService;
@@ -92,6 +94,9 @@ class WSCoreExtension extends Extension implements PrependExtensionInterface
         // Tag Sidebars Definitions
         $container->registerForAutoconfiguration(SidebarDefinitionInterface::class)->addTag(SidebarCompilerPass::TAG);
 
+        // Tag Navbars Definitions
+        $container->registerForAutoconfiguration(NavbarDefinitionInterface::class)->addTag(NavbarCompilerPass::TAG);
+
         // Tag Data Exporters
         $container->registerForAutoconfiguration(DataExportProviderInterface::class)->addTag(DataExportCompilerPass::TAG);
 
@@ -112,6 +117,7 @@ class WSCoreExtension extends Extension implements PrependExtensionInterface
         // Configure Device Detector
         $deviceListener = $container->getDefinition(DeviceListener::class);
         $deviceListener->setArgument(0, $config['device_detector']);
+
     }
 
     public function prepend(ContainerBuilder $container)

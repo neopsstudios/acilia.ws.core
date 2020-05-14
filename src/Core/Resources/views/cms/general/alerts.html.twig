@@ -31,11 +31,11 @@
             {% endfor %}
         </div>
     </div>
-    {% else %}
-        <a class="c-notification" href="#" title="{{ 'alerts.tooltip'|trans({ '%count%': 0 }, 'ws_cms') }}">
-            <span class="c-notification__icon">
-                <i class="fal fa-bell"></i>
-            </span>
-            <span class="c-notification__number">{{ 'alerts.tooltip'|trans({ '%count%': 0 }, 'ws_cms') }}</span>
-        </a>
+{% else %}
+    <a class="c-notification" href="#" title="{{ 'alerts.tooltip'|trans({ '%count%': 0 }, 'ws_cms') }}">
+        <span class="c-notification__icon">
+            <i class="fal fa-bell"></i>
+        </span>
+        <span class="c-notification__number">{{ 'alerts.tooltip'|trans({ '%count%': 0 }, 'ws_cms') }}</span>
+    </a>
 {% endif %}

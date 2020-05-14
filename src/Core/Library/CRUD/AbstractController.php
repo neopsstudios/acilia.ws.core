@@ -213,9 +213,10 @@ abstract class AbstractController extends BaseController
             $limit = $this->getLimit();
         }
 
-        $filter = (string) $request->get('f');
+        // Search simple
+        $search = (string) $request->get('f');
 
-        // Filter Extended
+        // Filter extended
         $filterExtended = $this->getFilterExtendedForm();
         $filterExtendedView = null;
         $filterExtendedData = null;
@@ -228,8 +229,10 @@ abstract class AbstractController extends BaseController
             $filterExtendedView = $filterExtended->createView();
         }
 
-        $data = $this->getService()->getAll($filter, $filterExtendedData, $page, $limit, (string)$request->get('sort'), (string)$request->get('dir'));
+        // Retrieve data
+        $data = $this->getService()->getAll($search, $filterExtendedData, $page, $limit, (string)$request->get('sort'), (string)$request->get('dir'));
 
+        // Calculate pagination
         $paginationData = [
             'currentPage' => $page,
             'url' => $request->get('_route'),
@@ -248,11 +251,13 @@ abstract class AbstractController extends BaseController
             }
         }
 
+        // Hook to add data to the view
         $extraData = [];
         if (isset($this->events[self::EVENT_INDEX_EXTRA_DATA])) {
             $extraData = $this->events[self::EVENT_INDEX_EXTRA_DATA]();
         }
 
+        // Define CRUD roles
         $viewRoles = [
             'create' => $this->calculateRole($this->getService()->getEntityClass(), 'create'),
             'edit' => $this->calculateRole($this->getService()->getEntityClass(), 'edit'),
@@ -273,7 +278,8 @@ abstract class AbstractController extends BaseController
                     'list_fields' => $listFields,
                     'batch_actions' => $this->getBatchActions(),
                     'filter_extended_form' => $filterExtendedView,
-                    'view_roles' => $viewRoles
+                    'view_roles' => $viewRoles,
+                    'view_export' => ($this->getService() instanceof DataExportInterface),
                 ],
                 $extraData
             )

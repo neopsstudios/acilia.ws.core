@@ -11,7 +11,8 @@ class ImageCompilerPass implements CompilerPassInterface
 {
     use PriorityTaggedServiceTrait;
 
-    const TAG = 'ws.image_renditions';
+    const TAG_RENDITIONS = 'ws.image_renditions';
+    const TAG_CONSUMER = 'ws.image_consumer';
 
     public function process(ContainerBuilder $container)
     {
@@ -21,9 +22,15 @@ class ImageCompilerPass implements CompilerPassInterface
 
         $definition = $container->findDefinition(ImageService::class);
 
-        $taggedServices = $this->findAndSortTaggedServices(self::TAG, $container);
+        $taggedServices = $this->findAndSortTaggedServices(self::TAG_RENDITIONS, $container);
         foreach ($taggedServices as $taggedService) {
             $definition->addMethodCall('registerRenditions', [$taggedService]);
+        }
+
+        $taggedServices = $this->findAndSortTaggedServices(self::TAG_CONSUMER, $container);
+        foreach ($taggedServices as $taggedService) {
+            $consumer = $container->findDefinition($taggedService);
+            $consumer->addMethodCall('setImageService', [$definition]);
         }
     }
 }

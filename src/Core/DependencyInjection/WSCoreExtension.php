@@ -4,6 +4,7 @@ namespace WS\Core\DependencyInjection;
 
 use WS\Core\Entity\Administrator;
 use WS\Core\EventListener\DeviceListener;
+use WS\Core\Library\Asset\ImageConsumerInterface;
 use WS\Core\Library\DataExport\DataExportCompilerPass;
 use WS\Core\Library\DataExport\DataExportProviderInterface;
 use WS\Core\Library\CRUD\AbstractController;
@@ -74,7 +75,10 @@ class WSCoreExtension extends Extension implements PrependExtensionInterface
         $container->registerForAutoconfiguration(SettingDefinitionInterface::class)->addTag(SettingCompilerPass::TAG);
 
         // Tag Image Rendition Definitions
-        $container->registerForAutoconfiguration(ImageRenditionInterface::class)->addTag(ImageCompilerPass::TAG);
+        $container->registerForAutoconfiguration(ImageRenditionInterface::class)->addTag(ImageCompilerPass::TAG_RENDITIONS);
+
+        // Tag Image Consumers
+        $container->registerForAutoconfiguration(ImageConsumerInterface::class)->addTag(ImageCompilerPass::TAG_CONSUMER);
 
         // Tag Factory Objects
         $container->registerForAutoconfiguration(FactoryCollectorInterface::class)->addTag(FactoryCollectorCompilerPass::TAG);

@@ -35,7 +35,9 @@ class LayoutExtension extends AbstractExtension
     {
         return [
             new TwigFunction('ws_cms_sidebar_get', [$this, 'getSidebar']),
-            new TwigFunction('ws_cms_sidebar_is_granted', [$this, 'isGranted']),
+            new TwigFunction('ws_cms_sidebar_is_granted', [$this, 'sidebarIsGranted']),
+            new TwigFunction('ws_cms_sidebar_has_asset', [$this, 'sidebarHasAsset']),
+            new TwigFunction('ws_cms_sidebar_get_asset', [$this, 'sidebarGetAsset']),
             new TwigFunction('ws_cms_navbar_get', [$this, 'getNavbar']),
             new TwigFunction('ws_cms_in_route', [$this, 'checkIfInRoute'], ['is_safe' => ['html']]),
         ];
@@ -46,7 +48,7 @@ class LayoutExtension extends AbstractExtension
         return $this->sidebarService->getSidebar();
     }
 
-    public function isGranted(array $roles): bool
+    public function sidebarIsGranted(array $roles): bool
     {
         if (null === $this->securityChecker) {
             return false;
@@ -61,6 +63,16 @@ class LayoutExtension extends AbstractExtension
         } catch (AuthenticationCredentialsNotFoundException $e) {
             return false;
         }
+    }
+
+    public function sidebarHasAsset($key): bool
+    {
+        return $this->sidebarService->assets->has($key);
+    }
+
+    public function sidebarGetAsset($key)
+    {
+        return $this->sidebarService->assets->get($key);
     }
 
     public function getNavbar(): array

@@ -4,11 +4,20 @@ namespace WS\Core\Service;
 
 use WS\Core\Library\Sidebar\SidebarDefinition;
 use WS\Core\Library\Sidebar\SidebarDefinitionInterface;
+use Symfony\Component\HttpFoundation\ParameterBag;
 
 class SidebarService
 {
     protected $services = [];
+    /** @var array */
     protected $sidebar = null;
+    /** @var ParameterBag */
+    public $assets;
+
+    public function __construct()
+    {
+        $this->assets = new ParameterBag();
+    }
 
     public function registerSidebarDefinition(SidebarDefinitionInterface $service)
     {

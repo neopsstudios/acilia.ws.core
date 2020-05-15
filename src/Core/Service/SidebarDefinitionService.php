@@ -8,10 +8,15 @@ use WS\Core\Library\Sidebar\SidebarDefinitionInterface;
 class SidebarDefinitionService implements SidebarDefinitionInterface
 {
     protected $settingService;
+    protected $sidebarService;
 
-    public function __construct(SettingService $settingService)
+    public function __construct(SettingService $settingService, SidebarService $sidebarService)
     {
         $this->settingService = $settingService;
+        $this->sidebarService = $sidebarService;
+
+        // Set Default Logo
+        $this->sidebarService->assets->set('logo', 'images/logo-acilia.svg');
     }
 
     public function getSidebarDefinition(): array

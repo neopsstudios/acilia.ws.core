@@ -3,6 +3,7 @@
 namespace WS\Core\Form;
 
 use WS\Core\Entity\Administrator;
+use WS\Core\Library\Form\ToggleChoiceType;
 use WS\Core\Service\Entity\AdministratorService;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -64,6 +65,13 @@ class AdministratorType extends AbstractType
             ])
             ->add('active', CheckboxType::class, [
                 'label' => 'fields.active.label',
+            ])
+            ->add('active', ToggleChoiceType::class, [
+                'label'    => 'form.status.label',
+                'choices'  => [
+                    'fields.status.inactive' => 0,
+                    'fields.status.active' => 1,
+                ]
             ])
         ;
 

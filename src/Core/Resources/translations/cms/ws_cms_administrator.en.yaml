@@ -11,6 +11,8 @@ fields.repeat_password.invalid: Passwords must match
 fields.profile.label: Profile
 fields.active.label: Active
 fields.createdAt.label: Created at
+fields.status.active: Active
+fields.status.inactive: Inactive
 create_success: Administrator created
 create_error: There was an error when creating the Administrator, please try again.
 edit_success: Administrator edited

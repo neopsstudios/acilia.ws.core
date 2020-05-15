@@ -11,6 +11,8 @@ fields.repeat_password.invalid: Las contraseñas deben coincidir
 fields.profile.label: Perfil
 fields.active.label: Activo
 fields.createdAt.label: Creación
+fields.status.active: Activo
+fields.status.inactive: Inactivo
 create_success: Administrador creado
 create_error: Ha ocurrido un problema al crear el Administrador, por favor inténtelo de nuevo
 edit_success: Administrador editado

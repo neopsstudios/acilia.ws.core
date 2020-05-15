@@ -9,23 +9,25 @@ function init() {
   const datePickerCMSConfig = cmsSettings.ws_cms_components.datepicker;
 
   document.querySelectorAll('[data-component="ws_datepicker"]').forEach((elm) => {
-    const options = {
-      locale: cmsSettings.locale,
-    };
-    const { format } = elm.dataset;
-    if (format && Object.prototype.hasOwnProperty.call(datePickerCMSConfig.format, format)) {
-      // if the format from the input exist in the configuration json for the component, we assig it
-      options.dateFormat = datePickerCMSConfig.format[format];
-      if (format === 'date_hour') {
-        options.enableTime = true;
+    if (!elm.dataset.wsDisable) {
+      const options = {
+        locale: cmsSettings.locale,
+      };
+      const { format } = elm.dataset;
+      if (format && Object.prototype.hasOwnProperty.call(datePickerCMSConfig.format, format)) {
+        // if the format from the input exist in the configuration json for the component, we assig it
+        options.dateFormat = datePickerCMSConfig.format[format];
+        if (format === 'date_hour') {
+          options.enableTime = true;
+        }
+        if (format === 'hour') {
+          options.enableTime = true;
+          options.noCalendar = true;
+        }
       }
-      if (format === 'hour') {
-        options.enableTime = true;
-        options.noCalendar = true;
-      }
-    }
 
-    aDatePicker(elm, options);
+      aDatePicker(elm, options);
+    }
   });
 }
 

@@ -17,7 +17,7 @@ function init() {
   };
 
   document.querySelectorAll('[data-component="ws_select"]').forEach((elm) => {
-    if (!elm.dataset.isDisable && !elm.dataset.isDisable !== '') {
+    if (!elm.dataset.wsDisable) {
       config.searchEnabled = elm.dataset.search ? elm.dataset.search : false;
       aSelect(elm, config);
     }

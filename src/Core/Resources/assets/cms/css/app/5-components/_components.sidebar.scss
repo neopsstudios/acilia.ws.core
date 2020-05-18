@@ -1,6 +1,10 @@
 .c-sidebar {
     $self: &;
 
+    &__brand img {
+        height: 44px;
+    }
+
     &__text {
         padding-left: 10px;
     }

@@ -17,8 +17,12 @@
         height: 20px;
     }
 
-    button:focus {
-        outline: none;
+    button {
+        font-size: rem(16);
+
+        &:focus {
+            outline: none;
+        }
     }
 }
 
@@ -60,4 +64,18 @@
         background-color: transparent;
         text-decoration-skip: objects;
     }
+}
+
+.CodeMirror-code {
+    font-size: rem(14);
+    line-height: 1.5;
+    color: $gunmetal-200;
+}
+
+.CodeMirror-placeholder {
+    transition: opacity 0.3s;
+    color: $input-placeholder-color !important;
+    font-size: rem(14) !important;
+    font-weight: $input-placeholder-font-weight;
+    opacity: 0.5;
 }

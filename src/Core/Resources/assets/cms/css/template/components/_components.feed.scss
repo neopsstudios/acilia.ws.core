@@ -4,8 +4,8 @@
 
 /**
  * User Activity Feed
- * 
- * This component is used to show a stream of the user's activities and it's 
+ *
+ * This component is used to show a stream of the user's activities and it's
  * used in user-profile.html page.
  */
 
@@ -48,7 +48,7 @@
 		width: 12px;
 		height: 12px;
 		border-radius: 100%;
-		background-color: $color-info;
+		background-color: $color-brand;
 		content: "";
 	}
 

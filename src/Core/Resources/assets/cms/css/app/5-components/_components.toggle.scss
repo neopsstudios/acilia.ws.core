@@ -1,4 +1,9 @@
 .c-toggle {
     width: 100%;
     max-width: 500px;
+    height: 52px;
+
+    &__btn {
+        height: 52px;
+    }
 }

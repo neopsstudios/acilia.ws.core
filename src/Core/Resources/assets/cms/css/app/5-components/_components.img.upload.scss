@@ -1,25 +1,28 @@
 .c-img-upload {
 
+    &__select {
+        width: 250px;
+    }
+
     &__wrapper-img {
         position: relative;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        width: 100%;
+        width: 250px;
         height: auto;
-    }
-
-    &__btn {
-
-    }
-
-    &__icon {
-
     }
 
     &__img {
         width: 100%;
         height: auto;
         margin-bottom: 20px;
+    }
+}
+
+.c-doc-article__sidebar {
+    .c-img-upload__wrapper-img,
+    .c-img-upload__select {
+        width: 100%;
     }
 }

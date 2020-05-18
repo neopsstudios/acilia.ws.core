@@ -11,3 +11,8 @@
         -moz-appearance: none;
     }
 }
+
+textarea.c-input {
+    min-height: 250px;
+    resize: vertical;
+}

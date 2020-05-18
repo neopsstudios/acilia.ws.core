@@ -529,8 +529,9 @@
     {% if form.children.asset_image.vars.data == null %}
         <button
             type="button"
-            class="c-btn c-btn--secondary c-btn--fullwidth js-open-modal js-not-on-preview"
+            class="c-btn c-btn--brand c-img-upload__select u-mt-15 js-open-modal js-not-on-preview"
             data-id-asset-component="{{ form.children.asset.vars.id }}">
+            <i class="fal fa-file-image u-pr-5"></i>
             {{ 'assets_image.open_modal'|trans({}, 'ws_cms') }}
         </button>
     {% endif %}
@@ -722,7 +723,7 @@
 {%- endblock ws_widget_class -%}
 
 {%- block ws_toggle_choice -%}
-    <div class="c-toggle u-mb-small js-toggle" data-component="ws_toggle_choice">
+    <div class="c-toggle u-mt-15 js-toggle" data-component="ws_toggle_choice">
         {% for choice in choices %}
             <div class="c-toggle__btn js-toggle-btn {{ choice is selectedchoice(value) ? 'is-active' }}">
                 <label class="c-toggle__label" for={{ "#{id}#{loop.index}" }}>

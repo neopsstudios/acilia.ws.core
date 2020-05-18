@@ -17,8 +17,10 @@ function init() {
   };
 
   document.querySelectorAll('[data-component="ws_select"]').forEach((elm) => {
-    config.searchEnabled = elm.dataset.search ? elm.dataset.search : false;
-    aSelect(elm, config);
+    if (!elm.dataset.wsDisable) {
+      config.searchEnabled = elm.dataset.search ? elm.dataset.search : false;
+      aSelect(elm, config);
+    }
   });
 }
 

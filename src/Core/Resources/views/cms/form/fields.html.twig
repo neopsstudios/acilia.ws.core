@@ -24,7 +24,7 @@
     {%- if type == 'ws-asset-image' %}
         {{- block('ws_asset_image_widget') -}}
     {%- else -%}
-        <div class="c-doc-article__content-full" {{ block('widget_container_attributes') }}>
+        <div class="c-doc-article__columns" {{ block('widget_container_attributes') }}>
             {%- if form is rootform -%}
                 {{ form_errors(form) }}
             {%- endif -%}
@@ -363,15 +363,13 @@
         {%- set widget_attr = {attr: {'aria-describedby': id ~"_help"}} -%}
     {%- endif -%}
 
-    {%- set row_attr = row_attr|merge({'class': 'l-form__row ' ~ (row_attr.class is defined ? row_attr.class : '')}) -%}
+    {%- set row_attr = row_attr|merge({'class': 'l-form__item c-field ' ~ (row_attr.class is defined ? row_attr.class : '')}) -%}
 
     <div {% with {attr: row_attr|default({})} %}{{ block('attributes') }}{% endwith %}>
-        <div class="l-form__item l-form__item--large c-field">
-            {{- form_label(form) -}}
-            {{- form_widget(form, widget_attr) -}}
-            {{- form_errors(form) -}}
-            {{- form_help(form) -}}
-        </div>
+        {{- form_label(form) -}}
+        {{- form_widget(form, widget_attr) -}}
+        {{- form_errors(form) -}}
+        {{- form_help(form) -}}
     </div>
 {%- endblock form_row -%}
 
@@ -723,7 +721,7 @@
 {%- endblock ws_widget_class -%}
 
 {%- block ws_toggle_choice -%}
-    <div class="c-toggle u-mt-15 js-toggle" data-component="ws_toggle_choice">
+    <div class="c-toggle js-toggle" data-component="ws_toggle_choice">
         {% for choice in choices %}
             <div class="c-toggle__btn js-toggle-btn {{ choice is selectedchoice(value) ? 'is-active' }}">
                 <label class="c-toggle__label" for={{ "#{id}#{loop.index}" }}>

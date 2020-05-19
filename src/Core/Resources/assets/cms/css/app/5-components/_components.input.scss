@@ -10,6 +10,10 @@
         -webkit-appearance: none;
         -moz-appearance: none;
     }
+
+    &::placeholder {
+        font-style: italic;
+    }
 }
 
 textarea.c-input {

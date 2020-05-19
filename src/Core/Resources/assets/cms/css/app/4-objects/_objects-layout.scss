@@ -35,6 +35,10 @@
             width: calc(50% - 10px);
         }
 
+        &--xsmall {
+            width: 100px;
+        }
+
         &--medium {
             @include media-breakpoint(md) {
                 width: calc(33.33% - 10px);

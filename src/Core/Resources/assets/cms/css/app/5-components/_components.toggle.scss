@@ -1,9 +1,12 @@
 .c-toggle {
+    display: flex;
+    justify-content: space-between;
     width: 100%;
-    max-width: 500px;
-    height: 52px;
 
     &__btn {
-        height: 52px;
+        border-top-right-radius: 4px !important;
+        border-bottom-right-radius: 4px !important;
+        border-top-left-radius: 4px !important;
+        border-bottom-left-radius: 4px !important;
     }
 }

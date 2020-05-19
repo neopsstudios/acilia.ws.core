@@ -22,4 +22,17 @@
             color: $color-white;
         }
     }
+
+    &--info {
+        @include linear-gradient(to bottom, $color-info, $color-info);
+        border-color: $color-info;
+
+        &:hover {
+            @include linear-gradient(to bottom, darken($color-info, 4%), darken($color-info, 10%));
+        }
+
+        &:focus {
+            @include linear-gradient(to bottom, darken($color-info, 6%), darken($color-info, 10%));
+        }
+    }
 }

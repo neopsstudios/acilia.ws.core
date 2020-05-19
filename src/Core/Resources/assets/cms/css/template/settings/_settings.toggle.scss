@@ -10,9 +10,9 @@
 //    text vertically.
 //
 
-$toggle-height: 45px !default; // [1]
+$toggle-height: 52px !default; // [1]
 
-$toggle-btn-width: 50% !default;
+$toggle-btn-width: calc(50% - 10px) !default;
 $toggle-btn-height: $toggle-height !default; // [1]
 $toggle-btn-border-width: 1px !default;
 $toggle-btn-border-color: #E7E9ED !default;
@@ -20,11 +20,11 @@ $toggle-btn-border-radius: $base-border-radius !default;
 
 $toggle-btn-font-size: 14px !default;
 $toggle-btn-color: #565F6D !default;
-$toggle-btn-background-color: #FAFBFC !default;
+$toggle-btn-background-color: transparent !default;
 
-$toggle-btn-active-background-color: $color-brand !default;
-$toggle-btn-active-border-color: $color-brand !default;
-$toggle-btn-active-color: $white !default;
+$toggle-btn-active-background-color: transparent !default;
+$toggle-btn-active-border-color: $color-info !default;
+$toggle-btn-active-color:#565F6D !default;
 
 
 $toggle-label-width: 100% !default;

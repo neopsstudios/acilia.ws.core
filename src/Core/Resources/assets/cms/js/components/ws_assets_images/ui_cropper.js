@@ -26,7 +26,9 @@ function cancelCrop(event) {
   document.querySelector(`.ws-cropper_modal[data-id="${dataId}"] .ws-cropper_crop img`).src = '';
   document.querySelector(`.ws-cropper_modal[data-id="${dataId}"]`).dataset.croppIndex = 0;
   modal.close();
-  cancelEvent();
+  if (cancelEvent) {
+    cancelEvent();
+  }
 }
 
 function saveCrop(id) {

@@ -24,7 +24,7 @@
     {%- if type == 'ws-asset-image' %}
         {{- block('ws_asset_image_widget') -}}
     {%- else -%}
-        <div class="c-doc-article__columns" {{ block('widget_container_attributes') }}>
+        <div class="c-doc-article__content-full" {{ block('widget_container_attributes') }}>
             {%- if form is rootform -%}
                 {{ form_errors(form) }}
             {%- endif -%}

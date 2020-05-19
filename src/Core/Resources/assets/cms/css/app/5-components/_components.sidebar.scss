@@ -42,10 +42,6 @@
     }
 
     &--light {
-        border-right: 0;
-        box-shadow: 0 4px 16px 0 rgba(96, 101, 123, .14);
-        background-color: $color-white;
-
         #{ $self }__brand {
             border: 0;
         }

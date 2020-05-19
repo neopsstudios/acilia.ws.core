@@ -107,9 +107,9 @@
                     </form>
                 {% endblock %}
 
-                <div class="c-doc-article u-mt-10 {{ data|length > 0 ? 'u-hidden' }}">
+                <div class="c-doc-article c-doc-article--full u-mt-30 {{ data|length > 0 ? 'u-hidden' }}">
                     <div class="c-doc-article__content-full">
-                        <p class="u-color-warning">
+                        <p>
                             <i class="fa fa-info-circle u-color-warning">
                             </i> {{ 'no_rows_found'|trans([], trans_prefix) }}
                         </p>

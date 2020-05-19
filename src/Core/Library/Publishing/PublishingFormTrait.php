@@ -19,7 +19,7 @@ trait PublishingFormTrait
         $publishingOptions = [
             'publishing.publishStatus.draft.label' => PublishingEntityInterface::STATUS_DRAFT,
             'publishing.publishStatus.published.label' => PublishingEntityInterface::STATUS_PUBLISHED,
-            'publishing.publishStatus.unpublished.label' => PublishingEntityInterface::STATUS_UNPUBLISHED
+            'publishing.publishStatus.unpublished.label' => PublishingEntityInterface::STATUS_UNPUBLISHED,
         ];
 
         $builder
@@ -30,7 +30,7 @@ trait PublishingFormTrait
                 'required' => $required,
                 'attr' => [
                     'placeholder' => 'publishing.publishStatus.placeholder',
-                    'data-component' => 'ws_select'
+                    'data-component' => 'ws_select',
                 ],
             ])
         ;
@@ -43,15 +43,21 @@ trait PublishingFormTrait
                 'translation_domain' => 'ws_cms',
                 'label' => 'publishing.publishSince.label',
                 'attr' => array_merge(DateTimePickerType::DATE_TIME_PICKER_ATTR, [
-                    'placeholder' => 'publishing.publishSince.placeholder'
-                ])
+                    'placeholder' => 'publishing.publishSince.placeholder',
+                ]),
+                'row_attr' => [
+                    'class' => 'l-form__item--medium',
+                ],
             ])
             ->add('publishUntil', DateTimePickerType::class, [
                 'translation_domain' => 'ws_cms',
                 'label' => 'publishing.publishUntil.label',
                 'attr' => array_merge(DateTimePickerType::DATE_TIME_PICKER_ATTR, [
-                    'placeholder' => 'publishing.publishUntil.placeholder'
-                ])
+                    'placeholder' => 'publishing.publishUntil.placeholder',
+                ]),
+                'row_attr' => [
+                    'class' => 'l-form__item--medium',
+                ],
             ]);
     }
 }

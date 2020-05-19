@@ -2,21 +2,21 @@
 
 namespace WS\Core\Form;
 
-use WS\Core\Entity\Administrator;
-use WS\Core\Library\Form\ToggleChoiceType;
-use WS\Core\Service\Entity\AdministratorService;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use WS\Core\Entity\Administrator;
+use WS\Core\Library\Form\ToggleChoiceType;
+use WS\Core\Service\Entity\AdministratorService;
 
 class AdministratorType extends AbstractType
 {
@@ -24,9 +24,9 @@ class AdministratorType extends AbstractType
     protected $encoder;
 
     /**
-      * AdministratorType constructor.
-      *
-      */
+     * AdministratorType constructor.
+     *
+     */
     public function __construct(AdministratorService $administratorService, UserPasswordEncoderInterface $encoder)
     {
         $this->administratorService = $administratorService;
@@ -40,13 +40,13 @@ class AdministratorType extends AbstractType
                 'label' => 'fields.name.label',
                 'attr' => [
                     'placeholder' => 'fields.name.placeholder',
-                ]
+                ],
             ])
             ->add('email', EmailType::class, [
                 'label' => 'fields.email.label',
                 'attr' => [
                     'placeholder' => 'fields.email.placeholder',
-                ]
+                ],
             ])
             ->add('password', RepeatedType::class, [
                 'label' => 'fields.password.label',
@@ -56,7 +56,7 @@ class AdministratorType extends AbstractType
                 'required' => !$options['edit'],
                 'first_options' => ['label' => 'fields.password.label'],
                 'second_options' => ['label' => 'fields.repeat_password.label'],
-                'mapped' => false
+                'mapped' => false,
             ])
             ->add('profile', ChoiceType::class, [
                 'choice_translation_domain' => 'cms',
@@ -67,11 +67,11 @@ class AdministratorType extends AbstractType
                 'label' => 'fields.active.label',
             ])
             ->add('active', ToggleChoiceType::class, [
-                'label'    => 'form.status.label',
-                'choices'  => [
+                'label' => 'form.status.label',
+                'choices' => [
                     'fields.status.inactive' => 0,
                     'fields.status.active' => 1,
-                ]
+                ],
             ])
         ;
 
@@ -80,9 +80,9 @@ class AdministratorType extends AbstractType
             function (FormEvent $event) {
                 /** @var Administrator $administrator */
                 $administrator = $event->getForm()->getData();
-                
+
                 $newPassword = $event->getForm()->get('password')->getData();
-                if (! empty($newPassword)) {
+                if (!empty($newPassword)) {
                     $newPassword = $this->encoder->encodePassword($administrator, $newPassword);
                     $administrator->setPassword($newPassword);
                 }
@@ -98,8 +98,8 @@ class AdministratorType extends AbstractType
             'attr' => [
                 'novalidate' => 'novalidate',
                 'autocomplete' => 'off',
-                'accept-charset'=> 'UTF-8'
-            ]
+                'accept-charset' => 'UTF-8',
+            ],
         ]);
     }
 }

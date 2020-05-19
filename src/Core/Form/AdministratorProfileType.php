@@ -2,17 +2,17 @@
 
 namespace WS\Core\Form;
 
-use WS\Core\Entity\Administrator;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use WS\Core\Entity\Administrator;
 
 class AdministratorProfileType extends AbstractType
 {
@@ -52,14 +52,14 @@ class AdministratorProfileType extends AbstractType
                 'first_options' => [
                     'label' => 'profile.form.first.new_password.label',
                     'attr' => [
-                        'placeholder' => 'profile.form.first.new_password.placeholder'
-                    ]
+                        'placeholder' => 'profile.form.first.new_password.placeholder',
+                    ],
                 ],
                 'second_options' => [
                     'label' => 'profile.form.second.new_password.label',
                     'attr' => [
-                        'placeholder' => 'profile.form.second.new_password.placeholder'
-                    ]
+                        'placeholder' => 'profile.form.second.new_password.placeholder',
+                    ],
 
                 ],
                 'mapped' => false,
@@ -98,8 +98,8 @@ class AdministratorProfileType extends AbstractType
             'attr' => [
                 'novalidate' => 'novalidate',
                 'autocomplete' => 'off',
-                'accept-charset'=> 'UTF-8'
-            ]
+                'accept-charset' => 'UTF-8',
+            ],
         ]);
     }
 }

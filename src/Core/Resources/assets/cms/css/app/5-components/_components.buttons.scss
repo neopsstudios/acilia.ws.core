@@ -12,6 +12,17 @@
         }
     }
 
+    &--cancel {
+        border: 0;
+        background-color: $color-transparent;
+        color: $gunmetal-200;
+        text-decoration: underline;
+
+        &:hover {
+            color: $gunmetal-500;
+        }
+    }
+
     &--delete {
         transition: all .2s ease-in-out;
         color: $grey-700;

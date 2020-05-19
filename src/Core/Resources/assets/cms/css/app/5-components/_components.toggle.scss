@@ -1,4 +1,5 @@
 .c-toggle {
+    $self: &;
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -8,5 +9,12 @@
         border-bottom-right-radius: 4px !important;
         border-top-left-radius: 4px !important;
         border-bottom-left-radius: 4px !important;
+
+        &.is-active {
+            #{ $self }__label {
+                color: $color-info;
+                font-weight: $font-weight-semibold;
+            }
+        }
     }
 }

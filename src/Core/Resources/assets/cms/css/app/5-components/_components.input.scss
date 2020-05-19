@@ -19,4 +19,8 @@
 textarea.c-input {
     min-height: 250px;
     resize: vertical;
+
+    &.c-input--textarea-small {
+        min-height: 52px;
+    }
 }

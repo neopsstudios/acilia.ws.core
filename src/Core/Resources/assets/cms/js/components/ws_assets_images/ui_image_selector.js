@@ -11,7 +11,10 @@ function newFile(event) {
 function init(assetImageElement, modal) {
   if (assetImageElement.id !== undefined) {
     const dataString = `[data-id="${assetImageElement.id}"]`;
-    initCropper(assetImageElement, modal);
+    initCropper(assetImageElement, modal, () => {
+      initImageList(assetImageElement.id);
+      modal.open(`.js-image-selector-modal${dataString}`);
+    });
     initImageList(assetImageElement.id);
 
     document.querySelector(`.js-img-selector-new${dataString}`).addEventListener('click', newFile);

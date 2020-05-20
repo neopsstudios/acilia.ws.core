@@ -4,7 +4,7 @@ $table-cell-line-height: $base-line-height;
 
 .c-table {
     &__cell {
-        color: $grey-700;
+        color: $gunmetal-100;
         font-weight: $font-weight-normal;
 
         &--batch {
@@ -26,7 +26,7 @@ $table-cell-line-height: $base-line-height;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        color: $grey-700;
+        color: $gunmetal-100;
         font-size: $table-cell-font-size;
         font-weight: $font-weight-normal;
         line-height: $table-cell-line-height;
@@ -54,16 +54,17 @@ $table-cell-line-height: $base-line-height;
         }
 
         &:before {
-            @include position(absolute, $top: 2px, $right: -14px);
-            font-size: 14px;
-            font-family: "FontAwesome";
-            content: "\f107";
+            content: initial;
         }
 
         &.is-open {
             &:before {
-                content: "\f106";
+                content: initial;
             }
+        }
+
+        .o-arrow {
+            margin-left: 5px;
         }
     }
 
@@ -91,13 +92,13 @@ $table-cell-line-height: $base-line-height;
         position: relative;
         z-index: 2;
         font-weight: $font-weight-medium;
-        color: $grey-700;
+        color: $gunmetal-100;
     }
 }
 
 .c-table-collapse {
     padding: 20px 30px;
-    background-color: $table-head-slim-background-color;
+    background-color: $color-white;
     font-size: rem(14);
 
     &__item {
@@ -110,9 +111,14 @@ $table-cell-line-height: $base-line-height;
     }
 
     &__sub-list {
-        margin-top: 10px;
+        margin: 10px 0 0 20px;
         font-size: rem(14);
         line-height: rem(18);
+        font-weight: $font-weight-normal;
+    }
+
+    &__sub-item {
+        font-size: rem(13);
         font-weight: $font-weight-normal;
     }
 }

@@ -57,6 +57,16 @@ class ActivityLogListener
             // get entity changed fields
             $changes = $args->getEntityChangeSet();
 
+            // process datetime fields
+            foreach ($changes as $field => $value) {
+                if (isset($value[0]) && $value[0] instanceof \DateTimeInterface) {
+                    $changes[$field][0] = $value[0]->format('Y-m-d H:i:s');
+                }
+                if (isset($value[1]) && $value[1] instanceof \DateTimeInterface) {
+                    $changes[$field][1] = $value[1]->format('Y-m-d H:i:s');
+                }
+            }
+
             // discard unneeded changed fields
             if ($entityService->getActivityLogFields() !== null) {
                 foreach ($changes as $field => $value) {

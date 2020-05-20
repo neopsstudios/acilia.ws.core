@@ -151,38 +151,40 @@
                                                             {% if field == 'password' %}
                                                                 <li class="c-table-collapse__sub-item">
                                                                     <span class="u-font-bold">
-                                                                        {{ 'before'|trans({}, trans_prefix) }}:</br>
+                                                                        {{ 'before'|trans({}, trans_prefix) }}:&nbsp;
                                                                     </span>
                                                                     ******
                                                                 </li>
                                                                 <li class="c-table-collapse__sub-item">
                                                                     <span class="u-font-bold">
-                                                                        {{ 'after'|trans({}, trans_prefix) }}:</br>
+                                                                        {{ 'after'|trans({}, trans_prefix) }}:&nbsp;
                                                                     </span>
                                                                     ******
                                                                 </li>
                                                             {% else %}
                                                                 <li class="c-table-collapse__sub-item">
                                                                     <span class="u-font-bold">
-                                                                        {{ 'before'|trans({}, trans_prefix) }}:</br>
+                                                                        {{ 'before'|trans({}, trans_prefix) }}:&nbsp;
                                                                     </span>
-                                                                    {% for item in change[0] %}
-                                                                        {% if item is defined and item is not null %}
-                                                                            {{ item|raw }}
-                                                                            </br>
-                                                                        {% endif %}
-                                                                    {% endfor %}
+                                                                    {% if change[0] is iterable %}
+                                                                        {% for item in change[0] %}
+                                                                            {{ item|default('-')|raw }}
+                                                                        {% endfor %}
+                                                                    {% else %}
+                                                                        {{ change[0]|default('-')|raw }}
+                                                                    {% endif %}
                                                                 </li>
                                                                 <li class="c-table-collapse__sub-item">
                                                                     <span class="u-font-bold">
-                                                                        {{ 'after'|trans({}, trans_prefix) }}:</br>
+                                                                        {{ 'after'|trans({}, trans_prefix) }}:&nbsp;
                                                                     </span>
-                                                                    {% for item in change[1] %}
-                                                                        {% if item is defined and item is not null %}
-                                                                            {{ item|raw }}
-                                                                            </br>
-                                                                        {% endif %}
-                                                                    {% endfor %}
+                                                                    {% if change[1] is iterable %}
+                                                                        {% for item in change[1] %}
+                                                                            {{ item|default('-')|raw }}
+                                                                        {% endfor %}
+                                                                    {% else %}
+                                                                        {{ change[1]|default('-')|raw }}
+                                                                    {% endif %}
                                                                 </li>
                                                             {% endif %}
                                                         </ul>

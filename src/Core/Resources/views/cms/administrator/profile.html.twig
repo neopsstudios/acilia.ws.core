@@ -12,22 +12,25 @@
 } %}
 
 {% block content %}
+    {{ form_start(form) }}
+
     <div class="container">
         <div class="c-doc-article">
-            <div class="c-doc-article__content-full">
-                <h3 class="u-h3 u-mb-30">{{ 'profile.title'|trans({}, 'ws_cms_administrator') }}</h3>
-                {{ form_start(form) }}
-                {{ form_row(form.name) }}
-                {{ form_row(form.password) }}
-                {{ form_row(form.newPassword.first) }}
-                {{ form_row(form.newPassword.second) }}
-            </div>
-        </div>
-        <div class="c-divider u-mv-small"></div>
-        <button type="submit" class="c-btn c-btn--info">{{ 'save'|trans({}, 'ws_cms') }}</button>
-        <a href="{{ path('ws_dashboard') }}" class="c-btn c-btn--cancel">{{ 'cancel'|trans({}, 'ws_cms') }}</a>
-        {{ form_widget(form._token) }}
-        {{ form_end(form, {'render_rest': false}) }}
-    </div>
 
+            {% block crud_show_title %}
+                <div class="u-flex u-mr-auto">
+                    <h2 class="c-doc-article__title u-h2 u-mb-30">{{ 'profile.title'|trans({}, 'ws_cms_administrator') }}</h2>
+                </div>
+            {% endblock %}
+
+            {{ form_widget(form) }}
+
+            <div class="c-divider u-mv-small"></div>
+
+            <button type="submit" class="c-btn c-btn--info">{{ 'save'|trans({}, 'ws_cms') }}</button>
+            <a href="{{ path('ws_dashboard') }}" class="c-btn c-btn--cancel">{{ 'cancel'|trans({}, 'ws_cms') }}</a>
+
+            {{ form_end(form, {'render_rest': false}) }}
+        </div>
+    </div>
 {% endblock %}

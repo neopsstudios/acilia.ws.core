@@ -115,6 +115,7 @@
                                             <td class="c-table__cell">
                                                 <span class="c-table__toggle">
                                                     {{ entity.model|ws_activity_log_model }}
+                                                    {{ source('@WSCore/cms/icons/arrow.svg') }}
                                                 </span>
                                             </td>
                                     {% else %}
@@ -149,38 +150,36 @@
                                                         {{ field|capitalize }}
                                                         <ul class="c-table-collapse__sub-list">
                                                             {% if field == 'password' %}
-                                                                <li class="c-table-collapse__sub-item">
-                                                                    <span class="u-font-bold">
+                                                                <li class="c-table-collapse__sub-item u-mb-10">
+                                                                    <span class="u-font-semibold u-block">
                                                                         {{ 'before'|trans({}, trans_prefix) }}:</br>
                                                                     </span>
                                                                     ******
                                                                 </li>
-                                                                <li class="c-table-collapse__sub-item">
-                                                                    <span class="u-font-bold">
+                                                                <li class="c-table-collapse__sub-item u-mb-10">
+                                                                    <span class="u-font-semibold u-block">
                                                                         {{ 'after'|trans({}, trans_prefix) }}:</br>
                                                                     </span>
                                                                     ******
                                                                 </li>
                                                             {% else %}
-                                                                <li class="c-table-collapse__sub-item">
-                                                                    <span class="u-font-bold">
+                                                                <li class="c-table-collapse__sub-item u-mb-10">
+                                                                    <span class="u-font-semibold u-block">
                                                                         {{ 'before'|trans({}, trans_prefix) }}:</br>
                                                                     </span>
                                                                     {% for item in change[0] %}
                                                                         {% if item is defined and item is not null %}
-                                                                            {{ item|raw }}
-                                                                            </br>
+                                                                            <span class="u-inline-block u-mr-10">{{ item|raw }}</span>
                                                                         {% endif %}
                                                                     {% endfor %}
                                                                 </li>
-                                                                <li class="c-table-collapse__sub-item">
-                                                                    <span class="u-font-bold">
+                                                                <li class="c-table-collapse__sub-item u-mb-10">
+                                                                    <span class="u-font-semibold u-block">
                                                                         {{ 'after'|trans({}, trans_prefix) }}:</br>
                                                                     </span>
                                                                     {% for item in change[1] %}
                                                                         {% if item is defined and item is not null %}
-                                                                            {{ item|raw }}
-                                                                            </br>
+                                                                            <span class="u-inline-block u-mr-10">{{ item|raw }}</span>
                                                                         {% endif %}
                                                                     {% endfor %}
                                                                 </li>

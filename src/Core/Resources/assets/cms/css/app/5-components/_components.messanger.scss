@@ -1,0 +1,20 @@
+.c-messanger {
+    border: 1px solid $grey-700;
+    overflow: hidden;
+    height: calc(100vh - (#{$height-navbar} + #{$margin-navbar} + #{$height-toolbar} + #{$height-pagination} + #{$height-footer}));
+}
+
+.chat {
+    height: calc(100vh - (#{$height-navbar} + #{$margin-navbar} + #{$height-toolbar} + #{$height-pagination} + #{$height-footer}));
+
+    &__divider {
+        &.is-active {
+            color: $color-info;
+
+            &::before,
+            &::after {
+                background-color: $color-info;
+            }
+        }
+    }
+}

@@ -2,6 +2,7 @@ import { init as initACropper, getCropperInstance, crop } from '../../modules/a_
 
 const cropperIgnoreClasses = ':not(.cropper-u-hidden):not(.cropper-hidden)';
 let modal = null;
+let cancelEvent = null;
 
 function getComponentConfig(elmId, ratio) {
   return {
@@ -25,6 +26,9 @@ function cancelCrop(event) {
   document.querySelector(`.ws-cropper_modal[data-id="${dataId}"] .ws-cropper_crop img`).src = '';
   document.querySelector(`.ws-cropper_modal[data-id="${dataId}"]`).dataset.croppIndex = 0;
   modal.close();
+  if (cancelEvent) {
+    cancelEvent();
+  }
 }
 
 function saveCrop(id) {
@@ -196,7 +200,7 @@ async function initCropper(event) {
     const errorMsg = error.replace('%width%', imgValidator.minWidth).replace('%height%', imgValidator.minHeight);
     const alert = document.querySelector('.c-img-modal__wrapper .c-alert.c-alert--border-warning');
     if (alert && error) {
-      alert.innerHTML = `<i class="fal fa-exclamation-triangle u-pr-5 u-color-warning"></i>` + errorMsg;
+      alert.innerHTML = `<i class="fal fa-exclamation-triangle u-pr-5 u-color-warning"></i>${errorMsg}`;
       alert.classList.remove('u-hidden');
       setTimeout(() => {
         alert.classList.add('u-hidden');
@@ -227,12 +231,13 @@ async function initCropper(event) {
   }
 }
 
-function init(assetElement, modalElement) {
+function init(assetElement, modalElement, closeEvent) {
   const { cmsTranslations } = window;
   if (cmsTranslations === undefined || cmsTranslations === null) {
     throw Error('No CMS Translations defined.');
   }
 
+  cancelEvent = closeEvent;
   modal = modalElement;
   assetElement.addEventListener('change', initCropper);
 

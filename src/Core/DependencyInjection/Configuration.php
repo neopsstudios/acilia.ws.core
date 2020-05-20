@@ -22,6 +22,17 @@ class Configuration implements ConfigurationInterface
                     ->defaultFalse()
                     ->info('Disables or Enables the Device Detection on the site.')
                 ->end() // device_detector
+                ->arrayNode('translations')
+                    ->addDefaultsIfNotSet()
+                    ->info('Allows to configure site translations.')
+                    ->children()
+                        ->arrayNode('sources')
+                            ->prototype('scalar')
+                            ->end()
+                            ->defaultValue(['ws'])
+                        ->end()
+                    ->end()
+                ->end() // translation
             ->end()
         ;
 

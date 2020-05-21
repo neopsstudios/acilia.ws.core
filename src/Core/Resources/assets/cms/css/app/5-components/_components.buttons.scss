@@ -34,6 +34,22 @@
         }
     }
 
+    &--ghost {
+        border: 0;
+        padding: 0;
+        background-color: $color-transparent;
+        color: $grey-700;
+
+        i {
+            color: $grey-700;
+        }
+
+        &:hover,
+        &:focus {
+            color: $color-primary;
+        }
+    }
+
     &--info {
         @include linear-gradient(to bottom, $color-info, $color-info);
         border-color: $color-info;

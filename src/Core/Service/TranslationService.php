@@ -10,21 +10,27 @@ use Symfony\Component\Translation\MessageCatalogueInterface;
 
 class TranslationService
 {
+    protected $config;
     protected $registry;
     protected $translator;
     protected $contextService;
     protected $translations;
     protected $sources;
 
-    public function __construct(TranslatorInterface $translator, ManagerRegistry $registry, ContextService $contextService)
-    {
+    public function __construct(
+        array $config,
+        TranslatorInterface $translator,
+        ManagerRegistry $registry,
+        ContextService $contextService
+    ) {
+        $this->config = $config;
         $this->registry = $registry;
         $this->translator = $translator;
         $this->contextService = $contextService;
         $this->sources = [];
     }
-
-    public function fillCatalogue(MessageCatalogueInterface $catalogue) : void
+    
+    public function fillCatalogue(MessageCatalogueInterface $catalogue): void
     {
         if ($this->translations === null) {
             $sql = 'SELECT node_name, node_type, node_source, attrib_name, value_translation '
@@ -58,7 +64,7 @@ class TranslationService
         }
     }
 
-    public function getForCMS() : array
+    public function getForCMS(): array
     {
         $translations = [];
 
@@ -94,7 +100,7 @@ class TranslationService
         return $translations;
     }
 
-    public function updateTranslations(array $translations) : void
+    public function updateTranslations(array $translations): void
     {
         $em = $this->registry->getManager();
         $repositoryAttributes = $this->registry->getRepository(TranslationAttribute::class);
@@ -124,13 +130,16 @@ class TranslationService
         $em->flush();
     }
 
-    public function addSource(string $sourcePath, string $sourceName) : self
+    public function addSource(string $sourcePath, string $sourceName): self
     {
-        $this->sources[$sourcePath] = $sourceName;
+        if (in_array($sourceName, $this->config['sources'])) {
+            $this->sources[$sourcePath] = $sourceName;
+        }
+
         return $this;
     }
 
-    public function getSources() : array
+    public function getSources(): array
     {
         return $this->sources;
     }

@@ -37,6 +37,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
+use WS\Core\Service\TranslationService;
 
 class WSCoreExtension extends Extension implements PrependExtensionInterface
 {
@@ -117,6 +118,10 @@ class WSCoreExtension extends Extension implements PrependExtensionInterface
         // Configure Device Detector
         $deviceListener = $container->getDefinition(DeviceListener::class);
         $deviceListener->setArgument(0, $config['device_detector']);
+
+        // Configure Translations
+        $translationsService = $container->getDefinition(TranslationService::class);
+        $translationsService->setArgument(0, $config['translations']);
 
     }
 

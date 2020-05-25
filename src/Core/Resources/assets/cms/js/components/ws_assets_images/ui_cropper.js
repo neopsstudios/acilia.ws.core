@@ -1,4 +1,5 @@
 import { init as initACropper, getCropperInstance, crop } from '../../modules/a_cropper';
+import { showError as showErrorNotification } from '../../modules/a_notifications';
 
 const cropperIgnoreClasses = ':not(.cropper-u-hidden):not(.cropper-hidden)';
 let modal = null;
@@ -205,6 +206,9 @@ async function initCropper(event) {
       setTimeout(() => {
         alert.classList.add('u-hidden');
       }, 10000);
+    } else {
+      // no warning html find in the page, show a notification
+      showErrorNotification(errorMsg);
     }
   } else {
     setPreview(elm.id, imageSrc);

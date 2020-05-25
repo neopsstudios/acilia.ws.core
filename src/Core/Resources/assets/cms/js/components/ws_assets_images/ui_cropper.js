@@ -1,4 +1,5 @@
 import { init as initACropper, getCropperInstance, crop } from '../../modules/a_cropper';
+import { showError as showErrorNotification } from '../../modules/a_notifications';
 
 const cropperIgnoreClasses = ':not(.cropper-u-hidden):not(.cropper-hidden)';
 let modal = null;
@@ -196,11 +197,14 @@ async function initCropper(event) {
     const errorMsg = error.replace('%width%', imgValidator.minWidth).replace('%height%', imgValidator.minHeight);
     const alert = document.querySelector('.c-img-modal__wrapper .c-alert.c-alert--border-warning');
     if (alert && error) {
-      alert.innerHTML = `<i class="fal fa-exclamation-triangle u-pr-5 u-color-warning"></i>` + errorMsg;
+      alert.innerHTML = `<i class="fal fa-exclamation-triangle u-pr-5 u-color-warning"></i>${errorMsg}`;
       alert.classList.remove('u-hidden');
       setTimeout(() => {
         alert.classList.add('u-hidden');
       }, 10000);
+    } else {
+      // no warning html find in the page, show a notification
+      showErrorNotification(errorMsg);
     }
   } else {
     setPreview(elm.id, imageSrc);

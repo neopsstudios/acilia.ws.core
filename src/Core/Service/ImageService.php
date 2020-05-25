@@ -277,10 +277,10 @@ class ImageService
             if (null !== $options['cropper'][$key]) {
                 list($cropData['w'], $cropData['h'], $cropData['x'], $cropData['y']) = explode(';', $options['cropper'][$key]);
                 $image->crop(
-                    (int) floor((float) $cropData['w']),
-                    (int) floor((float) $cropData['h']),
-                    (int) floor((float) $cropData['x']),
-                    (int) floor((float) $cropData['y'])
+                    (int) round((float) $cropData['w']),
+                    (int) round((float) $cropData['h']),
+                    (int) round((float) $cropData['x']),
+                    (int) round((float) $cropData['y'])
                 );
             }
         }
@@ -313,10 +313,10 @@ class ImageService
             list($cropData['w'], $cropData['h'], $cropData['x'], $cropData['y']) = explode(';', $options['cropper'][$key]);
 
             $image->crop(
-                (int) floor((float) $cropData['w']),
-                (int) floor((float) $cropData['h']),
-                (int) floor((float) $cropData['x']),
-                (int) floor((float) $cropData['y'])
+                (int) round((float) $cropData['w']),
+                (int) round((float) $cropData['h']),
+                (int) round((float) $cropData['x']),
+                (int) round((float) $cropData['y'])
             );
         }
 

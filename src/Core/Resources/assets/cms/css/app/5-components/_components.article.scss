@@ -46,6 +46,43 @@ $sidebar-content-lg: 350px;
         }
     }
 
+    &__fieldset {
+        position: relative;
+        display: block;
+        width: 100%;
+        color: $color-brand;
+        font-size: $text-font-size;
+        font-weight: $font-weight-semibold;
+        text-align: center;
+
+        &::before,
+        &::after {
+            position: absolute;
+            top: 50%; // at the center
+            width: 42%;
+            height: 1px;
+            background-color: $base-border-color;
+            content: '';
+        }
+
+        &::before {
+            left: 0;
+        }
+
+        &::after {
+            right: 0;
+        }
+
+        &.is-active {
+            color: $color-brand;
+
+            &::before,
+            &::after {
+                background-color: $color-brand;
+            }
+        }
+    }
+
     &--medium {
         width: 860px;
     }

@@ -53,11 +53,11 @@ class CRUDExtension extends AbstractExtension
         return '-';
     }
 
-    public function listFilter(Environment $environment, $filter, $value)
+    public function listFilter(Environment $environment, $filter, $options, $value)
     {
         $twigFilter = $environment->getFilter($filter);
         if ($twigFilter instanceof TwigFilter) {
-            $filteredValue = call_user_func($twigFilter->getCallable(), $value);
+            $filteredValue = call_user_func_array($twigFilter->getCallable(), [$value, $options]);
 
             $safeContext = $twigFilter->getSafe(new \Twig\Node\Node());
             if (!is_array($safeContext) || !in_array('html', $safeContext)) {

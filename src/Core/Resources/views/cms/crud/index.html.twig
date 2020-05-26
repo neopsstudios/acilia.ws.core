@@ -217,7 +217,7 @@
                                                     {% if field.isDate|default(false) %}
                                                         {{ ws_cms_crud_list_is_date(attribute(entity, field.name)) }}
                                                     {% elseif field.filter|default(false) %}
-                                                        {{ ws_cms_crud_list_filter(field.filter, attribute(entity, field.name)) }}
+                                                        {{ ws_cms_crud_list_filter(field.filter, field.options|default([]), attribute(entity, field.name)) }}
                                                     {% else %}
                                                         {{ attribute(entity, field.name) }}
                                                     {% endif %}

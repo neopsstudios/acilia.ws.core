@@ -218,7 +218,7 @@ class ImageService
         $originalContent = $this->storageService->get(sprintf('images/%s', $originalFile), StorageService::CONTEXT_PUBLIC);
         $originalImage = $this->imageManager->make($originalContent);
         $originalImage->fit($width, $height);
-        $this->storageService->save(sprintf('images/%s', $requestedFile), $originalImage->encode(null, 75), StorageService::CONTEXT_PUBLIC);
+        $this->storageService->save(sprintf('images/%s', $requestedFile), $originalImage->encode(null, 90), StorageService::CONTEXT_PUBLIC);
 
         return $originalImage;
     }
@@ -239,7 +239,7 @@ class ImageService
 
         $image = $this->executeRenderMethod($definition, $image, $options);
 
-        $this->storageService->save($this->getFilePath($assetImage, $definition->getName()), $image->encode(null, 75), StorageService::CONTEXT_PUBLIC);
+        $this->storageService->save($this->getFilePath($assetImage, $definition->getName()), $image->encode(null, $definition->getQuality()), StorageService::CONTEXT_PUBLIC);
 
         foreach ($definition->getSubRenditions() as $subRendition) {
             list($subRenditionWidth, $subRenditionHeight) = explode('x', $subRendition, 2);
@@ -256,7 +256,11 @@ class ImageService
             }
 
             $subRenditionImage->fit((int) $subRenditionWidth, (int) $subRenditionHeight);
-            $this->storageService->save($this->getFilePath($assetImage, $definition->getName(), $subRendition), $subRenditionImage->encode(null, 75), StorageService::CONTEXT_PUBLIC);
+            $this->storageService->save(
+                $this->getFilePath($assetImage, $definition->getName(), $subRendition),
+                $subRenditionImage->encode(null, $definition->getQuality()),
+                StorageService::CONTEXT_PUBLIC
+            );
         }
     }
 

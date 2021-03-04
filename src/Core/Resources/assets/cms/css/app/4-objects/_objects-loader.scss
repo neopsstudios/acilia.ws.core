@@ -1,0 +1,42 @@
+.o-loader-wrapper {
+    @include position(fixed, $right: 0, $bottom: 48px, $left: 0);
+    z-index: 5;
+    display: none;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+
+    &:before {
+        position: absolute;
+        content: '';
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, .8);
+    }
+
+    &.is-active {
+        display: flex;
+    }
+
+    &--image-list {
+        height: calc(100vh - 505px);
+    }
+}
+
+.o-loader {
+    @include position(absolute, 0, 0, 0, 0);
+    border: 3px solid $grey-500;
+    border-top-color: $grey-800;
+    border-radius: 50%;
+    width: 3em;
+    height: 3em;
+    margin: auto;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

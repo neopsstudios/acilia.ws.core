@@ -1,0 +1,42 @@
+# Administrator
+menu: Administrators
+title: Administrators
+form.name.label: Name
+form.name.placeholder: John Doe
+form.email.label: Email
+form.email.placeholder: john.doe@acme.com
+form.password.label: Password
+form.repeat_password.label: Repeat password
+form.repeat_password.invalid: Passwords must match
+form.profile.label: Profile
+form.active.label: Active
+fields.name.label: Name
+fields.email.label: Email
+fields.profile.label: Profile
+fields.createdAt.label: Created at
+
+create_success: Administrator created
+create_error: There was an error when creating the Administrator, please try again.
+edit_success: Administrator edited
+edit_error: There was an error when editing the Administrator, please try again.
+delete_warning: Are you sure you want to delete this Administrator?
+delete_success: Administrator deleted successfully
+no_rows_found: No Administrators available
+not_found: Unable to find the Administrator with id %s
+
+# Administrator profile
+profile.title: Administrator profile
+profile.edit_success: Administrator profile edited
+profile.edit_error: There was an error when editing the profile Administrator, please try again.
+profile.form.name.label: Name
+profile.form.name.placeholder: Administrator name
+profile.form.password.label: Current password
+profile.form.password.placeholder: Current password
+profile.form.first.new_password.label: New password
+profile.form.first.new_password.placeholder: Enter the new password
+profile.form.second.new_password.label: Repeat password
+profile.form.second.new_password.placeholder: Repeat the new password
+profile.form.button.change_password: Change password
+
+status.active: Active
+status.inactive: Inactive

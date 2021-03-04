@@ -1,0 +1,41 @@
+.c-img-upload {
+
+    &__select {
+        width: 100%;
+
+        @include media-breakpoint('md') {
+            width: 250px;
+        }
+    }
+
+    &__wrapper-img {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        height: auto;
+
+        @include media-breakpoint('md') {
+            width: 250px;
+        }
+    }
+
+    &__img {
+        width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+    }
+}
+
+.c-form__sidebar {
+    .c-img-upload__wrapper-img,
+    .c-img-upload__select {
+        width: 100%;
+    }
+
+    .c-btn-upload-image-container {
+        display: flex;
+        justify-content: space-between;
+    }
+}

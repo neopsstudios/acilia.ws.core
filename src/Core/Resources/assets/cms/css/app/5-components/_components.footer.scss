@@ -1,0 +1,13 @@
+.c-footer {
+    margin-top: 50px;
+    padding: 30px 0;
+    border-top: 1px solid $border-color;
+    color: $color-default-text;
+    font-size: rem(12);
+    text-align: right;
+}
+
+.c-footer__link {
+    color: $color-default-text;
+    font-weight: 600;
+}

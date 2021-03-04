@@ -1,0 +1,25 @@
+.c-field {
+    $self: &;
+
+    &__label {
+        flex-basis: auto;
+    }
+
+    &--xsmall {
+        width: 150px;
+    }
+
+    &--small {
+        width: 200px;
+    }
+
+    &--medium {
+        width: 250px;
+    }
+
+    &--filters {
+        #{ $self }__label {
+            color: $grey-700;
+        }
+    }
+}

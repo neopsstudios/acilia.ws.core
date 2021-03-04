@@ -1,2 +1,2 @@
-# acilia.ws.core
-Widestand core bundle
+# WSCore
+WideStand Core bundle

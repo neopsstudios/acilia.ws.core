@@ -1,0 +1,40 @@
+<header class="c-navbar u-mb-medium">
+    <button class="c-sidebar-toggle js-sidebar-toggle">
+        <span class="c-sidebar-toggle__bar"></span>
+        <span class="c-sidebar-toggle__bar"></span>
+        <span class="c-sidebar-toggle__bar"></span>
+    </button>
+    <div class="u-ml-auto">
+        {% for menu in ws_cms_navbar_get() %}
+            {% if menu.roles is empty or ws_cms_sidebar_is_granted(menu.roles) %}
+                <a class="u-mr-20" href="{{ path(menu.routeName, menu.routeOptions) }}" title="{{ menu.label|trans({}, menu.translationDomain)|raw }}">
+                    <i class="fal {{ menu.icon }} fa-lg"></i>
+                </a>
+            {% endif %}
+        {% endfor %}
+
+        {{ include('@WSCore/cms/general/language.html.twig') }}
+
+        {{ include('@WSCore/cms/general/alerts.html.twig') }}
+
+        <a class="c-navbar__logout u-mr-20" href="{{ app.user ? logout_path() : '' }}" title="{{ 'logout'|trans({}, 'ws_cms') }}">
+            <i class="fal fa-sign-out-alt fa-lg"></i>
+        </a>
+
+        {{ include('@WSCore/cms/general/dropdown_profile.html.twig') }}
+    </div>
+    {% set breadcrumbs = [{ 'name': 'dashboard.menu'|trans({}, 'ws_cms'), 'path': ws_cms_path('ws_dashboard') }]|merge(get_breadcrumbs()) %}
+    <ol class="c-breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+            <li class="c-breadcrumb__item {{ breadcrumb.main is defined and breadcrumb.main ? 'is-active' }}">
+                {% if breadcrumb.path is defined %}
+                    <a href="{{ breadcrumb.path }}">
+                        {{ breadcrumb.name }}
+                    </a>
+                {% else %}
+                    {{ breadcrumb.name }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ol>
+</header>

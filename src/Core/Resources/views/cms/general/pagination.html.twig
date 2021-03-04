@@ -1,0 +1,73 @@
+{#
+    Parameters:
+      * nbPages (int): number of pages
+      * currentPage (int): current pages
+      * url (string): route name & query (string): route parameter
+        ex: list/page-5?q=myFilter (5 = page and query = myFilter)
+#}
+
+{% apply spaceless %}
+<div class="u-flex u-justify-between u-mt-small">
+    {% if totalCount > 0 %}
+        <div class="dataTables_info">
+            {{
+                'pagination.info'|trans(
+                    {
+                        '%count%': totalCount,
+                        '%from%': ((currentPage - 1) * limit) + 1,
+                        '%to%': ((currentPage - 1) * limit) + currentCount
+                    }
+                , 'ws_cms')
+            }}
+        </div>
+    {% endif %}
+
+    {% if nbPages > 1 %}
+        {% set nearbyPagesLimit = 4 %}
+
+        <nav class="c-pagination u-flex u-justify-end">
+            <ul class="c-pagination__list">
+
+                {% if currentPage > 1 %}
+                    <li class="c-pagination__item">
+                        <a class="c-pagination__control" href="{{ ws_cms_path(url, params|merge({'page': 1})) }}">
+                            <i class="fa fa-caret-left"></i>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% for i in 1..nbPages %}
+                    {% if 0 == (currentPage - nearbyPagesLimit) - loop.index %}
+                        {% if 1 == loop.index %}
+                            <li class="c-pagination__item">
+                                <a class="c-pagination__link" href="{{ ws_cms_path(url, params|merge({'page': 1 })) }}">1</a>
+                            </li>
+                        {% endif %}
+                    {% elseif 0 == (currentPage + nearbyPagesLimit) - loop.index  and (currentPage + nearbyPagesLimit) < nbPages %}
+                    {% elseif 0 < (currentPage - nearbyPagesLimit) - loop.index %}
+                    {% elseif 0 > (currentPage + nearbyPagesLimit) - loop.index %}
+                    {% else %}
+                        <li class="c-pagination__item">
+                            <a
+                                class="c-pagination__link {{ currentPage == loop.index ? 'is-active' }}"
+                                href="{{ ws_cms_path(url, params|merge({'page': loop.index})) }}"
+                            >
+                                {{ loop.index }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if currentPage < nbPages %}
+                    <li class="c-pagination__item">
+                        <a class="c-pagination__control" href="{{ ws_cms_path(url, params|merge({'page': nbPages})) }}">
+                            <i class="fa fa-caret-right"></i>
+                        </a>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </nav>
+    {% endif %}
+</div>
+{% endapply %}

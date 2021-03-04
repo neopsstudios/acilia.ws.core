@@ -1,0 +1,41 @@
+{% if has_alerts() %}
+    <div class="c-dropdown dropdown u-mr-20 u-hidden-down@mobile" data-toggle="dropdown-alerts" data-component="ws_dropdown">
+        <a
+            href="#"
+            id="alertDropdownButton"
+            class="c-notification dropdown-toggle"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            title="{{ 'alerts.tooltip'|trans({ '%count%': get_alerts()|length }, 'ws_cms') }}">
+            <span class="c-notification__icon">
+                <i class="fal fa-bell"></i>
+            </span>
+            <span class="c-notification__number">{{ get_alerts()|length }}</span>
+        </a>
+
+        <div
+            class="c-dropdown__menu c-dropdown__menu--large dropdown-menu dropdown-menu-right dropdown-alerts"
+            aria-labelledby="alertDropdownButton"
+        >
+            {% for alert in get_alerts() %}
+                {% if alert.routeName is not null %}
+                    <a href="{{ path(alert.routeName, alert.routeOptions) }}" class="c-dropdown__item dropdown-item o-media">
+                        {{ alert.message|raw }}
+                    </a>
+                {% else %}
+                    <span class="c-dropdown__item dropdown-item o-media">
+                        {{ alert.message|raw }}
+                    </span>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% else %}
+    <a class="c-notification" href="#" title="{{ 'alerts.tooltip'|trans({ '%count%': 0 }, 'ws_cms') }}">
+        <span class="c-notification__icon">
+            <i class="fal fa-bell"></i>
+        </span>
+        <span class="c-notification__number">{{ 'alerts.tooltip'|trans({ '%count%': 0 }, 'ws_cms') }}</span>
+    </a>
+{% endif %}

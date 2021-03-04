@@ -1,0 +1,128 @@
+{% extends('@WSCore/cms/layout.html.twig') %}
+
+{% page_configuration {
+    'title': 'title'|trans({}, trans_prefix),
+    'header': 'title'|trans({}, trans_prefix),
+    'breadcrumbs': [
+        {
+            'name': 'title'|trans({}, trans_prefix),
+            'main': true
+        }
+    ]
+} %}
+
+{% block content %}
+    <div class="row u-mb-large">
+        <div class="col-sm-12">
+            <div class="c-table-responsive@desktop">
+                {% block crud_filter %}
+                    <form
+                        class="c-toolbar c-toolbar--caption u-justify-space-between"
+                        id="user_filter_form"
+                        role="form"
+                        accept-charset="UTF-8"
+                    >
+                        <div class="u-flex u-mr-auto">
+                            <h4 class="c-toolbar__title u-mr-10">{{ 'title'|trans([], trans_prefix) }}</h4>
+                        </div>
+
+                        <div class="c-field c-field--inline c-field--inline--medium c-choice-wrapper c-choice-wrapper--small u-mr-10">
+                            <select name="m" class="u-mr-10" data-component="ws_select">
+                                <option value="">{{ 'select_model'|trans({}, trans_prefix) }}</option>
+                                {% for model in models %}
+                                    <option
+                                        value='{{ model['model'] }}'
+                                        {{ model['model'] is ws_activity_log_selected(filters, 'model') ? 'selected="selected"' : '' }}
+                                    >
+                                        {{ model['model']|ws_activity_log_model }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="c-field c-field--inline c-field--inline--medium u-mr-10">
+                            <input
+                                type="text"
+                                name="f"
+                                autocomplete="off"
+                                class="c-input c-input--small"
+                                value="{{ app.request.get('f') }}"
+                                placeholder="{{ 'select_model_id'|trans({}, trans_prefix) }}"
+                            >
+                        </div>
+
+                        <div class="c-field c-field--inline c-field--inline--medium c-choice-wrapper c-choice-wrapper--small u-mr-10">
+                            <select name="u" data-component="ws_select">
+                                <option value="">{{ 'select_by'|trans({}, trans_prefix) }}</option>
+                                {% for user in users %}
+                                    <option
+                                        value='{{ user['user'] }}'
+                                        {{ user['user'] is ws_activity_log_selected(filters, 'user') ? 'selected="selected"' : '' }}
+                                    >
+                                        {{ user['user'] }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <button type="submit" class="c-btn c-btn--info u-mr-5">
+                            {{ source('@WSCore/cms/icons/search.svg') }}
+                            {{ 'search'|trans({}, 'ws_cms') }}
+                        </button>
+
+                    </form>
+                {% endblock %}
+
+                <div class="c-toolbar c-toolbar--caption u-mt-30 {{ data|length > 0 ? 'u-hidden' }}">
+                    <div class="c-form__content-full">
+                        <p class="u-color-warning">
+                            <i class="fa fa-info-circle u-color-warning"></i>
+                            {{ 'no_rows_found'|trans([], trans_prefix) }}
+                        </p>
+                    </div>
+                </div>
+
+                {% if data|length > 0 %}
+                    <table class="c-table c-table--fixed c-table--highlight" data-component="ws_table_collapse">
+
+                        {% block crud_table_head %}
+                            <thead class="c-table__head c-table__head--slim">
+                                <tr class="c-table__row">
+                                    <th class="c-table__cell c-table__cell--head">
+                                        {{ 'model'|trans({}, trans_prefix) }}
+                                    </th>
+                                    <th class="c-table__cell c-table__cell--head">
+                                        {{ 'model_id'|trans({}, trans_prefix) }}
+                                    </th>
+                                    <th class="c-table__cell c-table__cell--head">
+                                        {{ 'date'|trans({}, trans_prefix) }}
+                                    </th>
+                                    <th class="c-table__cell c-table__cell--head">
+                                        {{ 'user'|trans({}, trans_prefix) }}
+                                    </th>
+                                    <th class="c-table__cell c-table__cell--head">
+                                        {{ 'action'|trans({}, trans_prefix) }}
+                                    </th>
+                                </tr>
+                            </thead>
+                        {% endblock %}
+
+                        {% block crud_table_body %}
+                            <tbody>
+                            {% for entity in data %}
+                                {{ include('@WSCore/cms/activitylog/row.html.twig') }}
+                            {% endfor %}
+                            </tbody>
+                        {% endblock %}
+                    </table>
+                {% endif %}
+
+                {{ include(
+                    '@WSCore/cms/general/pagination.html.twig',
+                    paginationData|merge({ 'params': params }),
+                    with_context = false
+                ) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

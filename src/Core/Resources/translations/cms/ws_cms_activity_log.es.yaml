@@ -1,0 +1,14 @@
+# Translations
+menu: Log de actividad
+title: Log de actividad
+model: Modelo
+model_id: Id de Modelo
+action: Acción
+no_rows_found: No hay Logs de Actividad para mostrar
+user: Usuario
+date: Fecha
+before: Antes
+after: Después
+select_by: Seleccione Usuario
+select_model: Seleccione Modelo
+select_model_id: Seleccione Id de Modelo

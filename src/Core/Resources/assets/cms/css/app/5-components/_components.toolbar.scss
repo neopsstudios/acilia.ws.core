@@ -1,0 +1,16 @@
+.c-toolbar {
+    &__row {
+        display: flex;
+        width: 100%;
+    }
+
+    &--column {
+        flex-direction: column;
+    }
+
+    &--caption {
+        border-radius: 4px 4px 0 0;
+        border: 1px solid $grey-300;
+        border-bottom: 0;
+    }
+}

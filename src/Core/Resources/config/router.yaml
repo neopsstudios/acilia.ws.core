@@ -1,0 +1,9 @@
+parameters:
+
+services:
+
+    WS\Core\Library\Router\Router:
+        parent: router.default
+        calls:
+            - [ setLoader, ['@WS\Core\Library\Router\Loader\Loader']]
+            - [ setDefaultLocale, ['%locale%']]

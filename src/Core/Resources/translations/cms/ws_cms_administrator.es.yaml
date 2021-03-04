@@ -1,0 +1,41 @@
+# Administrator
+menu: Administradores
+title: Administradores
+form.name.label: Nombre
+form.name.placeholder: Juan Perez
+form.email.label: Email
+form.email.placeholder: juan.perez@acme.es
+form.password.label: Contraseña
+form.repeat_password.label: Repetir contraseña
+form.repeat_password.invalid: Las contraseñas deben coincidir
+form.profile.label: Perfil
+form.active.label: Estado
+fields.name.label: Nombre
+fields.email.label: Email
+fields.profile.label: Perfil
+fields.createdAt.label: Creación
+create_success: Administrador creado
+create_error: Ha ocurrido un problema al crear el Administrador, por favor inténtelo de nuevo
+edit_success: Administrador editado
+edit_error: Ha ocurrido un problema al editar el Administrador, por favor inténtelo de nuevo
+delete_warning: ¿Seguro que desea eliminar este Administrador?
+delete_success: Administrador eliminado correctamente
+no_rows_found: No hay Administradores para mostrar
+not_found: No se pudo encontrar el Administrador con identificador %s
+
+# Administrator profile
+profile.title: Perfil de Administrador
+profile.edit_success: Perfil de Administrador editado
+profile.edit_error: Ha ocurrido un problema al editar el perfil de Administrador, por favor inténtelo de nuevo
+profile.form.name.label: Nombre
+profile.form.name.placeholder: Nombre del Administrador
+profile.form.password.label: Contraseña actual
+profile.form.password.placeholder: Contraseña actual
+profile.form.first.new_password.label: Nueva contraseña
+profile.form.first.new_password.placeholder: Ingrese la nueva contraseña
+profile.form.second.new_password.label: Repita la contraseña
+profile.form.second.new_password.placeholder: Repita la nueva contraseña
+profile.form.button.change_password: Cambiar contraseña
+
+status.active: Activo
+status.inactive: Inactivo

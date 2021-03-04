@@ -1,0 +1,114 @@
+# General
+not_allowed: No tienes permisos para acceder aquí
+bad_request: No podemos procesar tu solicitud
+alerts.tooltip: "{0} No tienes ninguna alerta|{1} Tienes una alerta sin definir|]1,Inf[ Tienes %count% alertas sin atender"
+logout: Salir
+search: Buscar
+filter: Filtros
+export.csv: CSV
+new: Nuevo
+edit: Editar
+view: Ver
+delete: Eliminar
+delete_failed: Ha ocurrido un error al eliminar, intente nuevamente
+delete_confirm: Sí, borrar
+delete_title_success: Borrado exitoso
+save: Guardar
+save.edit: Guardar y Continuar Editando
+save.back: Guardar y Volver
+save.new: Guardar y Crear Nuevo
+cancel: Cancelar
+next: Siguiente
+back: Atrás
+confirm: Confirmar
+error: ¡Error!
+actions: Acciones
+date_hour_format: "d/m/Y H:i:s"
+date_format: "d/m/Y"
+datePicker_date_hour: "d/m/Y H:i:S"
+datePicker_date: "d/m/Y"
+datePicker_hour: "H:i:S"
+select_loading: "Cargando..."
+select_noResults: "No hay resultados"
+select_noChoices: "No hay opciones"
+select_itemSelect: ""
+symfony_date_hour_format: "dd/MM/yyyy HH:mm"
+symfony_date_format: "dd/MM/yyyy"
+symfony_hour_format: "HH:mm"
+pagination.first: Primero
+pagination.last: Último
+pagination.info: Mostrando un único elemento.|Mostrando %from% a %to% de %count% elementos.
+domain_switched: Cambiado al dominio %domain% (%locale%)
+view_profile: Perfil
+dashboard: Panel
+dashboard.menu: Panel
+
+# Cropper and assets
+cropper_preview: Previsualización
+cropper_title: Detalles
+cropper_ratio: Relación
+cropper_minWidth: Ancho min.
+cropper_minHeight: Alto min.
+cropper_width: ancho
+cropper_height: alto
+cropper_obs: Obs.
+cropper_widthHeightError: "Esta imagen no contiene el ancho y alto mínimo requerido, %width%px X %height%px"
+assets_image.open_modal: Selecciona una imagen
+assets_image.add_modal_on_image: Añadir
+assets_image.open_modal_on_image: Abrir
+assets_image.change_modal_on_image: Cambiar
+assets_image.drag: Click o arrastre aquí para agregar una nueva imagen
+assets_image.image_list.use: Usar
+assets_image.image_list.crop: Recortar
+assets_images_noResults: No hay más imagenes para mostrar
+
+# Languages
+language.es: Español
+language.en: Inglés
+
+# Login
+login.header: Por favor, ingrese su correo y su contraseña
+login.email: Correo electrónico
+login.password: Contraseña
+login.button: Ingresar
+login.bad_credentials: El correo o la contraseña no son válidos
+login.disabled_admin: Tu usuario ha sido deshabilitado, por favor consulta con el administrador del sitio.
+
+# Errors
+error_page.401.title: ¡Oops, por aquí no!
+error_page.401.description: No tienes los permisos necesarios para acceder a esta página. Por favor, comprueba que la URL es correcta, o pudes volver a atrás.
+error_page.403.title: ¡Oops, por aquí no!
+error_page.403.description: No tienes los permisos necesarios para acceder a esta página. Por favor, comprueba que la URL es correcta, o pudes volver a atrás.
+error_page.404.title: Página no encontrada
+error_page.404.description: No hemos podido encontrar la página que estás buscando. Por favor, comprueba que la URL es correcta, o pudes volver a atrás.
+error_page.500.title: Error interno
+error_page.500.description: ¡Lo lamentamos mucho! Ha ocurrido un error y no podremos finalizar tu solicitud.
+error_page.go_back: Ir a atrás
+
+# Editorial Publishing
+publishing.publishStatus.label: Estado de Publicación
+publishing.publishStatus.placeholder: Estado de Publicación
+publishing.publishStatus.published.label: Publicado
+publishing.publishStatus.unpublished.label: Despublicado
+publishing.publishStatus.draft.label: Borrador
+publishing.publishSince.label: Publicar desde
+publishing.publishSince.placeholder: Publicar desde
+publishing.publishUntil.label: Publicar hasta
+publishing.publishUntil.placeholder: Publicar hasta
+
+# Batch actions
+batch_action.confirm_message: Esta acción se aplicará a cada elemento seleccionado. ¿Deseas continuar?
+batch_action.confirm_button_label: Continuar
+batch_action.no_action_selected: Es necesario seleccionar una acción a realizar.
+batch_action.no_item_selected: Es necesario seleccionar elementos para realizar la acción seleccionada.
+batch_action.success_message: La acción ha sido realizada correctamente.
+batch_action.fail_message: Ha habido algún problema y la acción no ha podido ser completada.
+batch_action.remove_alert_title: Borrado múltiple
+
+# Input Multiple Widget
+input_multiple.add_item_message: 'Presione Enter para agregar'
+input_multiple.unique_item_message: 'El valor ingresado ya esta en el listado'
+input_multiple.invalid_item_message: 'El valor ingresado no es válido'
+
+# Markdown
+markdown.autosave: 'Guardado: '

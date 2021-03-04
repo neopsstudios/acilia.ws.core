@@ -1,0 +1,36 @@
+{% extends('@WSCore/cms/layout.html.twig') %}
+
+{% page_configuration {
+    'title': 'profile.title'|trans({}, 'ws_cms_administrator'),
+    'header': 'profile.title'|trans({}, 'ws_cms_administrator'),
+    'breadcrumbs': [
+        {
+            'name': 'profile.title'|trans({}, 'ws_cms_administrator'),
+            'main': true
+        }
+    ]
+} %}
+
+{% block content %}
+    {{ form_start(form) }}
+
+    <div class="container">
+        <div class="c-form">
+
+            {% block crud_show_title %}
+                <div class="u-flex u-mr-auto">
+                    <h2 class="c-form__title u-h2 u-mb-30">{{ 'profile.title'|trans({}, 'ws_cms_administrator') }}</h2>
+                </div>
+            {% endblock %}
+
+            {{ form_widget(form) }}
+
+            <div class="c-divider u-mv-small"></div>
+
+            <button type="submit" class="c-btn c-btn--info">{{ 'save'|trans({}, 'ws_cms') }}</button>
+            <a href="{{ path('ws_dashboard') }}" class="c-btn c-btn--cancel">{{ 'cancel'|trans({}, 'ws_cms') }}</a>
+
+            {{ form_end(form, {'render_rest': false}) }}
+        </div>
+    </div>
+{% endblock %}

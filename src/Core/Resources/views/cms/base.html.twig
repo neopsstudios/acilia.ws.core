@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="google" content="notranslate">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ get_title() }} | {{ 'name'|trans({}, 'cms') }}{% endblock %}</title>
+
+        <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,500,600,700&display=swap" rel="stylesheet">
+
+    {# <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600" rel="stylesheet"> #}
+
+    <link rel="shortcut icon" href="{{ asset('cms/favicon.ico', 'cms') }}" type="image/x-icon">
+    <link type="text/css" href="{{ asset('cms/css/app.css', 'cms') }}" rel="stylesheet" />
+
+    {% block stylesheets %}{% endblock %}
+</head>
+<body class="o-page {{ bodyClass is defined ? bodyClass }}">
+    {% block body %}{% endblock %}
+
+    {% for flashMessage in app.session.flashbag.get('cms_success') %}
+        <div class="cms-notifications u-hidden" data-type="success">{{ flashMessage|raw }}</div>
+    {% endfor %}
+
+    {% for flashMessage in app.session.flashbag.get('cms_error') %}
+        <div class="cms-notifications u-hidden" data-type="failure">{{ flashMessage|raw }}</div>
+    {% endfor %}
+
+    <script type="text/javascript">
+        window.cmsTranslations = {
+            cancel: '{{ 'cancel'|trans({}, 'ws_cms') }}',
+            delete: {
+                confirm: '{{ 'delete_confirm'|trans({}, 'ws_cms') }}',
+            },
+            error: '{{ 'error'|trans({}, 'ws_cms') }}',
+            ws_cms_components: {
+                select: {
+                    loading: '{{ 'select_loading'|trans({}, 'ws_cms') }}',
+                    no_results: '{{ 'select_noResults'|trans({}, 'ws_cms') }}',
+                    no_choices: '{{ 'select_noChoices'|trans({}, 'ws_cms') }}',
+                    item_select: '{{ 'select_itemSelect'|trans({}, 'ws_cms') }}',
+                },
+                cropper: {
+                    error: '{{ 'cropper_widthHeightError'|trans({}, 'ws_cms') }}',
+                },
+                assets_images: {
+                    no_results: '{{ 'assets_images_noResults'|trans({}, 'ws_cms') }}'
+                },
+                input_multiple: {
+                    add_item: '{{ 'input_multiple.add_item_message'|trans({}, 'ws_cms') }}',
+                    unique_item: '{{ 'input_multiple.unique_item_message'|trans({}, 'ws_cms') }}',
+                    invalid_item: '{{ 'input_multiple.invalid_item_message'|trans({}, 'ws_cms') }}',
+                },
+                markdown: {
+                    autosave: '{{ 'markdown.autosave'|trans({}, 'ws_cms') }}',
+                }
+            },
+            ws_cms_batch_actions: {
+                confirm_message: '{{ 'batch_action.confirm_message'|trans({}, 'ws_cms') }}',
+                confirm_button_label: '{{ 'batch_action.confirm_button_label'|trans({}, 'ws_cms') }}',
+                no_item_selected: '{{ 'batch_action.no_item_selected'|trans({}, 'ws_cms') }}',
+                no_action_selected: '{{ 'batch_action.no_action_selected'|trans({}, 'ws_cms') }}'
+            }
+        };
+
+        window.cmsSettings = {
+            locale: '{{ app.request.locale }}',
+            ws_cms_components: {
+                datepicker: {
+                    format: {
+                        date_hour: '{{ 'datePicker_date_hour'|trans({}, 'ws_cms') }}',
+                        date: '{{ 'datePicker_date'|trans({}, 'ws_cms') }}',
+                        hour: '{{ 'datePicker_hour'|trans({}, 'ws_cms') }}'
+                    }
+                },
+                assets_images: {
+                    endpoint: '{{ path('ws_asset_image_images') }}'
+                },
+                markdown_asset_image: {
+                    endpoint: '{{ path('ws_asset_image_save_asset_image') }}'
+                },
+                input_multiple: {
+                    duplicate_items_allowed: false,
+                    edit_items: true,
+                    placeholder: true,
+                    remove_item_button: true,
+                }
+            },
+        };
+    </script>
+
+    <script type="text/javascript" src="{{ asset('cms/js/app.js', 'cms') }}"></script>
+
+    <!-- Custom JavaScript -->
+    {% block javascript %}{% endblock %}
+</body>
+
+<!-- Build: {{ app_build }} -->
+</html>

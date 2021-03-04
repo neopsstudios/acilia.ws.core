@@ -1,0 +1,49 @@
+{% extends('@WSCore/cms/layout.html.twig') %}
+
+{% page_configuration {
+    'title': section.name|trans({}, section.translationDomain) ~ ' ' ~  'title'|trans({}, 'ws_cms_setting'),
+    'header': 'title'|trans({}, 'ws_cms_setting'),
+    'subtitle': section.name|trans({}, section.translationDomain),
+    'breadcrumbs': [
+        {
+            'name': 'title'|trans({}, 'ws_cms_setting'),
+            'main': true
+        },
+        {
+            'name': section.name|trans({}, section.translationDomain)
+        }
+    ]
+} %}
+
+{% block content %}
+    <div class="container" data-page="settings">
+        <div class="c-form">
+            <div class="c-form__content-full">
+                <div class="u-flex u-mr-auto">
+                    <h2 class="c-form__title u-h2 u-mr-10 u-mb-10">{{ 'title'|trans({}, 'ws_cms_setting') }}</h2>
+                </div>
+                <p class="u-text-small u-mb-30">
+                    {{ 'disclaimer'|trans({}, 'ws_cms_setting') }}
+                </p>
+                {% for group in section.groups %}
+                    <div class="l-form__wrapper-row u-mb-30">
+                        <h5 class="u-h5 u-font-bold u-mb-30">
+                            {{ group.name|trans({}, group.translationDomain) }}
+                            {% if group.description is not empty %}
+                                <small class="c-field__message u-mt-5">({{ group.description|trans({}, group.translationDomain) }})</small>
+                            {% endif %}
+                        </h5>
+                        {{ render(controller('WS\\Core\\Controller\\CMS\\SettingController::form', {
+                            'section': section.code,
+                            'group': group.code
+                        })) }}
+                    </div>
+                {% endfor %}
+                <small class="c-field__message u-mt-5"><i class="fa fa-info-circle"></i>{{ 'required'|trans({}, 'ws_cms_setting')|raw }}</small>
+                <div class="c-divider u-mv-small"></div>
+                <button class="c-btn c-btn--info" data-save-url="{{ path('ws_setting_save', { 'section': section.code }) }}" id="ws-settings-save">{{ 'save'|trans({}, 'ws_cms') }}</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

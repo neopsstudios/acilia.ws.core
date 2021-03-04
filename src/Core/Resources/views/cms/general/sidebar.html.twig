@@ -1,0 +1,48 @@
+<ul class="c-sidebar__list">
+    {% for menu in ws_cms_sidebar_get() %}
+        {% if menu.roles is empty or ws_cms_sidebar_is_granted(menu.roles) %}
+            {% if menu.container %}
+                <li class="c-sidebar__item has-submenu {{ ws_cms_in_route(menu.collapsedRoutes, 'is-open') }}">
+                    <a
+                        class="c-sidebar__link"
+                        href="#"
+                        aria-expanded="false"
+                    >
+                        <i class="fal fa-1x {{ menu.icon }}" aria-hidden="true"></i>
+                        <span class="c-sidebar__text">
+                            {{ menu.label|trans({}, menu.translationDomain)|raw  }}
+                        </span>
+                        {{ source('@WSCore/cms/icons/arrow.svg') }}
+                    </a>
+                    <ul class="c-sidebar__submenu collapse">
+                        {% for submenu in menu.children %}
+                            {% if ws_cms_sidebar_is_granted(submenu.roles) %}
+                                <li>
+                                    <a
+                                        class="c-sidebar__link js-submenu-children {{ ws_cms_in_route(submenu.collapsedRoutes, 'is-active', null, submenu.routeOptions) }}"
+                                        href="{{ path(submenu.routeName, submenu.routeOptions) }}"
+                                    >
+                                        <i class="fal fa-1x {{ submenu.icon }}" aria-hidden="true"></i>
+                                        <span class="c-sidebar__text">
+                                            {{ submenu.label|trans({}, submenu.translationDomain) }}
+                                        </span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% else %}
+                <a
+                    class="c-sidebar__link {{ ws_cms_in_route(menu.collapsedRoutes, 'is-active') }}"
+                    href="{{ path(menu.routeName, menu.routeOptions) }}"
+                >
+                    <i class="fal fa-1x {{ menu.icon }}" aria-hidden="true"></i>
+                    <span class="c-sidebar__text">
+                        {{ menu.label|trans({}, menu.translationDomain)|raw  }}
+                    </span>
+                </a>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+</ul>

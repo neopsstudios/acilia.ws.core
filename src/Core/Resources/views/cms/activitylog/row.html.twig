@@ -1,0 +1,59 @@
+{% if entity.action == constant('WS\\Core\\Library\\ActivityLog\\ActivityLogInterface::UPDATE') %}
+<tr class="c-table__row ws-table-collapse" data-toggle="collapseRow{{ entity.id }}">
+    <td class="c-table__cell">
+        <span class="c-table__toggle">
+            {{ entity.model|ws_activity_log_model }}
+            {{ source('@WSCore/cms/icons/arrow.svg') }}
+        </span>
+    </td>
+{% else %}
+<tr class="c-table__row">
+    <td class="c-table__cell">
+        {{ entity.model|ws_activity_log_model }}
+    </td>
+{% endif %}
+    <td class="c-table__cell">
+        {{ entity.modelId }}
+    </td>
+    <td class="c-table__cell">
+        {{ entity.createdAt|date('date_hour_format'|trans({}, 'ws_cms')) }}
+    </td>
+    <td class="c-table__cell">
+        {{ entity.createdBy }}
+    </td>
+    <td class="c-table__cell">
+        <span class="c-badge c-badge--{{ entity.action|ws_activity_log_action }}">
+            {{ entity.action }}
+        </span>
+    </td>
+</tr>
+
+{% if entity.action == constant('WS\\Core\\Library\\ActivityLog\\ActivityLogInterface::UPDATE') %}
+    <tr class="c-table__row c-table__collapse" id="collapseRow{{ entity.id }}">
+        <td colspan="5">
+            <div class="c-table-collapse">
+                <ul class="c-table-collapse__list">
+                {% for change in entity.parsedChanges %}
+                    <li class="c-table-collapse__item">
+                        {{ change.field }}
+                        <ul class="c-table-collapse__sub-list">
+                            <li class="c-table-collapse__sub-item u-mb-10">
+                                <span class="u-font-semibold u-block">
+                                    {{ 'before'|trans({}, trans_prefix) }}:</br>
+                                </span>
+                                <span class="u-inline-block u-ml-20">{{ change.before|raw }}</span>
+                            </li>
+                            <li class="c-table-collapse__sub-item u-mb-10">
+                                <span class="u-font-semibold u-block">
+                                    {{ 'after'|trans({}, trans_prefix) }}:</br>
+                                </span>
+                                <span class="u-inline-block u-ml-20">{{ change.after|raw }}</span>
+                            </li>
+                        </ul>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+        </td>
+    </tr>
+{% endif %}

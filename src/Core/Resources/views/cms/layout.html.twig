@@ -1,0 +1,25 @@
+{% extends('@WSCore/cms/base.html.twig') %}
+
+{% block body %}
+    <div class="o-page__sidebar js-page-sidebar">
+        <aside class="c-sidebar c-sidebar--light">
+            {{ include('@WSCore/cms/general/nav_profile.html.twig', with_context = false) }}
+            {{ include('@WSCore/cms/general/sidebar.html.twig', with_context = false) }}
+            <i class="c-sidebar__close fal fa-times u-hidden@md--up js-sidebar-close"></i>
+        </aside>
+    </div>
+
+    <main class="o-page__content">
+        {% block header %}
+            {{ include('@WSCore/cms/general/navbar.html.twig') }}
+        {% endblock %}
+
+        <div class="container-fluid">
+
+            {% block content %}{% endblock %}
+
+            {# Footer #}
+            {{ include('@WSCore/cms/general/footer.html.twig') }}
+        </div>
+    </main>
+{% endblock %}

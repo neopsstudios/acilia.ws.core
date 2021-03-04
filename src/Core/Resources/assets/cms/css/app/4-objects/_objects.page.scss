@@ -1,0 +1,11 @@
+.o-page {
+    &__content {
+        overflow: visible;
+    }
+
+    &__sidebar {
+        z-index: 3;
+    }
+}
+
+

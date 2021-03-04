@@ -1,0 +1,9 @@
+# Settings
+menu: Configuration
+title: Configuration
+disclaimer: Manage the site settings carefully, if you don't understand an option please contact the administrator
+required: Settings with * are required.
+save_success: Settings saved successfully.
+save_error: Unable to save the Settings.
+alert: You have <strong>one</strong> unconfigured setting.|You have <strong>%count%</strong> unconfigured settings.
+

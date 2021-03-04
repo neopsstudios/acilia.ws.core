@@ -1,0 +1,9 @@
+.container-fluid .container {
+    padding: 0;
+}
+
+.container-fluid {
+    @include media-breakpoint('lg') {
+        padding: 0 30px;
+    }
+}

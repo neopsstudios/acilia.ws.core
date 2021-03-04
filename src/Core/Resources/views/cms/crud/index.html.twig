@@ -1,0 +1,264 @@
+{% extends('@WSCore/cms/layout.html.twig') %}
+
+{% page_configuration {
+    'title': 'title'|trans([], trans_prefix),
+    'header': 'title'|trans([], trans_prefix),
+    'breadcrumbs': [
+    {
+        'name': 'title'|trans({}, trans_prefix),
+        'main': true
+    }
+]
+    } %}
+
+{% block content %}
+    <div class="row u-mb-large">
+        <div class="col-sm-12">
+            <div class="c-table-responsive@desktop">
+                {% block crud_filter %}
+                    <form
+                            class="c-toolbar c-toolbar--column c-toolbar--caption u-justify-space-between"
+                            id="user_filter_extended_form"
+                            role="form"
+                            accept-charset="UTF-8"
+                    >
+                        <div class="c-toolbar__row">
+                            {% block crud_create_action %}
+                                <div class="u-flex u-mr-auto">
+                                    <h4 class="c-toolbar__title u-mr-10">{{ 'title'|trans([], trans_prefix) }}</h4>
+                                    {% if is_granted(view_roles['create']) %}
+                                        <a class="c-btn c-btn--brand u-mr-10" href="{{ ws_cms_path("#{route_prefix}_create") }}">
+                                            {{ 'new'|trans({}, 'ws_cms') }}
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            {% endblock %}
+
+                            {{ include(
+                                '@WSCore/cms/general/batch.html.twig',
+                                { 'batch_actions': batch_actions, 'route_prefix': route_prefix },
+                                with_context = false
+                            ) }}
+
+                            <div class="c-field c-field--medium has-icon-right u-mr-10">
+                                <span class="c-field__icon">
+                                    {{ source('@WSCore/cms/icons/search.svg') }}
+                                </span>
+                                <label class="u-hidden-visually" for="navbar-search">
+                                    {{ 'search'|trans({}, 'ws_cms') }}
+                                </label>
+                                <input
+                                        class="c-input c-input--small"
+                                        id="navbar-search"
+                                        type="text"
+                                        placeholder="{{ 'search'|trans({}, 'ws_cms') }}"
+                                        name="f"
+                                        value="{{ app.request.get('f') }}"
+                                        autocomplete="off"
+                                >
+                            </div>
+                            <button type="submit" class="c-btn c-btn--info u-mr-10 u-hidden@md--down">
+                                {{ source('@WSCore/cms/icons/search.svg') }}
+                                {{ 'search'|trans({}, 'ws_cms') }}
+                            </button>
+
+                            {% if filter_extended_form is not null %}
+                                <button type="button" class="c-btn c-btn--secondary u-mr-10 u-hidden@md--down js-toggle-filter">
+                                    {{ source('@WSCore/cms/icons/filter.svg') }}
+                                    {{ 'filter'|trans({}, 'ws_cms') }}
+                                </button>
+                            {% endif %}
+
+                            {% if view_export %}
+                                <div class="c-dropdown dropdown u-hidden@md--down" data-toggle="dropdown-export" data-component="ws_dropdown">
+                                    <button class="c-btn c-btn--secondary has-dropdown dropdown-toggle"
+                                            type="button"
+                                            id="ExportDropdownButton"
+                                            aria-haspopup="true" aria-expanded="false">
+                                            {{ source('@WSCore/cms/icons/export.svg') }}
+                                            Exportar
+                                    </button>
+                                    {% block crud_export_formats %}
+                                        <div class="c-dropdown__menu dropdown-menu dropdown-export" aria-labelledby="ExportDropdownButton">
+                                            <a  class="c-dropdown__item dropdown-item"
+                                                href="{{ ws_cms_path("#{route_prefix}_export", app.request.query.all) }}">
+                                                <i class="fal fa-file-csv u-pr-5"></i> {{ 'export.csv'|trans({}, 'ws_cms') }}
+                                            </a>
+                                            {% block crud_export_format %}
+                                            {% endblock %}
+                                        </div>
+                                    {% endblock %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        {% block crud_filter_extended %}
+                            <div class="c-toolbar__row u-hidden u-border-top u-pt-20 u-mt-20 js-toggle-filter-row">
+                                {% if filter_extended_form is not null %}
+                                    {% for filter_form_field in filter_extended_form.children %}
+                                        <div class="c-field c-field--medium c-field--filters {% if not loop.last %}u-mr-10 {% endif %}">
+                                            {{ form_label(filter_form_field) }}
+                                            {{ form_widget(filter_form_field, {'attr': {'class': ''}}) }}
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        {% endblock %}
+                    </form>
+                {% endblock %}
+
+                <div class="c-toolbar c-toolbar--caption u-mt-30 {{ data|length > 0 ? 'u-hidden' }}">
+                    <div class="c-form__content-full">
+                        <p>
+                            <i class="fa fa-info-circle u-color-warning">
+                            </i> {{ 'no_rows_found'|trans([], trans_prefix) }}
+                        </p>
+                    </div>
+                </div>
+
+                {% if data|length > 0 %}
+                    <table class="c-table c-table--highlight">
+                        {% if dir == 'asc' %}
+                            {% set dirClass = '_asc' %}
+                            {% set newDir = 'desc' %}
+                        {% else %}
+                            {% set dirClass = '_desc' %}
+                            {% set newDir = 'asc' %}
+                        {% endif %}
+                        {% set filterQuery = get_filter_query(params, ['f']) %}
+                        {% set sortedField = get_filter_query(params, ['sort']) %}
+
+                        {% block crud_table_head %}
+                            <thead class="c-table__head c-table__head--slim">
+                            <tr class="c-table__row">
+                                {% if batch_actions is not empty %}
+                                    <th class="c-table__cell c-table__cell--head c-table__cell--batch no-sort">
+                                        <div class="c-choice c-choice--checkbox">
+                                            <input
+                                                    type="checkbox"
+                                                    id="checkbox-batch"
+                                                    name="checkboxes"
+                                                    class="c-choice__input js-batchAll"
+                                            >
+                                            <label class="c-choice__label c-choice__label--batch" for="checkbox-batch"></label>
+                                        </div>
+                                    </th>
+                                {% endif %}
+
+                                {% for field in list_fields %}
+                                    {% set sortClass = 'no-sort' %}
+                                    {% if field.sortable %}
+                                        {% set sortClass = 'sorting' %}
+                                        {% if field.name in sortedField %}
+                                            {% set sortClass = sortClass ~ dirClass %}
+                                        {% endif %}
+                                    {% endif %}
+
+                                    <th
+                                            class="c-table__cell c-table__cell--head"
+                                            {{ field.width is defined ? "width=#{field.width}" }}
+                                    >
+
+                                        {% if field.sortable %}
+                                            {% set sortableParams = {
+                                                "sort":field.name,
+                                                "dir":newDir
+                                            } %}
+
+                                            <div class="c-table__sorting {{ sortClass }}">
+                                                <a
+                                                        class="c-table__sorting-link d-block"
+                                                        href={{"?#{params|merge(sortableParams)|url_encode}"}}
+                                                >
+                                                    {{ "fields.#{field.name}.label"|trans([], trans_prefix) }}
+                                                    <i class="fad fa-sort u-pl-5"></i>
+                                                </a>
+                                            </div>
+                                        {% else %}
+                                            {{ "fields.#{field.name}.label"|trans([], trans_prefix) }}
+                                        {% endif %}
+                                    </th>
+                                {% endfor %}
+                                <th class="c-table__cell c-table__cell--head">{{ 'actions'|trans({}, 'ws_cms') }}</th>
+                            </tr>
+                            </thead>
+                        {% endblock %}
+
+                        {% block crud_table_body %}
+                            <tbody>
+                            {% for entity in data %}
+                                <tr class="c-table__row js-genericDelete_wrapper" data-id="{{ entity.id }}">
+                                    {% if batch_actions is not empty %}
+                                        <td class="c-table__cell">
+                                            <div class="c-choice c-choice--checkbox">
+                                                <input
+                                                        class="c-choice__input js-batchItem"
+                                                        id="checkbox-item-{{ entity.id }}"
+                                                        name="checkboxes"
+                                                        type="checkbox"
+                                                >
+                                                <label
+                                                        class="c-choice__label c-choice__label--batch"
+                                                        for="checkbox-item-{{ entity.id }}"
+                                                >
+                                                </label>
+                                            </div>
+                                        </td>
+                                    {% endif %}
+                                    {% for field in list_fields %}
+                                        {% block crud_table_body_row %}
+                                            <td class="c-table__cell">
+                                                {% if is_granted(view_roles['edit']) %}
+                                                    <a
+                                                        class="c-table__link"
+                                                        href="{{ ws_cms_path("#{route_prefix}_edit", { 'id': entity.id }) }}"
+                                                    >
+                                                {% endif %}
+                                                    {% if field.isDate|default(false) %}
+                                                        {{ ws_cms_crud_list_is_date(attribute(entity, field.name)) }}
+                                                    {% elseif field.filter|default(false) %}
+                                                        {{ ws_cms_crud_list_filter(field.filter, field.options|default([]), attribute(entity, field.name)) }}
+                                                    {% else %}
+                                                        {{ attribute(entity, field.name) }}
+                                                    {% endif %}
+                                                {% if is_granted(view_roles['edit']) %}
+                                                    </a>
+                                                {% endif %}
+                                            </td>
+                                        {% endblock %}
+                                    {% endfor %}
+
+                                    {% block crud_table_body_row_actions %}
+                                        <td class="c-table__cell">
+                                            {% block crud_table_body_row_action %}{% endblock %}
+
+                                            {% if is_granted(view_roles['delete']) %}
+                                                <button
+                                                        class="c-btn c-btn--secondary c-btn--delete js-genericDelete"
+                                                        data-id="{{ entity.id }}"
+                                                        data-url="{{ ws_cms_path("#{route_prefix}_delete", { 'id': entity.id }) }}"
+                                                        data-title="{{ 'title'|trans([], trans_prefix) }}"
+                                                        data-message="{{ 'delete_warning'|trans([], trans_prefix) }}"
+                                                >
+                                                    <i class="fal fa-trash-alt u-mr-5"></i>
+                                                    {{ 'delete'|trans({}, 'ws_cms') }}
+                                                </button>
+                                            {% endif %}
+                                        </td>
+                                    {% endblock %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        {% endblock %}
+                    </table>
+                {% endif %}
+                {{ include(
+                    '@WSCore/cms/general/pagination.html.twig',
+                    paginationData|merge({ 'params': params }),
+                    with_context = false
+                ) }}
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

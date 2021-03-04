@@ -1,0 +1,114 @@
+# General
+not_allowed: You are not allowed to access here
+bad_request: We cannot process this request
+alerts.tooltip: "{0} You don't have any alerts|{1} You have one unattended alert|]1,Inf[ You have %count% unattended alerts"
+logout: Logout
+search: Search
+filter: Filters
+export.csv: CSV
+new: New
+edit: Edit
+view: View
+delete: Delete
+delete_failed: An error occured deleting the element, please try again.
+delete_confirm: Yes, delete
+delete_title_success: Deleted Successfully
+save: Save
+save.edit: Save and Stay
+save.back: Save and Back
+save.new: Save and Create Other
+cancel: Cancel
+next: Next
+back: Back
+confirm: Confirm
+error: Error!
+actions: Actions
+date_hour_format: "m/d/Y h:i A"
+date_format: "m/d/Y"
+datePicker_date_hour: "d/m/Y H:i:S"
+datePicker_date: "m/d/Y"
+datePicker_hour: "h:i"
+select_loading: "Loading..."
+select_noResults: "No results found"
+select_noChoices: "No choices to choose from"
+select_itemSelect: ""
+symfony_date_hour_format: "MM/dd/yyyy h:mm a"
+symfony_date_format: "MM/dd/yyyy"
+symfony_hour_format: "h:mm a"
+pagination.first: First
+pagination.last: Last
+pagination.info: Showing one element.|Showing %from% to %to% of %count% elements.
+domain_switched: Switched to domain %domain% (%locale%)
+view_profile: View Profile
+dashboard: Dashboard
+dashboard.menu: Dashboard
+
+# Cropper and assets
+cropper_preview: Preview
+cropper_title: Details
+cropper_ratio: Ratio
+cropper_minWidth: Min. width
+cropper_minHeight: Min. height
+cropper_width: width
+cropper_height: height
+cropper_obs: Obs.
+cropper_widthHeightError: "This image does not have the minimum values for width and height required, %width%px X %height%px"
+assets_image.open_modal: Select an image
+assets_image.add_modal_on_image: Add
+assets_image.open_modal_on_image: Open
+assets_image.change_modal_on_image: Change
+assets_image.drag: Click here or drag to add a new image
+assets_image.image_list.use: Use
+assets_image.image_list.crop: Crop
+assets_images_noResults: There is no more images to show
+
+# Languages
+language.es: Spanish
+language.en: English
+
+# Login
+login.header: Please, enter your email and password to access
+login.email: Email
+login.password: Password
+login.button: Log in
+login.bad_credentials: Email or password are not valid
+login.disabled_admin: Your user is currently disabled, therefore you can not log in.
+
+# Errors
+error_page.401.title: Oops, not this way!
+error_page.401.description: You do not have the privileges to access this page. Please, check the URL in case there is an error and try again, or you can go back.
+error_page.403.title: Oops, not this way!
+error_page.403.description: You do not have the privileges to access this page. Please, check the URL in case there is an error and try again, or you can go back.
+error_page.404.title: Page not found
+error_page.404.description: We weren't able to find the page you are looking for. Please, check the URL in case there is an error and try again, or you can go back.
+error_page.500.title: Internal Error
+error_page.500.description: We are so sorry! An internal error ocurred and we weren't able to complete your request.
+error_page.go_back: Go back
+
+# Editorial Publishing
+publishing.publishStatus.label: Publish Status
+publishing.publishStatus.placeholder: Publish Status
+publishing.publishStatus.published.label: Published
+publishing.publishStatus.unpublished.label: Unpublished
+publishing.publishStatus.draft.label: Draft
+publishing.publishSince.label: Publish Since
+publishing.publishSince.placeholder: Publish Since
+publishing.publishUntil.label: Publish Until
+publishing.publishUntil.placeholder: Publish Until
+
+# Batch actions
+batch_action.confirm_message: This action will be applied to every item selected. Do you want to continue?
+batch_action.confirm_button_label: Continue
+batch_action.no_action_selected: You need to select some action to apply.
+batch_action.no_item_selected: You need to select some items to apply the action selected.
+batch_action.success_message: The action has been applied to the items succesfully
+batch_action.fail_message: There was a problem and the action could not have been done.
+batch_action.remove_alert_title: Batch delete
+
+# Input Multiple Widget
+input_multiple.add_item_message: 'Press Enter to add'
+input_multiple.unique_item_message: 'The entered value is already on the list'
+input_multiple.invalid_item_message: 'The entered value is not valid'
+
+# Markdown
+markdown.autosave: 'Saved: '

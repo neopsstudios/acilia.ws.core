@@ -1,0 +1,29 @@
+{% extends('@WSCore/cms/crud/show.html.twig') %}
+
+{% block content %}
+    {{ form_start(form, { 'attr': {'class': 'js-form-columns'} }) }}
+    <div class="c-form c-form--full">
+        <div class="u-flex u-mr-auto">
+            <h2 class="c-form__title u-h2 u-mb-30">{{ 'title'|trans({}, trans_prefix) }}</h2>
+        </div>
+        <div class="u-flex">
+            <div class="c-form__content">
+                {% block crud_show_side_content %}{% endblock %}
+
+                <div class="c-divider u-mv-small"></div>
+                <button type="submit" class="c-btn c-btn--info">{{ 'save'|trans({}, 'ws_cms') }}</button>
+                <a href="{{ path("#{route_prefix}_index") }}" class="c-btn c-btn--cancel">{{ 'cancel'|trans({}, 'ws_cms') }}</a>
+            </div>
+
+            <div class="c-form__sidebar">
+                {% block crud_show_side_sidebar %}
+                    {{ include('@WSCore/cms/form/publishing.html.twig', { 'form': form }, with_context = false) }}
+                    {{ include('@WSCore/cms/form/metadata.html.twig', { 'form': form }, with_context = false) }}
+                    {{ form_row(form.image) }}
+                {% endblock %}
+            </div>
+
+            {{ form_end(form, {'render_rest': false}) }}
+        </div>
+    </div>
+{% endblock %}

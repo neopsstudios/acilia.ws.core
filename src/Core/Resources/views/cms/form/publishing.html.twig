@@ -1,0 +1,24 @@
+<div class="l-form__row">
+    <div class="l-form__item l-form__item--large c-field">
+        {{ form_label(form.publishStatus) }}
+        {{ form_widget(form.publishStatus) }}
+        {{ form_errors(form.publishStatus) }}
+        {{ form_help(form.publishStatus) }}
+    </div>
+</div>
+<div class="l-form__row">
+    <div class="l-form__item l-form__item--large c-field has-addon-left">
+        <span class="c-field__addon"><i class="fal fa-calendar-alt"></i></span>
+        {{ form_widget(form.publishSince) }}
+        {{ form_errors(form.publishSince) }}
+        {{ form_help(form.publishSince) }}
+    </div>
+</div>
+<div class="l-form__row">
+    <div class="l-form__item l-form__item--large c-field has-addon-left">
+        <span class="c-field__addon"><i class="fal fa-calendar-alt"></i></span>
+        {{ form_widget(form.publishUntil) }}
+        {{ form_errors(form.publishUntil) }}
+        {{ form_help(form.publishUntil) }}
+    </div>
+</div>

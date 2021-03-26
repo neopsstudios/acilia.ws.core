@@ -31,7 +31,6 @@
         "symfony/yaml": "^5.2",
         "symfony/maker-bundle": "^1.15",
         "sensio/framework-extra-bundle": "^5.2",
-        "twig/extensions": "^1.5",
         "antishov/doctrine-extensions-bundle": "^1.4",
         "piwik/device-detector": "^3.12",
         "intervention/image": "^2.5",

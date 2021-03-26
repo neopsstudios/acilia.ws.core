@@ -21,4 +21,11 @@ class <?= $class_name ?> extends AbstractService<?= "\n" ?>
     {
         return [<?php array_walk($sort_fields, function(&$x) {$x = "'$x'";}); echo implode(', ', $sort_fields); ?>];
     }
+
+    protected function getListFields(): array
+    {
+        return [
+            ['name' => '<?php echo $list_fields[0] ?>'],
+        ];
+    }
 }

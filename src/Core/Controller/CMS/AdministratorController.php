@@ -34,16 +34,6 @@ class AdministratorController extends AbstractController
         return 'ws_cms_administrator';
     }
 
-    protected function getListFields(): array
-    {
-        return [
-            ['name' => 'name'],
-            ['name' => 'email'],
-            ['name' => 'profile', 'filter' => 'ws_cms_administrator_profile'],
-            ['name' => 'createdAt', 'width' => 200, 'isDate' => true],
-        ];
-    }
-
     /**
      * @Route("/profile", name="profile")
      * @Security("is_granted('ROLE_CMS')", message="not_allowed")

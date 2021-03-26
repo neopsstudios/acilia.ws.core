@@ -60,8 +60,6 @@ abstract class AbstractController extends BaseController
         return $this->service;
     }
 
-    abstract protected function getListFields(): array;
-
     protected function getBatchActions(): array
     {
         return [];
@@ -249,7 +247,7 @@ abstract class AbstractController extends BaseController
         ];
 
         // Mark sortable fields
-        $listFields = $this->getListFields();
+        $listFields = $this->getService()->getListFields();
         foreach ($listFields as &$field) {
             $field['sortable'] = false;
             if (in_array($field['name'], $this->getService()->getSortFields())) {

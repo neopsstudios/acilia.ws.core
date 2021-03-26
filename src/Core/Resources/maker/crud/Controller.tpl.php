@@ -17,11 +17,4 @@ class <?= $class_name ?> extends AbstractController<?= "\n" ?>
     {
         $this->service = $service;
     }
-
-    protected function getListFields(): array
-    {
-        return [
-            ['name' => '<?php echo $list_fields[0] ?>'],
-        ];
-    }
 }

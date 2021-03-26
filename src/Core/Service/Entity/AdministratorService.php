@@ -29,6 +29,18 @@ class AdministratorService extends AbstractService implements ActivityLogInterfa
         return ['name'];
     }
 
+    public function getListFields(): array
+    {
+        return [
+            ['name' => 'name'],
+            ['name' => 'email'],
+            ['name' => 'profile', 'filter' => 'ws_cms_administrator_profile'],
+            ['name' => 'createdAt', 'width' => 200, 'isDate' => true],
+        ];
+    }
+
+
+
     public function addRoles(array $roles)
     {
         foreach ($roles as $role) {

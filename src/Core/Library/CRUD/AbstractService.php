@@ -30,6 +30,8 @@ abstract class AbstractService implements DBLoggerInterface
 
     abstract public function getSortFields(): array;
 
+    abstract public function getListFields(): array;
+
     public function getImageEntityClass($entity): ?string
     {
         return null;

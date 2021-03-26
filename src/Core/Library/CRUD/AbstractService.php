@@ -77,6 +77,9 @@ abstract class AbstractService implements DBLoggerInterface
             $orderBy = [(string) $sort => $dir ? strtoupper($dir) : 'ASC'];
         } else {
             $orderBy = ['id' => 'DESC'];
+            if (!empty($this->getSortFields())) {
+                $orderBy = [$this->getSortFields()[0] => 'DESC'];
+            }
         }
 
         $entities = $this->repository->getAll($this->contextService->getDomain(), $filter, $filterExtendedData, $orderBy, $limit, ($page - 1) * $limit);

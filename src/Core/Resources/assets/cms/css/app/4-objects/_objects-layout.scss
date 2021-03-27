@@ -23,6 +23,12 @@
                 width: calc(50% - 10px);
             }
         }
+        
+        &--long {
+            @include media-breakpoint(md) {
+                width: calc(75% - 10px);
+            }
+        }
 
         &--image {
             @include media-breakpoint(md) {

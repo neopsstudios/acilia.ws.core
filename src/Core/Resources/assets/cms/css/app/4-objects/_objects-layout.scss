@@ -15,12 +15,18 @@
         margin-bottom: 20px;
 
         &--xsmall {
-            width: 110px;
+            width: calc(22% - 5px);
         }
 
         &--medium {
             @include media-breakpoint(md) {
                 width: calc(50% - 10px);
+            }
+        }
+        
+        &--long {
+            @include media-breakpoint(md) {
+                width: calc(76% - 10px);
             }
         }
 

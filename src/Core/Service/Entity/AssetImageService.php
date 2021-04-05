@@ -37,7 +37,7 @@ class AssetImageService implements FactoryCollectorInterface
     }
 
     /**
-     * @param string $filter
+     * @param string|null $filter
      * @param int $page
      * @param int $limit
      * @param string $sort
@@ -60,7 +60,7 @@ class AssetImageService implements FactoryCollectorInterface
         }
 
         try {
-            return $this->repository->getAll($this->contextService->getDomain(), $filter, [], $orderBy, $limit, $offset);
+            return $this->repository->getAll($this->contextService->getDomain(), $filter, $orderBy, $limit, $offset);
         } catch (\Exception $e) {
             $this->logger->error(sprintf('Error fetching image assets. Error %s', $e->getMessage()));
         }
@@ -191,15 +191,6 @@ class AssetImageService implements FactoryCollectorInterface
         }
     }
 
-    protected function sanitizeFilename(UploadedFile $imageFile): string
-    {
-        $filename = explode('.', (string) $imageFile->getClientOriginalName());
-        $imageName = (string) preg_replace('/[^\w\-\.]/', '', $filename[0]);
-        $filename = sprintf('%s.%s', $imageName, $imageFile->getClientOriginalExtension());
-
-        return trim($filename);
-    }
-
     public function getAvailableByIds(array $ids): array
     {
         $result = [];
@@ -221,5 +212,14 @@ class AssetImageService implements FactoryCollectorInterface
     public function getFactoryCollectorSupported(): array
     {
         return [AssetImage::class];
+    }
+
+    protected function sanitizeFilename(UploadedFile $imageFile): string
+    {
+        $filename = explode('.', (string) $imageFile->getClientOriginalName());
+        $imageName = (string) preg_replace('/[^\w\-\.]/', '', $filename[0]);
+        $filename = sprintf('%s.%s', $imageName, $imageFile->getClientOriginalExtension());
+
+        return trim($filename);
     }
 }

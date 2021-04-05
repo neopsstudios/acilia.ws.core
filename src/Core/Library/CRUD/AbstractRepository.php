@@ -28,25 +28,32 @@ abstract class AbstractRepository extends ServiceEntityRepository
 
     abstract public function getFilterFields();
 
-    public function processFilterExtended(QueryBuilder $qb, ?array $filterExtendedData)
+    public function processFilterExtended(QueryBuilder $qb, ?array $filter)
     {
     }
 
     /**
      * @param Domain $domain
-     * @param string $filter
+     * @param string|null $search
+     * @param array|null $filter
      * @param array|null $orderBy
      * @param int|null $limit
      * @param int|null $offset
      *
-     * @return mixed
+     * @return int|mixed|string
      */
-    public function getAll(Domain $domain, ?string $filter, ?array $filterExtendedData, array $orderBy = null, int $limit = null, int $offset = null)
-    {
+    public function getAll(
+        Domain $domain,
+        ?string $search,
+        ?array $filter,
+        array $orderBy = null,
+        int $limit = null,
+        int $offset = null
+    ) {
         $alias = 't';
         $qb = $this->createQueryBuilder($alias);
 
-        $this->setFilter($alias, $qb, $filter);
+        $this->setFilter($alias, $qb, $search);
 
         if ($orderBy && count($orderBy)) {
             foreach ($orderBy as $field => $dir) {
@@ -59,7 +66,7 @@ abstract class AbstractRepository extends ServiceEntityRepository
             $qb->setMaxResults($limit);
         }
 
-        $this->processFilterExtended($qb, $filterExtendedData);
+        $this->processFilterExtended($qb, $filter);
 
         $this->setDomainRestriction($alias, $qb, $domain);
 
@@ -80,18 +87,20 @@ abstract class AbstractRepository extends ServiceEntityRepository
 
     /**
      * @param Domain $domain
-     * @param string|null $filter
+     * @param string|null $search
+     * @param array|null $filter
+     *
      * @return int
      */
-    public function getAllCount(Domain $domain, ?string $filter, ?array $filterExtendedData)
+    public function getAllCount(Domain $domain, ?string $search, ?array $filter)
     {
         $alias = 't';
 
         $qb = $this->createQueryBuilder($alias)->select(sprintf(sprintf('count(%s.id)', $alias)));
 
-        $this->setFilter($alias, $qb, $filter);
+        $this->setFilter($alias, $qb, $search);
 
-        $this->processFilterExtended($qb, $filterExtendedData);
+        $this->processFilterExtended($qb, $filter);
 
         $this->setDomainRestriction($alias, $qb, $domain);
 
@@ -107,11 +116,11 @@ abstract class AbstractRepository extends ServiceEntityRepository
     /**
      * @param string $alias
      * @param QueryBuilder $qb
-     * @param string|null $filter
+     * @param string|null $search
      */
-    protected function setFilter(string $alias, QueryBuilder $qb, ?string $filter)
+    protected function setFilter(string $alias, QueryBuilder $qb, ?string $search)
     {
-        if (!$filter) {
+        if (!$search) {
             return;
         }
 
@@ -119,7 +128,7 @@ abstract class AbstractRepository extends ServiceEntityRepository
         $filterParameters = [];
         foreach ($this->getFilterFields() as $field) {
             $filterConditions[] = sprintf('%s LIKE :%s_filter', sprintf('%s.%s', $alias, $field), $field);
-            $filterParameters[sprintf('%s_filter', $field)] = sprintf('%%%s%%', $filter);
+            $filterParameters[sprintf('%s_filter', $field)] = sprintf('%%%s%%', $search);
         }
 
         if (count($filterConditions) > 0) {

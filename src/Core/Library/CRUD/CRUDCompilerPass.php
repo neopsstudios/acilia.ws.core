@@ -3,6 +3,7 @@
 namespace WS\Core\Library\CRUD;
 
 use WS\Core\Service\DataExportService;
+use WS\Core\Service\FileService;
 use WS\Core\Service\ImageService;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\DependencyInjection\Compiler\PriorityTaggedServiceTrait;
@@ -29,6 +30,12 @@ class CRUDCompilerPass implements CompilerPassInterface
             $imageServiceDefinition = $container->findDefinition(ImageService::class);
         }
 
+        // Get File Service Definition
+        $fileServiceDefinition = null;
+        if ($container->has(FileService::class)) {
+            $fileServiceDefinition = $container->findDefinition(FileService::class);
+        }
+
         // Get DataExport Service Definition
         $dataExportServiceDefinition = null;
         if ($container->has(DataExportService::class)) {
@@ -49,6 +56,11 @@ class CRUDCompilerPass implements CompilerPassInterface
             // Link Image Service
             if ($imageServiceDefinition) {
                 $definition->addMethodCall('setImageService', [$imageServiceDefinition]);
+            }
+
+            // Link File Service
+            if ($fileServiceDefinition) {
+                $definition->addMethodCall('setFileService', [$fileServiceDefinition]);
             }
 
             // Link DataExport Service

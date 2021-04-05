@@ -2,6 +2,8 @@
 
 namespace WS\Core\Library\CRUD;
 
+use Symfony\Component\Form\FormInterface;
+use WS\Core\Library\Asset\Form\AssetFileType;
 use WS\Core\Library\Asset\ImageRenditionInterface;
 use WS\Core\Library\Domain\DomainDependantInterface;
 use WS\Core\Library\DBLogger\DBLoggerInterface;
@@ -50,6 +52,20 @@ abstract class AbstractService implements DBLoggerInterface
         return array_keys($images);
     }
 
+    public function getFileFields(FormInterface $form, $entity): array
+    {
+        $files = [];
+
+        foreach ($form as $field) {
+            var_dump($field->getConfig()->getType()->getInnerType());
+            if ($field->getConfig()->getType()->getInnerType() instanceof AssetFileType) {
+                $files[] = $field->getPropertyPath();
+            }
+        }
+
+        return $files;
+    }
+
     public function getEntity()
     {
         try {
@@ -61,7 +77,8 @@ abstract class AbstractService implements DBLoggerInterface
     }
 
     /**
-     * @param string $filter
+     * @param string|null $search
+     * @param array|null $filter
      * @param int $page
      * @param int $limit
      * @param string $sort
@@ -70,8 +87,14 @@ abstract class AbstractService implements DBLoggerInterface
      * @return array
      * @throws \Exception
      */
-    public function getAll(?string $filter, ?array $filterExtendedData, int $page, int $limit, string $sort = '', string $dir = '')
-    {
+    public function getAll(
+        ?string $search,
+        ?array $filter,
+        int $page,
+        int $limit,
+        string $sort = '',
+        string $dir = ''
+    ) {
         if ($sort) {
             if (!in_array($sort, $this->getSortFields())) {
                 throw new \Exception('Sort by this field is not allowed');
@@ -84,8 +107,8 @@ abstract class AbstractService implements DBLoggerInterface
             }
         }
 
-        $entities = $this->repository->getAll($this->contextService->getDomain(), $filter, $filterExtendedData, $orderBy, $limit, ($page - 1) * $limit);
-        $total = $this->repository->getAllCount($this->contextService->getDomain(), $filter, $filterExtendedData);
+        $entities = $this->repository->getAll($this->contextService->getDomain(), $search, $filter, $orderBy, $limit, ($page - 1) * $limit);
+        $total = $this->repository->getAllCount($this->contextService->getDomain(), $search, $filter);
 
         return ['total' => $total, 'data' => $entities];
     }

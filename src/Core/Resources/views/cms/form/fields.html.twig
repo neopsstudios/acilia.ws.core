@@ -23,6 +23,8 @@
     {%- set type = form.vars.type|default('') -%}
     {%- if type == 'ws-asset-image' %}
         {{- block('ws_asset_image_widget') -}}
+    {%- elseif type == 'ws-asset-file' -%}
+        {{- block('ws_asset_file_widget') -}}
     {%- else -%}
         <div class="c-form__content-full" {{ block('widget_container_attributes') }}>
             {%- if form is rootform -%}
@@ -502,6 +504,19 @@
         {%- endfor -%}
     {%- endif-%}
 {%- endblock ws_attributes -%}
+
+{%- block ws_asset_file_widget -%}
+    {# show file input field #}
+    {{ form_widget(form.children.asset) }}
+    {{ form_errors(form.children.asset) }}
+
+    {# input to indicate if we are gonna to delete the asset image #}
+    {{ form_widget(form.children.asset_remove) }}
+
+    {#
+    AssetFileData: {{ dump(form.children.asset_file.vars.data) }}
+    #}
+{%- endblock ws_asset_file_widget -%}
 
 {%- block ws_asset_image_widget -%}
     {# show image thumbnail if exists #}

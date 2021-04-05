@@ -6,6 +6,7 @@ use Symfony\Component\Form\Form;
 use WS\Core\Library\DataExport\DataExportInterface;
 use WS\Core\Library\DataExport\Provider\CsvExportProvider;
 use WS\Core\Service\DataExportService;
+use WS\Core\Service\FileService;
 use WS\Core\Service\ImageService;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
@@ -27,6 +28,7 @@ abstract class AbstractController extends BaseController
     const EVENT_EDIT_CREATE_FORM = 'edit.create_form';
     const EVENT_EDIT_EXTRA_DATA = 'edit.extra_data';
     const EVENT_IMAGE_HANDLE = 'image_handle';
+    const EVENT_FILE_HANDLE = 'file_handle';
 
     const DELETE_BATCH_ACTION = 'delete.batch_action';
 
@@ -36,6 +38,7 @@ abstract class AbstractController extends BaseController
 
     protected $translator;
     protected $imageService;
+    protected $fileService;
     protected $dataExportService;
     protected $events = [];
     protected $service;
@@ -48,6 +51,11 @@ abstract class AbstractController extends BaseController
     public function setImageService(ImageService $imageService)
     {
         $this->imageService = $imageService;
+    }
+
+    public function setFileService(FileService $fileService)
+    {
+        $this->fileService = $fileService;
     }
 
     public function setDataExportService(DataExportService $dataExportService)
@@ -151,6 +159,32 @@ abstract class AbstractController extends BaseController
                     if (isset($this->events[self::EVENT_IMAGE_HANDLE])) {
                         $this->events[self::EVENT_IMAGE_HANDLE]($entity, $imageField, null);
                     }
+                }
+            }
+
+            $this->getDoctrine()->getManager()->flush();
+        }
+    }
+
+    protected function handleFiles(FormInterface $form, $entity): void
+    {
+        foreach ($this->getService()->getFileFields($form, $entity) as $fileFieldName) {
+
+            if (!empty($form->get($fileFieldName)->get('asset')->getData())) {
+                $fileField = $form->get($fileFieldName)->get('asset')->getData();
+
+                $assetFile = $this->fileService->handle($fileField, $entity, $fileFieldName);
+                if (isset($this->events[self::EVENT_FILE_HANDLE])) {
+                    $this->events[self::EVENT_FILE_HANDLE]($entity, $fileFieldName, $assetFile);
+                }
+            } elseif (
+                $form->get($fileFieldName)->has('asset_remove') &&
+                $form->get($fileFieldName)->get('asset_remove')->getData() === 'remove'
+            ) {
+                $this->fileService->delete($entity, $fileFieldName);
+
+                if (isset($this->events[self::EVENT_FILE_HANDLE])) {
+                    $this->events[self::EVENT_FILE_HANDLE]($entity, $fileFieldName, null);
                 }
             }
 
@@ -332,6 +366,8 @@ abstract class AbstractController extends BaseController
 
                     $this->handleImages($form, $entity);
 
+                    $this->handleFiles($form, $entity);
+
                     $this->addFlash('cms_success', $this->trans('create_success', [], $this->getTranslatorPrefix()));
 
                     return $this->redirect($this->wsGenerateUrl($this->getRouteNamePrefix() . '_index'));
@@ -394,6 +430,8 @@ abstract class AbstractController extends BaseController
                     $this->getService()->edit($entity);
 
                     $this->handleImages($form, $entity);
+
+                    $this->handleFiles($form, $entity);
 
                     $this->addFlash('cms_success', $this->trans('edit_success', [], $this->getTranslatorPrefix()));
 

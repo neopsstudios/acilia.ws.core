@@ -20,14 +20,14 @@ class FileService
         $this->storageService = $storageService;
     }
 
-    public function handle(UploadedFile $fileFile, $entity, string $fileField): AssetFile
+    public function handle(UploadedFile $fileFile, $entity, string $fileField, ?array $options = null): AssetFile
     {
         $assetFile = $this->assetFileService->createFromUploadedFile($fileFile, $entity, $fileField);
 
         $this->storageService->save(
             $this->getFilePath($assetFile),
             file_get_contents($fileFile->getPathname()),
-            StorageService::CONTEXT_PUBLIC
+            $options['context'] ?? StorageService::CONTEXT_PRIVATE
         );
 
         return $assetFile;

@@ -57,9 +57,8 @@ abstract class AbstractService implements DBLoggerInterface
         $files = [];
 
         foreach ($form as $field) {
-            var_dump($field->getConfig()->getType()->getInnerType());
             if ($field->getConfig()->getType()->getInnerType() instanceof AssetFileType) {
-                $files[] = $field->getPropertyPath();
+                $files[] = (string) $field->getPropertyPath();
             }
         }
 

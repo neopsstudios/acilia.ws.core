@@ -6,15 +6,13 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Exception\InvalidConfigurationException;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use WS\Core\Entity\AssetFile;
+use WS\Core\Service\StorageService;
 
 class AssetFileType extends AbstractType
 {
@@ -50,18 +48,6 @@ class AssetFileType extends AbstractType
         } catch (\Exception $e) {}
 
         $builder->add('asset_file', EntityType::class, $assetFileOptions);
-
-        /*$builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
-            $assetFile = $event->getForm()->get('asset_file');
-            $submittedData = $event->getData();
-
-            if (!array_key_exists('asset_file', $submittedData) && $assetFile->getData() instanceof AssetFile) {
-                $submittedData['asset_file'] = $assetFile->getData()->getId();
-                $event->setData($submittedData);
-            }
-        });*/
-
-
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
@@ -69,7 +55,7 @@ class AssetFileType extends AbstractType
         $view->vars = array_replace($view->vars, [
             'ws' => [
                 'entity' => $options['ws']['entity'],
-                'constraints' => $options['ws']['constraints'],
+                'constraints' => $options['ws']['constraints']
             ],
             'type' => 'ws-asset-file',
         ]);
@@ -82,7 +68,8 @@ class AssetFileType extends AbstractType
             'mapped' => false,
             'ws' => [
                 'entity' => null,
-                'constraints' => []
+                'constraints' => [],
+                'context' => null
             ]
         ]);
     }

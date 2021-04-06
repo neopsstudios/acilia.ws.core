@@ -173,7 +173,11 @@ abstract class AbstractController extends BaseController
             if (!empty($form->get($fileFieldName)->get('asset')->getData())) {
                 $fileField = $form->get($fileFieldName)->get('asset')->getData();
 
-                $assetFile = $this->fileService->handle($fileField, $entity, $fileFieldName);
+                $options = [
+                    'context' => $form->get($fileFieldName)->getConfig()->getOptions()['ws']['context'] ?? null
+                ];
+
+                $assetFile = $this->fileService->handle($fileField, $entity, $fileFieldName, $options);
                 if (isset($this->events[self::EVENT_FILE_HANDLE])) {
                     $this->events[self::EVENT_FILE_HANDLE]($entity, $fileFieldName, $assetFile);
                 }
